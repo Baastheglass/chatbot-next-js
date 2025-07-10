@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
 import { ObjectId } from 'mongodb'; 
 // Example whitelist
-const EMAIL_WHITELIST = ["[email protected]", "[email protected]","mustafaahsan002@gmail.com", "lightningblazer123@gmail.com"]
+const EMAIL_WHITELIST = ["[email protected]", "[email protected]","mustafaahsan002@gmail.com", "lightningblazer123@gmail.com", ""]
 
 // A small helper to hash user agent + a random string
 function hashUserAgentAndRandom(userAgent) {
@@ -45,9 +45,9 @@ export const authOptions = {
           console.log('Sending verification email to:', email);
           
           // Whitelist check
-          if (!EMAIL_WHITELIST.includes(email)) {
-            throw new Error("Email is not whitelisted.")
-          }
+          // if (!EMAIL_WHITELIST.includes(email)) {
+          //   throw new Error("Email is not whitelisted.")
+          // }
 
           // Send magic link email
           const transporter = nodemailer.createTransport(provider.server)
