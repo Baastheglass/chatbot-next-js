@@ -1,11 +1,10 @@
 "use client";
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from 'next/navigation';
 
-export default function LoginPage() {
+function LoginContent() {
   const [email, setEmail] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
   const { data: session, status } = useSession();  // Check if already logged in
@@ -18,6 +17,7 @@ export default function LoginPage() {
       router.replace("/chat");
     }
   }, [status, router]);
+
   useEffect(() => {
     const message = searchParams.get('message');
     if (message === 'session_expired') {
@@ -25,8 +25,7 @@ export default function LoginPage() {
         // You can use your preferred notification system
         alert("Your session has expired. Please login again.");
     }
-}, [searchParams]);
-
+  }, [searchParams]);
 
   // Show a spinner or status while checking session
   if (status === "loading") {
@@ -56,7 +55,6 @@ export default function LoginPage() {
     }
   };
 
-
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
@@ -85,17 +83,10 @@ export default function LoginPage() {
   );
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginContent />
+    </Suspense>
+  );
+}
