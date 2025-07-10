@@ -7,7 +7,7 @@ from vectordb_manager import VectorDBManager
 from chat_manager import ChatManager
 import os
 from dotenv import load_dotenv
-from auth_middleware import verify_token
+# from auth_middleware import verify_token  # Authentication disabled for demo/development
 
 load_dotenv()
 
@@ -267,31 +267,33 @@ async def video_endpoint(topic_request: TopicRequest, request: Request):
         raise HTTPException(status_code=500, detail=str(e))
 @app.get("/chats")
 async def get_user_chats_endpoint(request: Request):
-    # Get user info from request state (set by auth middleware)
-    user_email = getattr(request.state, 'user_email', None)
-    if not user_email:
-        raise HTTPException(status_code=401, detail="User not authenticated")
+    # Authentication disabled for demo/development
+    # user_email = getattr(request.state, 'user_email', None)
+    # if not user_email:
+    #     raise HTTPException(status_code=401, detail="User not authenticated")
     
+    user_email = "demo@example.com"  # Use demo email for development
     chats = await chat_manager.get_user_chats(user_email)
     return {"chats": chats}
 
 @app.get("/chats/{chatId}/messages")
 async def get_chat_messages_endpoint(chatId: str, request: Request):
-    # Get user info from request state (set by auth middleware)
-    user_email = getattr(request.state, 'user_email', None)
-    if not user_email:
-        raise HTTPException(status_code=401, detail="User not authenticated")
+    # Authentication disabled for demo/development
+    # user_email = getattr(request.state, 'user_email', None)
+    # if not user_email:
+    #     raise HTTPException(status_code=401, detail="User not authenticated")
     
     messages = await chat_manager.get_chat_messages(chatId)
     return {"messages": messages}
 
 @app.post("/chats/{chatId}/messages")
 async def post_message_endpoint(chatId: str, req: NewMessageRequest, request: Request):
-    # Get user info from request state (set by auth middleware)
-    user_email = getattr(request.state, 'user_email', None)
-    if not user_email:
-        raise HTTPException(status_code=401, detail="User not authenticated")
+    # Authentication disabled for demo/development
+    # user_email = getattr(request.state, 'user_email', None)
+    # if not user_email:
+    #     raise HTTPException(status_code=401, detail="User not authenticated")
     
+    user_email = "demo@example.com"  # Use demo email for development
     message = {
         "role": req.role,
         "content": req.content,
@@ -303,10 +305,12 @@ async def post_message_endpoint(chatId: str, req: NewMessageRequest, request: Re
 
 @app.post("/chats/{chatId}/delete")
 async def delete_chat_endpoint(chatId: str, request: Request):
-    # Get user info from request state (set by auth middleware)
-    user_email = getattr(request.state, 'user_email', None)
-    if not user_email:
-        raise HTTPException(status_code=401, detail="User not authenticated")
+    # Authentication disabled for demo/development
+    # user_email = getattr(request.state, 'user_email', None)
+    # if not user_email:
+    #     raise HTTPException(status_code=401, detail="User not authenticated")
+    
+    user_email = "demo@example.com"  # Use demo email for development
     # Update the chat's isDeleted field to true
     result = await chat_manager.soft_delete_chat(chatId, user_email)
     if result:
@@ -318,10 +322,10 @@ async def load_recent_context(chatId: str, sessionId: str, request: Request):
     """
     Whenever user switches to a new chat, load last 6 messages into self.chat_histories.
     """
-    # Get user info from request state (set by auth middleware)
-    user_email = getattr(request.state, 'user_email', None)
-    if not user_email:
-        raise HTTPException(status_code=401, detail="User not authenticated")
+    # Authentication disabled for demo/development
+    # user_email = getattr(request.state, 'user_email', None)
+    # if not user_email:
+    #     raise HTTPException(status_code=401, detail="User not authenticated")
     
     # Possibly verify user owns chatId if needed
     await chat_manager.load_recent_context_for_chat(chatId, sessionId)
