@@ -1,0 +1,9 @@
+"This diagram shows a drawing of a left hemicolectomy, which is a surgery to remove part of the left side of the colon (large intestine). It illustrates how doctors carefully cut through the tissue (dissection) to remove the colon while keeping important blood vessels safe. 
+
+The diagram helps us understand where the surgery happens and which blood vessels are involved. 
+
+- IMA (inferior mesenteric artery): This is a blood vessel that supplies blood to the lower part of the colon.
+- LCA (left colic artery): This artery provides blood to the left side of the colon.
+- SMA (superior mesenteric artery): This artery supplies blood to the upper part of the intestines. 
+
+Knowing these parts helps doctors plan the surgery better."

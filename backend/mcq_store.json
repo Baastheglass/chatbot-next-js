@@ -1,0 +1,1390 @@
+[
+  {
+    "5b2bf36d-7789-4254-8d94-5de51563f7cb": [
+      {
+        "question": "What is the most common site for extrapulmonary tuberculosis (TB) infection?",
+        "options": [
+          "A) Lymph nodes",
+          "B) Bones",
+          "C) Kidneys",
+          "D) Liver",
+          "E) Skin"
+        ],
+        "correct_answer": "A",
+        "explanation": "Lymph nodes are the most common extrapulmonary site of TB, with cervical and mediastinal glands being affected most frequently."
+      }
+    ]
+  },
+  {
+    "5b2bf36d-7789-4254-8d94-5de51563f7cb": [
+      {
+        "question": "What is the most common site for extrapulmonary tuberculosis (TB) infection?",
+        "options": [
+          "A) Lymph nodes",
+          "B) Bones",
+          "C) Kidneys",
+          "D) Liver",
+          "E) Skin"
+        ],
+        "correct_answer": "A",
+        "explanation": "Lymph nodes are the most common extrapulmonary site of TB, with cervical and mediastinal glands being affected most frequently."
+      },
+      {
+        "question": "Which of the following is a common clinical feature of pulmonary tuberculosis (TB)?",
+        "options": [
+          "A) Chronic cough with haemoptysis",
+          "B) Acute respiratory distress syndrome (ARDS)",
+          "C) Severe abdominal pain",
+          "D) High fever with chills",
+          "E) Sudden weight gain"
+        ],
+        "correct_answer": "A",
+        "explanation": "Chronic cough, often accompanied by haemoptysis, is a classic symptom of pulmonary tuberculosis. Other options listed are not typical features of pulmonary TB."
+      }
+    ]
+  },
+  {
+    "3f9e3208-7fa5-477f-8e4e-cbae24a6cfbc": [
+      {
+        "question": "What is the recommended follow-up for patients with familial adenomatous polyposis (FAP) after the successful endoscopic removal of polyps?",
+        "options": [
+          "A) Regular endoscopic surveillance starting at age 12-14 years",
+          "B) No follow-up is necessary if polyps are removed",
+          "C) Annual MRI scans to monitor for new polyp development",
+          "D) Follow-up colonoscopy every 5 years regardless of findings",
+          "E) Only symptomatic patients require follow-up"
+        ],
+        "correct_answer": "A",
+        "explanation": "Patients with familial adenomatous polyposis (FAP) require regular endoscopic surveillance starting at age 12-14 years, even if a genetic mutation has not been identified, due to the high risk of developing colorectal cancer."
+      }
+    ]
+  },
+  {
+    "3f9e3208-7fa5-477f-8e4e-cbae24a6cfbc": [
+      {
+        "question": "What is the recommended follow-up for patients with familial adenomatous polyposis (FAP) after the successful endoscopic removal of polyps?",
+        "options": [
+          "A) Regular endoscopic surveillance starting at age 12-14 years",
+          "B) No follow-up is necessary if polyps are removed",
+          "C) Annual MRI scans to monitor for new polyp development",
+          "D) Follow-up colonoscopy every 5 years regardless of findings",
+          "E) Only symptomatic patients require follow-up"
+        ],
+        "correct_answer": "A",
+        "explanation": "Patients with familial adenomatous polyposis (FAP) require regular endoscopic surveillance starting at age 12-14 years, even if a genetic mutation has not been identified, due to the high risk of developing colorectal cancer."
+      },
+      {
+        "question": "Which type of polyp is associated with the highest risk of malignant transformation?",
+        "options": [
+          "A) Tubular adenoma",
+          "B) Villous adenoma",
+          "C) Hyperplastic polyp",
+          "D) Sessile serrated lesion",
+          "E) Juvenile polyp"
+        ],
+        "correct_answer": "B",
+        "explanation": "Villous adenomas are associated with the highest risk of malignant transformation among the types of polyps listed. The risk of malignancy increases with the presence of villous features in adenomatous polyps."
+      }
+    ]
+  },
+  {
+    "3f9e3208-7fa5-477f-8e4e-cbae24a6cfbc": [
+      {
+        "question": "What is the recommended follow-up for patients with familial adenomatous polyposis (FAP) after the successful endoscopic removal of polyps?",
+        "options": [
+          "A) Regular endoscopic surveillance starting at age 12-14 years",
+          "B) No follow-up is necessary if polyps are removed",
+          "C) Annual MRI scans to monitor for new polyp development",
+          "D) Follow-up colonoscopy every 5 years regardless of findings",
+          "E) Only symptomatic patients require follow-up"
+        ],
+        "correct_answer": "A",
+        "explanation": "Patients with familial adenomatous polyposis (FAP) require regular endoscopic surveillance starting at age 12-14 years, even if a genetic mutation has not been identified, due to the high risk of developing colorectal cancer."
+      },
+      {
+        "question": "Which type of polyp is associated with the highest risk of malignant transformation?",
+        "options": [
+          "A) Tubular adenoma",
+          "B) Villous adenoma",
+          "C) Hyperplastic polyp",
+          "D) Sessile serrated lesion",
+          "E) Juvenile polyp"
+        ],
+        "correct_answer": "B",
+        "explanation": "Villous adenomas are associated with the highest risk of malignant transformation among the types of polyps listed. The risk of malignancy increases with the presence of villous features in adenomatous polyps."
+      }
+    ],
+    "572cc086-b4ca-4566-8ab1-0c8ecd637416": [
+      {
+        "question": "What is the most significant factor that influences the prognosis of colorectal cancer?",
+        "options": [
+          "A) Tumor stage and lymph node status",
+          "B) Patient age at diagnosis",
+          "C) Type of chemotherapy administered",
+          "D) Presence of family history of cancer",
+          "E) Tumor location within the colon"
+        ],
+        "correct_answer": "A",
+        "explanation": "The prognosis of colorectal cancer is primarily determined by the tumor stage and lymph node status. Patients with earlier stages of cancer (such as stage I) have a significantly better prognosis compared to those with advanced stages (like stage III), where lymph node involvement is a critical factor."
+      }
+    ]
+  },
+  {
+    "3f9e3208-7fa5-477f-8e4e-cbae24a6cfbc": [
+      {
+        "question": "What is the recommended follow-up for patients with familial adenomatous polyposis (FAP) after the successful endoscopic removal of polyps?",
+        "options": [
+          "A) Regular endoscopic surveillance starting at age 12-14 years",
+          "B) No follow-up is necessary if polyps are removed",
+          "C) Annual MRI scans to monitor for new polyp development",
+          "D) Follow-up colonoscopy every 5 years regardless of findings",
+          "E) Only symptomatic patients require follow-up"
+        ],
+        "correct_answer": "A",
+        "explanation": "Patients with familial adenomatous polyposis (FAP) require regular endoscopic surveillance starting at age 12-14 years, even if a genetic mutation has not been identified, due to the high risk of developing colorectal cancer."
+      },
+      {
+        "question": "Which type of polyp is associated with the highest risk of malignant transformation?",
+        "options": [
+          "A) Tubular adenoma",
+          "B) Villous adenoma",
+          "C) Hyperplastic polyp",
+          "D) Sessile serrated lesion",
+          "E) Juvenile polyp"
+        ],
+        "correct_answer": "B",
+        "explanation": "Villous adenomas are associated with the highest risk of malignant transformation among the types of polyps listed. The risk of malignancy increases with the presence of villous features in adenomatous polyps."
+      }
+    ],
+    "572cc086-b4ca-4566-8ab1-0c8ecd637416": [
+      {
+        "question": "What is the most significant factor that influences the prognosis of colorectal cancer?",
+        "options": [
+          "A) Tumor stage and lymph node status",
+          "B) Patient age at diagnosis",
+          "C) Type of chemotherapy administered",
+          "D) Presence of family history of cancer",
+          "E) Tumor location within the colon"
+        ],
+        "correct_answer": "A",
+        "explanation": "The prognosis of colorectal cancer is primarily determined by the tumor stage and lymph node status. Patients with earlier stages of cancer (such as stage I) have a significantly better prognosis compared to those with advanced stages (like stage III), where lymph node involvement is a critical factor."
+      },
+      {
+        "question": "Which of the following statements regarding the management of colorectal cancer is true?",
+        "options": [
+          "A) Tumors greater than 2 cm require en bloc resection of adjacent mesenteric lymph nodes.",
+          "B) All small hindgut tumors can be safely excised without further intervention.",
+          "C) Patients with metastatic disease to the colon are typically asymptomatic.",
+          "D) Surgical treatment is not recommended for low-grade non-Hodgkin's lymphoma.",
+          "E) CT colonography has replaced colonoscopy as the primary diagnostic tool for colorectal cancer."
+        ],
+        "correct_answer": "A",
+        "explanation": "Tumors greater than 2 cm indeed require en bloc resection of adjacent mesenteric lymph nodes to ensure complete removal and reduce the risk of metastasis. Other options are incorrect as they misrepresent the management protocols for colorectal cancer."
+      }
+    ]
+  },
+  {
+    "3f9e3208-7fa5-477f-8e4e-cbae24a6cfbc": [
+      {
+        "question": "What is the recommended follow-up for patients with familial adenomatous polyposis (FAP) after the successful endoscopic removal of polyps?",
+        "options": [
+          "A) Regular endoscopic surveillance starting at age 12-14 years",
+          "B) No follow-up is necessary if polyps are removed",
+          "C) Annual MRI scans to monitor for new polyp development",
+          "D) Follow-up colonoscopy every 5 years regardless of findings",
+          "E) Only symptomatic patients require follow-up"
+        ],
+        "correct_answer": "A",
+        "explanation": "Patients with familial adenomatous polyposis (FAP) require regular endoscopic surveillance starting at age 12-14 years, even if a genetic mutation has not been identified, due to the high risk of developing colorectal cancer."
+      },
+      {
+        "question": "Which type of polyp is associated with the highest risk of malignant transformation?",
+        "options": [
+          "A) Tubular adenoma",
+          "B) Villous adenoma",
+          "C) Hyperplastic polyp",
+          "D) Sessile serrated lesion",
+          "E) Juvenile polyp"
+        ],
+        "correct_answer": "B",
+        "explanation": "Villous adenomas are associated with the highest risk of malignant transformation among the types of polyps listed. The risk of malignancy increases with the presence of villous features in adenomatous polyps."
+      }
+    ],
+    "572cc086-b4ca-4566-8ab1-0c8ecd637416": [
+      {
+        "question": "What is the most significant factor that influences the prognosis of colorectal cancer?",
+        "options": [
+          "A) Tumor stage and lymph node status",
+          "B) Patient age at diagnosis",
+          "C) Type of chemotherapy administered",
+          "D) Presence of family history of cancer",
+          "E) Tumor location within the colon"
+        ],
+        "correct_answer": "A",
+        "explanation": "The prognosis of colorectal cancer is primarily determined by the tumor stage and lymph node status. Patients with earlier stages of cancer (such as stage I) have a significantly better prognosis compared to those with advanced stages (like stage III), where lymph node involvement is a critical factor."
+      },
+      {
+        "question": "Which of the following statements regarding the management of colorectal cancer is true?",
+        "options": [
+          "A) Tumors greater than 2 cm require en bloc resection of adjacent mesenteric lymph nodes.",
+          "B) All small hindgut tumors can be safely excised without further intervention.",
+          "C) Patients with metastatic disease to the colon are typically asymptomatic.",
+          "D) Surgical treatment is not recommended for low-grade non-Hodgkin's lymphoma.",
+          "E) CT colonography has replaced colonoscopy as the primary diagnostic tool for colorectal cancer."
+        ],
+        "correct_answer": "A",
+        "explanation": "Tumors greater than 2 cm indeed require en bloc resection of adjacent mesenteric lymph nodes to ensure complete removal and reduce the risk of metastasis. Other options are incorrect as they misrepresent the management protocols for colorectal cancer."
+      }
+    ],
+    "7ab61d11-ac02-45ae-a48a-91cb0ca805f0": [
+      {
+        "question": "Which of the following statements is true regarding Lynch syndrome?",
+        "options": [
+          "A) Individuals with Lynch syndrome have a 100% lifetime risk of developing colorectal cancer.",
+          "B) Lynch syndrome is caused by mutations in the APC gene.",
+          "C) The majority of cancers in Lynch syndrome patients develop in the proximal colon.",
+          "D) Lynch syndrome is characterized by the presence of more than 100 colorectal adenomas.",
+          "E) Females with Lynch syndrome have a 70% lifetime risk of developing endometrial cancer."
+        ],
+        "correct_answer": "C",
+        "explanation": "The correct answer is C) The majority of cancers in Lynch syndrome patients develop in the proximal colon. Lynch syndrome, also known as hereditary non-polyposis colorectal cancer (HNPCC), is associated with a significant risk of colorectal cancer, particularly in the proximal colon, and is caused by mutations in mismatch repair genes, not the APC gene."
+      }
+    ]
+  },
+  {
+    "3f9e3208-7fa5-477f-8e4e-cbae24a6cfbc": [
+      {
+        "question": "What is the recommended follow-up for patients with familial adenomatous polyposis (FAP) after the successful endoscopic removal of polyps?",
+        "options": [
+          "A) Regular endoscopic surveillance starting at age 12-14 years",
+          "B) No follow-up is necessary if polyps are removed",
+          "C) Annual MRI scans to monitor for new polyp development",
+          "D) Follow-up colonoscopy every 5 years regardless of findings",
+          "E) Only symptomatic patients require follow-up"
+        ],
+        "correct_answer": "A",
+        "explanation": "Patients with familial adenomatous polyposis (FAP) require regular endoscopic surveillance starting at age 12-14 years, even if a genetic mutation has not been identified, due to the high risk of developing colorectal cancer."
+      },
+      {
+        "question": "Which type of polyp is associated with the highest risk of malignant transformation?",
+        "options": [
+          "A) Tubular adenoma",
+          "B) Villous adenoma",
+          "C) Hyperplastic polyp",
+          "D) Sessile serrated lesion",
+          "E) Juvenile polyp"
+        ],
+        "correct_answer": "B",
+        "explanation": "Villous adenomas are associated with the highest risk of malignant transformation among the types of polyps listed. The risk of malignancy increases with the presence of villous features in adenomatous polyps."
+      }
+    ],
+    "572cc086-b4ca-4566-8ab1-0c8ecd637416": [
+      {
+        "question": "What is the most significant factor that influences the prognosis of colorectal cancer?",
+        "options": [
+          "A) Tumor stage and lymph node status",
+          "B) Patient age at diagnosis",
+          "C) Type of chemotherapy administered",
+          "D) Presence of family history of cancer",
+          "E) Tumor location within the colon"
+        ],
+        "correct_answer": "A",
+        "explanation": "The prognosis of colorectal cancer is primarily determined by the tumor stage and lymph node status. Patients with earlier stages of cancer (such as stage I) have a significantly better prognosis compared to those with advanced stages (like stage III), where lymph node involvement is a critical factor."
+      },
+      {
+        "question": "Which of the following statements regarding the management of colorectal cancer is true?",
+        "options": [
+          "A) Tumors greater than 2 cm require en bloc resection of adjacent mesenteric lymph nodes.",
+          "B) All small hindgut tumors can be safely excised without further intervention.",
+          "C) Patients with metastatic disease to the colon are typically asymptomatic.",
+          "D) Surgical treatment is not recommended for low-grade non-Hodgkin's lymphoma.",
+          "E) CT colonography has replaced colonoscopy as the primary diagnostic tool for colorectal cancer."
+        ],
+        "correct_answer": "A",
+        "explanation": "Tumors greater than 2 cm indeed require en bloc resection of adjacent mesenteric lymph nodes to ensure complete removal and reduce the risk of metastasis. Other options are incorrect as they misrepresent the management protocols for colorectal cancer."
+      }
+    ],
+    "7ab61d11-ac02-45ae-a48a-91cb0ca805f0": [
+      {
+        "question": "Which of the following statements is true regarding Lynch syndrome?",
+        "options": [
+          "A) Individuals with Lynch syndrome have a 100% lifetime risk of developing colorectal cancer.",
+          "B) Lynch syndrome is caused by mutations in the APC gene.",
+          "C) The majority of cancers in Lynch syndrome patients develop in the proximal colon.",
+          "D) Lynch syndrome is characterized by the presence of more than 100 colorectal adenomas.",
+          "E) Females with Lynch syndrome have a 70% lifetime risk of developing endometrial cancer."
+        ],
+        "correct_answer": "C",
+        "explanation": "The correct answer is C) The majority of cancers in Lynch syndrome patients develop in the proximal colon. Lynch syndrome, also known as hereditary non-polyposis colorectal cancer (HNPCC), is associated with a significant risk of colorectal cancer, particularly in the proximal colon, and is caused by mutations in mismatch repair genes, not the APC gene."
+      },
+      {
+        "question": "What is the recommended age to begin endoscopic surveillance for individuals at risk of familial adenomatous polyposis (FAP)?",
+        "options": [
+          "A) 12-14 years",
+          "B) 15-17 years",
+          "C) 18-20 years",
+          "D) 25 years",
+          "E) 30 years"
+        ],
+        "correct_answer": "A",
+        "explanation": "The correct answer is A) 12-14 years. Regular endoscopic surveillance for individuals at risk of familial adenomatous polyposis (FAP) should commence at the age of 12-14 years, even if a genetic mutation has not been identified, as polyps are usually visible on sigmoidoscopy by this age."
+      }
+    ]
+  },
+  {
+    "0d27b920-92a6-4a95-ac13-39916c694758": [
+      {
+        "question": "What is the primary karyotype associated with Turner syndrome?",
+        "options": [
+          "A) 45,X",
+          "B) 46,XX",
+          "C) 47,XXY",
+          "D) 45,X/46,XY",
+          "E) 46,XY"
+        ],
+        "correct_answer": "A",
+        "explanation": "Turner syndrome is primarily associated with a 45,X karyotype, which indicates the presence of a single X chromosome and the absence of a second sex chromosome."
+      }
+    ]
+  },
+  {
+    "0d27b920-92a6-4a95-ac13-39916c694758": [
+      {
+        "question": "What is the primary karyotype associated with Turner syndrome?",
+        "options": [
+          "A) 45,X",
+          "B) 46,XX",
+          "C) 47,XXY",
+          "D) 45,X/46,XY",
+          "E) 46,XY"
+        ],
+        "correct_answer": "A",
+        "explanation": "Turner syndrome is primarily associated with a 45,X karyotype, which indicates the presence of a single X chromosome and the absence of a second sex chromosome."
+      },
+      {
+        "question": "Which of the following statements is true regarding the management of Turner syndrome?",
+        "options": [
+          "A) Growth hormone therapy is ineffective for short stature in Turner syndrome.",
+          "B) Prophylactic gonadectomy is not recommended for individuals with 45,X/46,XY mosaicism.",
+          "C) Estrogen therapy can induce puberty but may cause cessation of growth.",
+          "D) Long-term monitoring for thyroid disease is the primary focus in adult management.",
+          "E) Individuals with Turner syndrome typically have normal ovarian function."
+        ],
+        "correct_answer": "C",
+        "explanation": "Estrogen therapy can indeed induce puberty in individuals with Turner syndrome, but it also causes fusion of the epiphyses, leading to cessation of growth."
+      }
+    ]
+  },
+  {
+    "0d27b920-92a6-4a95-ac13-39916c694758": [
+      {
+        "question": "What is the primary karyotype associated with Turner syndrome?",
+        "options": [
+          "A) 45,X",
+          "B) 46,XX",
+          "C) 47,XXY",
+          "D) 45,X/46,XY",
+          "E) 46,XY"
+        ],
+        "correct_answer": "A",
+        "explanation": "Turner syndrome is primarily associated with a 45,X karyotype, which indicates the presence of a single X chromosome and the absence of a second sex chromosome."
+      },
+      {
+        "question": "Which of the following statements is true regarding the management of Turner syndrome?",
+        "options": [
+          "A) Growth hormone therapy is ineffective for short stature in Turner syndrome.",
+          "B) Prophylactic gonadectomy is not recommended for individuals with 45,X/46,XY mosaicism.",
+          "C) Estrogen therapy can induce puberty but may cause cessation of growth.",
+          "D) Long-term monitoring for thyroid disease is the primary focus in adult management.",
+          "E) Individuals with Turner syndrome typically have normal ovarian function."
+        ],
+        "correct_answer": "C",
+        "explanation": "Estrogen therapy can indeed induce puberty in individuals with Turner syndrome, but it also causes fusion of the epiphyses, leading to cessation of growth."
+      }
+    ],
+    "3f0337f4-2c55-4a94-8584-ab56e0f8aed3": [
+      {
+        "question": "Which of the following is a common clinical feature of Turner syndrome?",
+        "options": [
+          "A) Short stature",
+          "B) Tall stature",
+          "C) Gynaecomastia",
+          "D) Increased muscle mass",
+          "E) Early onset of menstruation"
+        ],
+        "correct_answer": "A",
+        "explanation": "Short stature is a hallmark clinical feature of Turner syndrome, affecting individuals from an early age due to the absence or abnormality of one of the X chromosomes. In contrast, tall stature and early onset of menstruation are not associated with this condition."
+      }
+    ]
+  },
+  {
+    "0d27b920-92a6-4a95-ac13-39916c694758": [
+      {
+        "question": "What is the primary karyotype associated with Turner syndrome?",
+        "options": [
+          "A) 45,X",
+          "B) 46,XX",
+          "C) 47,XXY",
+          "D) 45,X/46,XY",
+          "E) 46,XY"
+        ],
+        "correct_answer": "A",
+        "explanation": "Turner syndrome is primarily associated with a 45,X karyotype, which indicates the presence of a single X chromosome and the absence of a second sex chromosome."
+      },
+      {
+        "question": "Which of the following statements is true regarding the management of Turner syndrome?",
+        "options": [
+          "A) Growth hormone therapy is ineffective for short stature in Turner syndrome.",
+          "B) Prophylactic gonadectomy is not recommended for individuals with 45,X/46,XY mosaicism.",
+          "C) Estrogen therapy can induce puberty but may cause cessation of growth.",
+          "D) Long-term monitoring for thyroid disease is the primary focus in adult management.",
+          "E) Individuals with Turner syndrome typically have normal ovarian function."
+        ],
+        "correct_answer": "C",
+        "explanation": "Estrogen therapy can indeed induce puberty in individuals with Turner syndrome, but it also causes fusion of the epiphyses, leading to cessation of growth."
+      }
+    ],
+    "3f0337f4-2c55-4a94-8584-ab56e0f8aed3": [
+      {
+        "question": "Which of the following is a common clinical feature of Turner syndrome?",
+        "options": [
+          "A) Short stature",
+          "B) Tall stature",
+          "C) Gynaecomastia",
+          "D) Increased muscle mass",
+          "E) Early onset of menstruation"
+        ],
+        "correct_answer": "A",
+        "explanation": "Short stature is a hallmark clinical feature of Turner syndrome, affecting individuals from an early age due to the absence or abnormality of one of the X chromosomes. In contrast, tall stature and early onset of menstruation are not associated with this condition."
+      },
+      {
+        "question": "What is the recommended management for individuals with Turner syndrome who have 45,X/46,XY mosaicism due to the increased risk of gonadoblastoma?",
+        "options": [
+          "A) Prophylactic gonadectomy",
+          "B) Immediate hormone replacement therapy",
+          "C) Regular monitoring without intervention",
+          "D) Growth hormone therapy only",
+          "E) Surgical intervention only if symptoms arise"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with 45,X/46,XY mosaicism in Turner syndrome because there is an increased risk of developing gonadoblastoma, a type of tumor that can arise from dysgenetic gonadal tissue."
+      }
+    ]
+  },
+  {
+    "82b3bf26-11a9-41a7-8233-b32d24b072e9": [
+      {
+        "question": "Which of the following is NOT a common symptom of tuberculosis (TB)?",
+        "options": [
+          "A) Chronic cough",
+          "B) Weight gain",
+          "C) Night sweats",
+          "D) Fatigue",
+          "E) Loss of appetite"
+        ],
+        "correct_answer": "B",
+        "explanation": "Weight gain is not a common symptom of tuberculosis. In fact, TB typically leads to weight loss due to factors such as loss of appetite and increased metabolic demands from the infection."
+      }
+    ]
+  },
+  {
+    "8e4f5927-a4ca-4263-bc2d-83a334e2174d": [
+      {
+        "question": "What is the primary method of transmission for tuberculosis (TB)?",
+        "options": [
+          "A) Inhalation of aerosolized droplets from an infected person",
+          "B) Direct contact with infected bodily fluids",
+          "C) Consumption of contaminated food or water",
+          "D) Vector-borne transmission through insects",
+          "E) Sexual contact with an infected individual"
+        ],
+        "correct_answer": "A",
+        "explanation": "Tuberculosis (TB) is primarily transmitted through the inhalation of aerosolized droplets from an infected person, making option A the correct answer. Other methods listed do not typically lead to the transmission of TB."
+      }
+    ]
+  },
+  {
+    "b103a5a3-5597-4186-a051-ad0e4a1f3a17": [
+      {
+        "question": "Which of the following statements about Tuberculosis (TB) is true?",
+        "options": [
+          "A) TB is primarily transmitted through contaminated food and water.",
+          "B) Miliary TB is characterized by localized symptoms in the lungs only.",
+          "C) The Tuber culin skin test (TST) is used to identify latent TB infection (LTBI).",
+          "D) Post-primary TB occurs only in individuals who have never been exposed to TB.",
+          "E) The BCG vaccine is ineffective in preventing TB in children."
+        ],
+        "correct_answer": "C",
+        "explanation": "The Tuber culin skin test (TST) is indeed used to identify latent TB infection (LTBI), making option C the correct statement. The other options contain inaccuracies regarding TB transmission, symptoms, and vaccine efficacy."
+      }
+    ]
+  },
+  {
+    "d44b59ce-1b0b-4b57-a356-2a293cd16cd9": [
+      {
+        "question": "Which of the following is NOT a common symptom of tuberculosis (TB)?",
+        "options": [
+          "A) Chronic cough",
+          "B) Weight loss",
+          "C) Night sweats",
+          "D) Severe abdominal pain",
+          "E) Fever"
+        ],
+        "correct_answer": "D",
+        "explanation": "Severe abdominal pain is not a common symptom of tuberculosis. While TB can affect the gastrointestinal tract and cause abdominal symptoms, the typical symptoms of TB include chronic cough, weight loss, night sweats, and fever."
+      }
+    ]
+  },
+  {
+    "16663b48-7538-4cc9-b002-8143a99647c1": [
+      {
+        "question": "Which of the following is NOT a common symptom of pulmonary tuberculosis?",
+        "options": [
+          "A) Chronic cough",
+          "B) Night sweats",
+          "C) Weight gain",
+          "D) Fever",
+          "E) Chest pain"
+        ],
+        "correct_answer": "C",
+        "explanation": "Weight gain is not a common symptom of pulmonary tuberculosis. In fact, weight loss is typically observed in patients with TB due to factors such as anorexia and increased metabolic demands from the infection."
+      }
+    ]
+  },
+  {
+    "dd908d49-c3b3-4bac-8487-aedb5d5573b2": [
+      {
+        "question": "Which of the following is NOT a common symptom of tuberculosis (TB)?",
+        "options": [
+          "A) Chronic cough",
+          "B) Night sweats",
+          "C) Weight gain",
+          "D) Fever",
+          "E) Fatigue"
+        ],
+        "correct_answer": "C",
+        "explanation": "Weight gain is not a common symptom of tuberculosis. In fact, TB typically leads to weight loss due to factors like loss of appetite and increased metabolic demands from the infection."
+      }
+    ]
+  },
+  {
+    "9df0a8db-05df-4ebf-acad-bb3456c4b194": [
+      {
+        "question": "Which of the following is NOT a common symptom of pulmonary tuberculosis (TB)?",
+        "options": [
+          "A) Chronic cough",
+          "B) Night sweats",
+          "C) Weight gain",
+          "D) Fever",
+          "E) Fatigue"
+        ],
+        "correct_answer": "C",
+        "explanation": "Weight gain is not a common symptom of pulmonary tuberculosis. Instead, patients typically experience weight loss due to the disease's effects on appetite and metabolism."
+      }
+    ]
+  },
+  {
+    "d8456033-3a82-4310-9dc2-82c8799aef19": [
+      {
+        "question": "What is the recommended screening interval for individuals who are carriers of the MLH1 and MSH2 gene mutations for colorectal cancer?",
+        "options": [
+          "A) Every 2 years starting at age 25",
+          "B) Every 5 years starting at age 35",
+          "C) Every year starting at age 30",
+          "D) Every 3 years starting at age 40",
+          "E) Every 2 years starting at age 30"
+        ],
+        "correct_answer": "A",
+        "explanation": "Individuals who are carriers of the MLH1 and MSH2 gene mutations should be offered endoscopic surveillance every 2 years starting at age 25, as per the guidelines discussed in the context."
+      }
+    ]
+  },
+  {
+    "d8456033-3a82-4310-9dc2-82c8799aef19": [
+      {
+        "question": "What is the recommended screening interval for individuals who are carriers of the MLH1 and MSH2 gene mutations for colorectal cancer?",
+        "options": [
+          "A) Every 2 years starting at age 25",
+          "B) Every 5 years starting at age 35",
+          "C) Every year starting at age 30",
+          "D) Every 3 years starting at age 40",
+          "E) Every 2 years starting at age 30"
+        ],
+        "correct_answer": "A",
+        "explanation": "Individuals who are carriers of the MLH1 and MSH2 gene mutations should be offered endoscopic surveillance every 2 years starting at age 25, as per the guidelines discussed in the context."
+      },
+      {
+        "question": "Which of the following statements is true regarding the common sites of colorectal cancer?",
+        "options": [
+          "A) The ascending colon is the most common site for colorectal cancer.",
+          "B) The rectum is less frequently affected by colorectal cancer than the transverse colon.",
+          "C) The descending colon is the only part of the colon where cancer can develop.",
+          "D) Approximately one-third of colorectal cancers occur in the rectum.",
+          "E) The transverse colon is the most common site for colorectal cancer."
+        ],
+        "correct_answer": "D",
+        "explanation": "Approximately one-third of colorectal cancers occur in the rectum, making it one of the most common sites for this type of cancer. The ascending colon is also a common site, but it is not the most common overall."
+      }
+    ]
+  },
+  {
+    "d8456033-3a82-4310-9dc2-82c8799aef19": [
+      {
+        "question": "What is the recommended screening interval for individuals who are carriers of the MLH1 and MSH2 gene mutations for colorectal cancer?",
+        "options": [
+          "A) Every 2 years starting at age 25",
+          "B) Every 5 years starting at age 35",
+          "C) Every year starting at age 30",
+          "D) Every 3 years starting at age 40",
+          "E) Every 2 years starting at age 30"
+        ],
+        "correct_answer": "A",
+        "explanation": "Individuals who are carriers of the MLH1 and MSH2 gene mutations should be offered endoscopic surveillance every 2 years starting at age 25, as per the guidelines discussed in the context."
+      },
+      {
+        "question": "Which of the following statements is true regarding the common sites of colorectal cancer?",
+        "options": [
+          "A) The ascending colon is the most common site for colorectal cancer.",
+          "B) The rectum is less frequently affected by colorectal cancer than the transverse colon.",
+          "C) The descending colon is the only part of the colon where cancer can develop.",
+          "D) Approximately one-third of colorectal cancers occur in the rectum.",
+          "E) The transverse colon is the most common site for colorectal cancer."
+        ],
+        "correct_answer": "D",
+        "explanation": "Approximately one-third of colorectal cancers occur in the rectum, making it one of the most common sites for this type of cancer. The ascending colon is also a common site, but it is not the most common overall."
+      }
+    ],
+    "498054f3-5a1f-46ad-86b5-973bc5143f4b": [
+      {
+        "question": "Which of the following factors is NOT typically associated with an increased risk of developing colorectal cancer?",
+        "options": [
+          "A) Age over 50 years",
+          "B) Family history of colorectal cancer",
+          "C) High intake of red and processed meats",
+          "D) Regular physical exercise",
+          "E) Inflammatory bowel disease (IBD)"
+        ],
+        "correct_answer": "D",
+        "explanation": "Regular physical exercise is generally associated with a reduced risk of many types of cancer, including colorectal cancer, while the other options are recognized risk factors."
+      }
+    ]
+  },
+  {
+    "d8456033-3a82-4310-9dc2-82c8799aef19": [
+      {
+        "question": "What is the recommended screening interval for individuals who are carriers of the MLH1 and MSH2 gene mutations for colorectal cancer?",
+        "options": [
+          "A) Every 2 years starting at age 25",
+          "B) Every 5 years starting at age 35",
+          "C) Every year starting at age 30",
+          "D) Every 3 years starting at age 40",
+          "E) Every 2 years starting at age 30"
+        ],
+        "correct_answer": "A",
+        "explanation": "Individuals who are carriers of the MLH1 and MSH2 gene mutations should be offered endoscopic surveillance every 2 years starting at age 25, as per the guidelines discussed in the context."
+      },
+      {
+        "question": "Which of the following statements is true regarding the common sites of colorectal cancer?",
+        "options": [
+          "A) The ascending colon is the most common site for colorectal cancer.",
+          "B) The rectum is less frequently affected by colorectal cancer than the transverse colon.",
+          "C) The descending colon is the only part of the colon where cancer can develop.",
+          "D) Approximately one-third of colorectal cancers occur in the rectum.",
+          "E) The transverse colon is the most common site for colorectal cancer."
+        ],
+        "correct_answer": "D",
+        "explanation": "Approximately one-third of colorectal cancers occur in the rectum, making it one of the most common sites for this type of cancer. The ascending colon is also a common site, but it is not the most common overall."
+      }
+    ],
+    "498054f3-5a1f-46ad-86b5-973bc5143f4b": [
+      {
+        "question": "Which of the following factors is NOT typically associated with an increased risk of developing colorectal cancer?",
+        "options": [
+          "A) Age over 50 years",
+          "B) Family history of colorectal cancer",
+          "C) High intake of red and processed meats",
+          "D) Regular physical exercise",
+          "E) Inflammatory bowel disease (IBD)"
+        ],
+        "correct_answer": "D",
+        "explanation": "Regular physical exercise is generally associated with a reduced risk of many types of cancer, including colorectal cancer, while the other options are recognized risk factors."
+      },
+      {
+        "question": "Which of the following factors is considered a protective measure against the development of colorectal cancer?",
+        "options": [
+          "A) Regular physical exercise",
+          "B) High consumption of processed meats",
+          "C) Family history of colorectal cancer",
+          "D) Age over 50 years",
+          "E) Sedentary lifestyle"
+        ],
+        "correct_answer": "A",
+        "explanation": "Regular physical exercise is known to be a protective factor against colorectal cancer, as it helps maintain a healthy weight and improves overall digestive health. In contrast, high consumption of processed meats (B) and a family history of colorectal cancer (C) are risk factors. Age over 50 years (D) increases risk, and a sedentary lifestyle (E) is associated with higher risk, making A the only protective measure listed."
+      }
+    ]
+  },
+  {
+    "d8456033-3a82-4310-9dc2-82c8799aef19": [
+      {
+        "question": "What is the recommended screening interval for individuals who are carriers of the MLH1 and MSH2 gene mutations for colorectal cancer?",
+        "options": [
+          "A) Every 2 years starting at age 25",
+          "B) Every 5 years starting at age 35",
+          "C) Every year starting at age 30",
+          "D) Every 3 years starting at age 40",
+          "E) Every 2 years starting at age 30"
+        ],
+        "correct_answer": "A",
+        "explanation": "Individuals who are carriers of the MLH1 and MSH2 gene mutations should be offered endoscopic surveillance every 2 years starting at age 25, as per the guidelines discussed in the context."
+      },
+      {
+        "question": "Which of the following statements is true regarding the common sites of colorectal cancer?",
+        "options": [
+          "A) The ascending colon is the most common site for colorectal cancer.",
+          "B) The rectum is less frequently affected by colorectal cancer than the transverse colon.",
+          "C) The descending colon is the only part of the colon where cancer can develop.",
+          "D) Approximately one-third of colorectal cancers occur in the rectum.",
+          "E) The transverse colon is the most common site for colorectal cancer."
+        ],
+        "correct_answer": "D",
+        "explanation": "Approximately one-third of colorectal cancers occur in the rectum, making it one of the most common sites for this type of cancer. The ascending colon is also a common site, but it is not the most common overall."
+      }
+    ],
+    "498054f3-5a1f-46ad-86b5-973bc5143f4b": [
+      {
+        "question": "Which of the following factors is NOT typically associated with an increased risk of developing colorectal cancer?",
+        "options": [
+          "A) Age over 50 years",
+          "B) Family history of colorectal cancer",
+          "C) High intake of red and processed meats",
+          "D) Regular physical exercise",
+          "E) Inflammatory bowel disease (IBD)"
+        ],
+        "correct_answer": "D",
+        "explanation": "Regular physical exercise is generally associated with a reduced risk of many types of cancer, including colorectal cancer, while the other options are recognized risk factors."
+      },
+      {
+        "question": "Which of the following factors is considered a protective measure against the development of colorectal cancer?",
+        "options": [
+          "A) Regular physical exercise",
+          "B) High consumption of processed meats",
+          "C) Family history of colorectal cancer",
+          "D) Age over 50 years",
+          "E) Sedentary lifestyle"
+        ],
+        "correct_answer": "A",
+        "explanation": "Regular physical exercise is known to be a protective factor against colorectal cancer, as it helps maintain a healthy weight and improves overall digestive health. In contrast, high consumption of processed meats (B) and a family history of colorectal cancer (C) are risk factors. Age over 50 years (D) increases risk, and a sedentary lifestyle (E) is associated with higher risk, making A the only protective measure listed."
+      },
+      {
+        "question": "Which of the following factors is considered a protective measure against the development of colorectal cancer?",
+        "options": [
+          "A) Regular physical exercise",
+          "B) High intake of processed meats",
+          "C) Smoking",
+          "D) Obesity",
+          "E) Sedentary lifestyle"
+        ],
+        "correct_answer": "A",
+        "explanation": "Regular physical exercise is recognized as a protective measure against colorectal cancer, as it helps maintain a healthy weight, reduces inflammation, and improves insulin sensitivity. In contrast, high intake of processed meats, smoking, obesity, and a sedentary lifestyle are all associated with an increased risk of developing colorectal cancer."
+      }
+    ]
+  },
+  {
+    "d8456033-3a82-4310-9dc2-82c8799aef19": [
+      {
+        "question": "What is the recommended screening interval for individuals who are carriers of the MLH1 and MSH2 gene mutations for colorectal cancer?",
+        "options": [
+          "A) Every 2 years starting at age 25",
+          "B) Every 5 years starting at age 35",
+          "C) Every year starting at age 30",
+          "D) Every 3 years starting at age 40",
+          "E) Every 2 years starting at age 30"
+        ],
+        "correct_answer": "A",
+        "explanation": "Individuals who are carriers of the MLH1 and MSH2 gene mutations should be offered endoscopic surveillance every 2 years starting at age 25, as per the guidelines discussed in the context."
+      },
+      {
+        "question": "Which of the following statements is true regarding the common sites of colorectal cancer?",
+        "options": [
+          "A) The ascending colon is the most common site for colorectal cancer.",
+          "B) The rectum is less frequently affected by colorectal cancer than the transverse colon.",
+          "C) The descending colon is the only part of the colon where cancer can develop.",
+          "D) Approximately one-third of colorectal cancers occur in the rectum.",
+          "E) The transverse colon is the most common site for colorectal cancer."
+        ],
+        "correct_answer": "D",
+        "explanation": "Approximately one-third of colorectal cancers occur in the rectum, making it one of the most common sites for this type of cancer. The ascending colon is also a common site, but it is not the most common overall."
+      }
+    ],
+    "498054f3-5a1f-46ad-86b5-973bc5143f4b": [
+      {
+        "question": "Which of the following factors is NOT typically associated with an increased risk of developing colorectal cancer?",
+        "options": [
+          "A) Age over 50 years",
+          "B) Family history of colorectal cancer",
+          "C) High intake of red and processed meats",
+          "D) Regular physical exercise",
+          "E) Inflammatory bowel disease (IBD)"
+        ],
+        "correct_answer": "D",
+        "explanation": "Regular physical exercise is generally associated with a reduced risk of many types of cancer, including colorectal cancer, while the other options are recognized risk factors."
+      },
+      {
+        "question": "Which of the following factors is considered a protective measure against the development of colorectal cancer?",
+        "options": [
+          "A) Regular physical exercise",
+          "B) High consumption of processed meats",
+          "C) Family history of colorectal cancer",
+          "D) Age over 50 years",
+          "E) Sedentary lifestyle"
+        ],
+        "correct_answer": "A",
+        "explanation": "Regular physical exercise is known to be a protective factor against colorectal cancer, as it helps maintain a healthy weight and improves overall digestive health. In contrast, high consumption of processed meats (B) and a family history of colorectal cancer (C) are risk factors. Age over 50 years (D) increases risk, and a sedentary lifestyle (E) is associated with higher risk, making A the only protective measure listed."
+      },
+      {
+        "question": "Which of the following factors is considered a protective measure against the development of colorectal cancer?",
+        "options": [
+          "A) Regular physical exercise",
+          "B) High intake of processed meats",
+          "C) Smoking",
+          "D) Obesity",
+          "E) Sedentary lifestyle"
+        ],
+        "correct_answer": "A",
+        "explanation": "Regular physical exercise is recognized as a protective measure against colorectal cancer, as it helps maintain a healthy weight, reduces inflammation, and improves insulin sensitivity. In contrast, high intake of processed meats, smoking, obesity, and a sedentary lifestyle are all associated with an increased risk of developing colorectal cancer."
+      },
+      {
+        "question": "What is the recommended screening interval for individuals who are carriers of the MLH1 and MSH2 gene mutations for colorectal cancer?",
+        "options": [
+          "A) Every 2 years starting at age 25",
+          "B) Every 5 years starting at age 35",
+          "C) Annually starting at age 30",
+          "D) Every 3 years starting at age 40",
+          "E) Every 10 years starting at age 50"
+        ],
+        "correct_answer": "A",
+        "explanation": "Individuals who are carriers of the MLH1 and MSH2 gene mutations should be offered endoscopic surveillance every 2 years starting at age 25, as per the guidelines for managing hereditary colorectal cancer risks."
+      }
+    ]
+  },
+  {
+    "995b7936-75a4-4d0d-a94a-b7ebe6beceaa": [
+      {
+        "question": "What is the recommended screening interval for individuals who are carriers of the MLH1 and MSH2 gene mutations for colorectal cancer?",
+        "options": [
+          "A) Every 2 years starting at age 25",
+          "B) Every 5 years starting at age 35",
+          "C) Annually starting at age 30",
+          "D) Every 3 years starting at age 40",
+          "E) Every 2 years starting at age 35"
+        ],
+        "correct_answer": "A",
+        "explanation": "Individuals who are carriers of the MLH1 and MSH2 gene mutations should be offered endoscopic surveillance every 2 years starting at age 25, as per the guidelines provided in the context."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "Which of the following is a recommended management strategy for individuals with Turner syndrome who have a karyotype of 45,X/46,XY mosaicism?",
+        "options": [
+          "A) Prophylactic gonadectomy due to increased risk of gonadoblastoma",
+          "B) Immediate initiation of high-dose estrogen therapy",
+          "C) Regular monitoring for hyperthyroidism",
+          "D) Administration of testosterone to induce male secondary sexual characteristics",
+          "E) Genetic counseling only, without any medical intervention"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with 45,X/46,XY mosaicism because there is an increased risk of gonadoblastoma associated with this karyotype."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "Which of the following is a recommended management strategy for individuals with Turner syndrome who have a karyotype of 45,X/46,XY mosaicism?",
+        "options": [
+          "A) Prophylactic gonadectomy due to increased risk of gonadoblastoma",
+          "B) Immediate initiation of high-dose estrogen therapy",
+          "C) Regular monitoring for hyperthyroidism",
+          "D) Administration of testosterone to induce male secondary sexual characteristics",
+          "E) Genetic counseling only, without any medical intervention"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with 45,X/46,XY mosaicism because there is an increased risk of gonadoblastoma associated with this karyotype."
+      },
+      {
+        "question": "What is the primary reason for recommending prophylactic gonadectomy in individuals with Turner syndrome who have a karyotype of 45,X/46,XY mosaicism?",
+        "options": [
+          "A) To prevent the development of gonadoblastoma",
+          "B) To promote normal pubertal development",
+          "C) To increase height growth",
+          "D) To reduce the risk of hyperthyroidism",
+          "E) To enhance estrogen production"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with Turner syndrome and 45,X/46,XY mosaicism due to the increased risk of developing gonadoblastoma, a type of tumor that can arise from dysgenetic gonadal tissue."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "Which of the following is a recommended management strategy for individuals with Turner syndrome who have a karyotype of 45,X/46,XY mosaicism?",
+        "options": [
+          "A) Prophylactic gonadectomy due to increased risk of gonadoblastoma",
+          "B) Immediate initiation of high-dose estrogen therapy",
+          "C) Regular monitoring for hyperthyroidism",
+          "D) Administration of testosterone to induce male secondary sexual characteristics",
+          "E) Genetic counseling only, without any medical intervention"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with 45,X/46,XY mosaicism because there is an increased risk of gonadoblastoma associated with this karyotype."
+      },
+      {
+        "question": "What is the primary reason for recommending prophylactic gonadectomy in individuals with Turner syndrome who have a karyotype of 45,X/46,XY mosaicism?",
+        "options": [
+          "A) To prevent the development of gonadoblastoma",
+          "B) To promote normal pubertal development",
+          "C) To increase height growth",
+          "D) To reduce the risk of hyperthyroidism",
+          "E) To enhance estrogen production"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with Turner syndrome and 45,X/46,XY mosaicism due to the increased risk of developing gonadoblastoma, a type of tumor that can arise from dysgenetic gonadal tissue."
+      },
+      {
+        "question": "What is the primary clinical feature that often leads to the diagnosis of Turner syndrome in affected individuals?",
+        "options": [
+          "A) Short stature",
+          "B) Gynaecomastia",
+          "C) Tall stature",
+          "D) Hearing loss",
+          "E) Aortic root dilatation"
+        ],
+        "correct_answer": "A",
+        "explanation": "Short stature is the most common and often the initial presenting symptom in individuals with Turner syndrome, leading to further investigation and diagnosis."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "What is the primary reason for recommending prophylactic gonadectomy in individuals with Turner syndrome who have a 45,X/46,XY mosaic karyotype?",
+        "options": [
+          "A) Increased risk of gonadoblastoma",
+          "B) Need for estrogen production",
+          "C) Prevention of short stature",
+          "D) Requirement for growth hormone therapy",
+          "E) Induction of puberty"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with 45,X/46,XY mosaicism due to the increased risk of gonadoblastoma, a type of tumor that can develop in dysgenetic gonads."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "What is a common recommendation for individuals with Turner syndrome who have a 45,X/46,XY mosaic karyotype?",
+        "options": [
+          "A) Prophylactic gonadectomy due to increased cancer risk",
+          "B) Immediate estrogen therapy to induce puberty",
+          "C) Regular monitoring for diabetes mellitus",
+          "D) Routine growth hormone therapy for all patients",
+          "E) Genetic counseling to assess family history"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with 45,X/46,XY mosaicism because there is an increased risk of gonadoblastoma, a type of cancer that can arise from the dysgenetic gonadal tissue."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "What is a common recommendation for individuals with Turner syndrome who have a 45,X/46,XY mosaic karyotype?",
+        "options": [
+          "A) Prophylactic gonadectomy due to increased cancer risk",
+          "B) Immediate estrogen therapy to induce puberty",
+          "C) Regular monitoring for diabetes mellitus",
+          "D) Routine growth hormone therapy for all patients",
+          "E) Genetic counseling to assess family history"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with 45,X/46,XY mosaicism because there is an increased risk of gonadoblastoma, a type of cancer that can arise from the dysgenetic gonadal tissue."
+      },
+      {
+        "question": "Which of the following is a key feature of Turner syndrome?",
+        "options": [
+          "A) Tall stature from early childhood",
+          "B) Gonadal dysgenesis leading to infertility",
+          "C) Increased testosterone levels",
+          "D) Normal karyotype",
+          "E) Hyperthyroidism"
+        ],
+        "correct_answer": "B",
+        "explanation": "Gonadal dysgenesis is a hallmark of Turner syndrome, leading to underdeveloped ovaries and infertility. Other features include short stature and elevated FSH and LH levels due to lack of estrogen feedback."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "Which of the following is a key characteristic of Turner syndrome?",
+        "options": [
+          "A) Short stature from an early age",
+          "B) Presence of an extra Y chromosome",
+          "C) Development of secondary sexual characteristics without hormone therapy",
+          "D) Increased risk of testicular cancer",
+          "E) Normal ovarian function"
+        ],
+        "correct_answer": "A",
+        "explanation": "Turner syndrome is characterized by short stature from an early age due to the absence or abnormality of one of the X chromosomes. Other options describe conditions not associated with Turner syndrome."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "Which of the following is a recommended management strategy for individuals with Turner syndrome who have a 45,X/46,XY mosaic karyotype?",
+        "options": [
+          "A) Prophylactic gonadectomy due to increased risk of gonadoblastoma",
+          "B) Immediate initiation of growth hormone therapy",
+          "C) Routine estrogen therapy without monitoring",
+          "D) Regular ultrasound for ovarian assessment",
+          "E) Genetic counseling only if symptoms develop"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with 45,X/46,XY mosaicism because there is an increased risk of gonadoblastoma, a type of tumor that can develop in dysgenetic gonads."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "Which of the following is a recommended management strategy for individuals with Turner syndrome who have a 45,X/46,XY mosaic karyotype?",
+        "options": [
+          "A) Prophylactic gonadectomy due to increased risk of gonadoblastoma",
+          "B) Immediate initiation of growth hormone therapy",
+          "C) Routine estrogen therapy without monitoring",
+          "D) Regular ultrasound for ovarian assessment",
+          "E) Genetic counseling only if symptoms develop"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with 45,X/46,XY mosaicism because there is an increased risk of gonadoblastoma, a type of tumor that can develop in dysgenetic gonads."
+      },
+      {
+        "question": "What is the primary reason for recommending prophylactic gonadectomy in individuals with Turner syndrome who have a 45,X/46,XY mosaic karyotype?",
+        "options": [
+          "A) Increased risk of gonadoblastoma",
+          "B) To enhance growth hormone therapy effectiveness",
+          "C) To prevent early onset of menopause",
+          "D) To facilitate estrogen therapy initiation",
+          "E) To improve ovarian function"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with a 45,X/46,XY mosaic karyotype due to the increased risk of gonadoblastoma, a type of tumor that can develop in dysgenetic gonads. This risk necessitates surgical intervention to prevent potential malignancy."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "Which of the following is a recommended management strategy for individuals with Turner syndrome who have a 45,X/46,XY mosaic karyotype?",
+        "options": [
+          "A) Prophylactic gonadectomy due to increased risk of gonadoblastoma",
+          "B) Immediate initiation of growth hormone therapy",
+          "C) Routine estrogen therapy without monitoring",
+          "D) Regular ultrasound for ovarian assessment",
+          "E) Genetic counseling only if symptoms develop"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with 45,X/46,XY mosaicism because there is an increased risk of gonadoblastoma, a type of tumor that can develop in dysgenetic gonads."
+      },
+      {
+        "question": "What is the primary reason for recommending prophylactic gonadectomy in individuals with Turner syndrome who have a 45,X/46,XY mosaic karyotype?",
+        "options": [
+          "A) Increased risk of gonadoblastoma",
+          "B) To enhance growth hormone therapy effectiveness",
+          "C) To prevent early onset of menopause",
+          "D) To facilitate estrogen therapy initiation",
+          "E) To improve ovarian function"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with a 45,X/46,XY mosaic karyotype due to the increased risk of gonadoblastoma, a type of tumor that can develop in dysgenetic gonads. This risk necessitates surgical intervention to prevent potential malignancy."
+      },
+      {
+        "question": "What is a common clinical feature observed in individuals with Klinefelter syndrome?",
+        "options": [
+          "A) Tall stature",
+          "B) Short stature",
+          "C) Gynaecomastia",
+          "D) Streak ovaries",
+          "E) Increased fertility"
+        ],
+        "correct_answer": "A/C",
+        "explanation": "Tall stature and gynaecomastia are both common clinical features of Klinefelter syndrome. Individuals typically present with tall stature due to delayed epiphyseal closure and may also exhibit gynaecomastia due to hormonal imbalances. Short stature is more characteristic of Turner syndrome, while streak ovaries are specific to Turner syndrome as well. Increased fertility is not a feature of Klinefelter syndrome, as affected individuals often experience hypogonadism and reduced fertility."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "Which of the following is a recommended management strategy for individuals with Turner syndrome who have a 45,X/46,XY mosaic karyotype?",
+        "options": [
+          "A) Prophylactic gonadectomy due to increased risk of gonadoblastoma",
+          "B) Immediate initiation of growth hormone therapy",
+          "C) Routine estrogen therapy without monitoring",
+          "D) Regular ultrasound for ovarian assessment",
+          "E) Genetic counseling only if symptoms develop"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with 45,X/46,XY mosaicism because there is an increased risk of gonadoblastoma, a type of tumor that can develop in dysgenetic gonads."
+      },
+      {
+        "question": "What is the primary reason for recommending prophylactic gonadectomy in individuals with Turner syndrome who have a 45,X/46,XY mosaic karyotype?",
+        "options": [
+          "A) Increased risk of gonadoblastoma",
+          "B) To enhance growth hormone therapy effectiveness",
+          "C) To prevent early onset of menopause",
+          "D) To facilitate estrogen therapy initiation",
+          "E) To improve ovarian function"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with a 45,X/46,XY mosaic karyotype due to the increased risk of gonadoblastoma, a type of tumor that can develop in dysgenetic gonads. This risk necessitates surgical intervention to prevent potential malignancy."
+      },
+      {
+        "question": "What is a common clinical feature observed in individuals with Klinefelter syndrome?",
+        "options": [
+          "A) Tall stature",
+          "B) Short stature",
+          "C) Gynaecomastia",
+          "D) Streak ovaries",
+          "E) Increased fertility"
+        ],
+        "correct_answer": "A/C",
+        "explanation": "Tall stature and gynaecomastia are both common clinical features of Klinefelter syndrome. Individuals typically present with tall stature due to delayed epiphyseal closure and may also exhibit gynaecomastia due to hormonal imbalances. Short stature is more characteristic of Turner syndrome, while streak ovaries are specific to Turner syndrome as well. Increased fertility is not a feature of Klinefelter syndrome, as affected individuals often experience hypogonadism and reduced fertility."
+      },
+      {
+        "question": "What is the primary reason for the short stature observed in individuals with Turner syndrome?",
+        "options": [
+          "A) Gonadal dysgenesis",
+          "B) Growth hormone deficiency",
+          "C) Genetic mutations affecting height",
+          "D) Hormonal imbalances",
+          "E) Nutritional deficiencies"
+        ],
+        "correct_answer": "A",
+        "explanation": "The short stature in Turner syndrome is primarily due to gonadal dysgenesis, which affects growth and development. Although growth hormone therapy can improve height, the underlying issue is not directly related to growth hormone deficiency."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "Which of the following is a recommended management strategy for individuals with Turner syndrome who have a 45,X/46,XY mosaic karyotype?",
+        "options": [
+          "A) Prophylactic gonadectomy due to increased risk of gonadoblastoma",
+          "B) Immediate initiation of growth hormone therapy",
+          "C) Routine estrogen therapy without monitoring",
+          "D) Regular ultrasound for ovarian assessment",
+          "E) Genetic counseling only if symptoms develop"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with 45,X/46,XY mosaicism because there is an increased risk of gonadoblastoma, a type of tumor that can develop in dysgenetic gonads."
+      },
+      {
+        "question": "What is the primary reason for recommending prophylactic gonadectomy in individuals with Turner syndrome who have a 45,X/46,XY mosaic karyotype?",
+        "options": [
+          "A) Increased risk of gonadoblastoma",
+          "B) To enhance growth hormone therapy effectiveness",
+          "C) To prevent early onset of menopause",
+          "D) To facilitate estrogen therapy initiation",
+          "E) To improve ovarian function"
+        ],
+        "correct_answer": "A",
+        "explanation": "Prophylactic gonadectomy is recommended for individuals with a 45,X/46,XY mosaic karyotype due to the increased risk of gonadoblastoma, a type of tumor that can develop in dysgenetic gonads. This risk necessitates surgical intervention to prevent potential malignancy."
+      },
+      {
+        "question": "What is a common clinical feature observed in individuals with Klinefelter syndrome?",
+        "options": [
+          "A) Tall stature",
+          "B) Short stature",
+          "C) Gynaecomastia",
+          "D) Streak ovaries",
+          "E) Increased fertility"
+        ],
+        "correct_answer": "A/C",
+        "explanation": "Tall stature and gynaecomastia are both common clinical features of Klinefelter syndrome. Individuals typically present with tall stature due to delayed epiphyseal closure and may also exhibit gynaecomastia due to hormonal imbalances. Short stature is more characteristic of Turner syndrome, while streak ovaries are specific to Turner syndrome as well. Increased fertility is not a feature of Klinefelter syndrome, as affected individuals often experience hypogonadism and reduced fertility."
+      },
+      {
+        "question": "What is the primary reason for the short stature observed in individuals with Turner syndrome?",
+        "options": [
+          "A) Gonadal dysgenesis",
+          "B) Growth hormone deficiency",
+          "C) Genetic mutations affecting height",
+          "D) Hormonal imbalances",
+          "E) Nutritional deficiencies"
+        ],
+        "correct_answer": "A",
+        "explanation": "The short stature in Turner syndrome is primarily due to gonadal dysgenesis, which affects growth and development. Although growth hormone therapy can improve height, the underlying issue is not directly related to growth hormone deficiency."
+      },
+      {
+        "question": "Which of the following is a significant health risk associated with Turner syndrome that requires monitoring?",
+        "options": [
+          "A) Aortic root dilatation",
+          "B) Osteoporosis",
+          "C) Diabetes mellitus",
+          "D) Hypertension",
+          "E) Thyroid dysfunction"
+        ],
+        "correct_answer": "A",
+        "explanation": "Individuals with Turner syndrome are at an increased risk for cardiovascular issues, particularly aortic root dilatation, which necessitates regular monitoring to prevent complications."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "What is the primary focus of infection in primary pulmonary tuberculosis, and how does it typically progress?",
+        "options": [
+          "A) It starts in the lungs and can heal on its own or progress to progressive pulmonary tuberculosis.",
+          "B) It begins in the lymph nodes and spreads to the lungs, causing miliary tuberculosis.",
+          "C) It originates in the pleura and leads to pleural effusion immediately.",
+          "D) It starts in the bloodstream and causes meningitis right away.",
+          "E) It begins in the bones and spreads to the lungs, resulting in osteomyelitis."
+        ],
+        "correct_answer": "A",
+        "explanation": "The primary focus of infection in primary pulmonary tuberculosis starts in the lungs and can often heal on its own. However, in some cases, it can progress to a more serious condition known as progressive pulmonary tuberculosis."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "What is the primary focus of infection in primary pulmonary tuberculosis, and how does it typically progress?",
+        "options": [
+          "A) It starts in the lungs and can heal on its own or progress to progressive pulmonary tuberculosis.",
+          "B) It begins in the lymph nodes and spreads to the lungs, causing miliary tuberculosis.",
+          "C) It originates in the pleura and leads to pleural effusion immediately.",
+          "D) It starts in the bloodstream and causes meningitis right away.",
+          "E) It begins in the bones and spreads to the lungs, resulting in osteomyelitis."
+        ],
+        "correct_answer": "A",
+        "explanation": "The primary focus of infection in primary pulmonary tuberculosis starts in the lungs and can often heal on its own. However, in some cases, it can progress to a more serious condition known as progressive pulmonary tuberculosis."
+      },
+      {
+        "question": "What is the estimated lifetime risk of developing active tuberculosis disease after initial infection with Mycobacterium tuberculosis?",
+        "options": [
+          "A) 5%–15%",
+          "B) 10%–20%",
+          "C) 15%–25%",
+          "D) 20%–30%",
+          "E) 30%–40%"
+        ],
+        "correct_answer": "A",
+        "explanation": "The estimated lifetime risk of developing active tuberculosis disease after initial infection with Mycobacterium tuberculosis is 5%–15%, with the majority of cases occurring within the first 5 years after initial infection."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "What is the most common karyotype associated with Turner syndrome?",
+        "options": [
+          "A) 45,X",
+          "B) 46,XX",
+          "C) 47,XXY",
+          "D) 45,XY",
+          "E) 46,XY"
+        ],
+        "correct_answer": "A",
+        "explanation": "The most common karyotype associated with Turner syndrome is 45,X, which indicates the absence of one X chromosome in females, leading to the characteristic features of the syndrome."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "What is the most common karyotype associated with Turner syndrome?",
+        "options": [
+          "A) 45,X",
+          "B) 46,XX",
+          "C) 47,XXY",
+          "D) 45,XY",
+          "E) 46,XY"
+        ],
+        "correct_answer": "A",
+        "explanation": "The most common karyotype associated with Turner syndrome is 45,X, which indicates the absence of one X chromosome in females, leading to the characteristic features of the syndrome."
+      },
+      {
+        "question": "Which of the following statements about Turner syndrome is true?",
+        "options": [
+          "A) Individuals with Turner syndrome typically have a 45,X karyotype.",
+          "B) Turner syndrome is characterized by the presence of two X chromosomes.",
+          "C) Individuals with Turner syndrome usually have normal ovarian function.",
+          "D) Growth hormone therapy is ineffective in treating short stature in Turner syndrome.",
+          "E) Turner syndrome is only diagnosed in adulthood."
+        ],
+        "correct_answer": "A",
+        "explanation": "Option A is correct because Turner syndrome is most commonly associated with a 45,X karyotype, indicating the presence of only one X chromosome. Option B is incorrect as Turner syndrome involves the absence of one X chromosome, not the presence of two. Option C is incorrect because individuals with Turner syndrome typically experience ovarian dysgenesis, leading to impaired ovarian function. Option D is incorrect since growth hormone therapy can be effective in improving short stature in individuals with Turner syndrome. Option E is also incorrect because Turner syndrome can be diagnosed in childhood, often when short stature is noted."
+      }
+    ]
+  },
+  {
+    "d54c63fb-3f78-492e-ab53-c1ff8963092f": [
+      {
+        "question": "What is the most common karyotype associated with Turner syndrome?",
+        "options": [
+          "A) 45,X",
+          "B) 46,XX",
+          "C) 47,XXY",
+          "D) 45,XY",
+          "E) 46,XY"
+        ],
+        "correct_answer": "A",
+        "explanation": "The most common karyotype associated with Turner syndrome is 45,X, which indicates the absence of one X chromosome in females, leading to the characteristic features of the syndrome."
+      },
+      {
+        "question": "Which of the following statements about Turner syndrome is true?",
+        "options": [
+          "A) Individuals with Turner syndrome typically have a 45,X karyotype.",
+          "B) Turner syndrome is characterized by the presence of two X chromosomes.",
+          "C) Individuals with Turner syndrome usually have normal ovarian function.",
+          "D) Growth hormone therapy is ineffective in treating short stature in Turner syndrome.",
+          "E) Turner syndrome is only diagnosed in adulthood."
+        ],
+        "correct_answer": "A",
+        "explanation": "Option A is correct because Turner syndrome is most commonly associated with a 45,X karyotype, indicating the presence of only one X chromosome. Option B is incorrect as Turner syndrome involves the absence of one X chromosome, not the presence of two. Option C is incorrect because individuals with Turner syndrome typically experience ovarian dysgenesis, leading to impaired ovarian function. Option D is incorrect since growth hormone therapy can be effective in improving short stature in individuals with Turner syndrome. Option E is also incorrect because Turner syndrome can be diagnosed in childhood, often when short stature is noted."
+      },
+      {
+        "question": "What is a recommended management strategy for individuals with Turner syndrome who have a 45,X/46,XY mosaic karyotype?",
+        "options": [
+          "A) Prophylactic gonadectomy due to increased risk of gonadoblastoma.",
+          "B) Immediate initiation of estrogen therapy without monitoring.",
+          "C) Regular monitoring of growth hormone levels only.",
+          "D) Avoidance of any surgical interventions.",
+          "E) Administration of testosterone to induce male characteristics."
+        ],
+        "correct_answer": "A",
+        "explanation": "Option A is correct because prophylactic gonadectomy is recommended for individuals with 45,X/46,XY mosaicism due to the increased risk of gonadoblastoma. Option B is incorrect as estrogen therapy should be carefully planned and monitored. Option C is incorrect because monitoring growth hormone levels alone is not sufficient; comprehensive management is required. Option D is incorrect as surgical interventions may be necessary for management. Option E is incorrect since testosterone is not indicated in Turner syndrome, which affects females."
+      }
+    ]
+  },
+  {
+    "cc813a5d-254b-449f-9497-1fff17526b68": [
+      {
+        "question": "Which of the following is NOT a common symptom of pulmonary tuberculosis?",
+        "options": [
+          "A) Chronic cough",
+          "B) Night sweats",
+          "C) Hematuria",
+          "D) Weight loss",
+          "E) Chest pain"
+        ],
+        "correct_answer": "C",
+        "explanation": "Hematuria, or blood in urine, is primarily associated with renal involvement in extrapulmonary tuberculosis, not pulmonary tuberculosis. Common symptoms of pulmonary TB include chronic cough, night sweats, weight loss, and chest pain."
+      }
+    ]
+  }
+]

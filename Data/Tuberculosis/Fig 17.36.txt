@@ -1,0 +1,9 @@
+"This diagram shows primary pulmonary tuberculosis, which is an infection in the lungs. 
+
+1. It starts from the main infection area (primary focus) and spreads to nearby lymph glands (small organs that help fight infection) in the chest, creating what is called the 'primary complex.' Most of the time, this can heal on its own. 
+
+2. Sometimes, the infection can grow directly from the primary focus, leading to a more serious type called progressive pulmonary tuberculosis. 
+
+3. The infection can also spread to the pleura (the lining around the lungs), causing a condition called tuberculous pleurisy, which can lead to fluid buildup (pleural effusion) around the lungs. 
+
+4. In some cases, the bacteria can travel through the blood. If only a few bacteria spread, they can cause infections in the lungs, bones, kidneys, or urinary system, which might happen months or years later. If a lot of bacteria spread, it can lead to a severe form called miliary pulmonary tuberculosis or meningitis (an infection of the brain and spinal cord)."

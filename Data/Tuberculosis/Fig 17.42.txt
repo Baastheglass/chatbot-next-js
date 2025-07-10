@@ -1,0 +1,5 @@
+"This diagram shows how interferon-gamma release assays (IGRAs) work. Specifically, it focuses on the QuantiFERON–TB Gold test, which is used to check for tuberculosis (TB). In this test, a sample of blood is mixed with special proteins (antigens) that come from the bacteria that cause TB (Mycobacterium tuberculosis or MTB). 
+
+When the blood cells react to these proteins, they release a substance called interferon-gamma (IFN-γ). This is important because it shows that the body is responding to the TB bacteria. The amount of interferon-gamma released is measured using a method called enzyme-linked immunosorbent assay (ELISA), which helps scientists see how much was produced. 
+
+There is also a similar method called ELISPOT, which stands for enzyme-linked immunosorbent spot assay, that helps count the number of cells making interferon-gamma."

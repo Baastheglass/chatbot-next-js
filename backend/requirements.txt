@@ -1,0 +1,10 @@
+numpy
+openai
+pydantic
+PyPDF2
+python-dotenv
+qdrant-client==1.12.2
+pyjwt
+fastapi
+motor
+uvicorn

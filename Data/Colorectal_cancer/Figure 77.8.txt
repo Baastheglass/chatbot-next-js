@@ -1,0 +1,9 @@
+"This diagram shows a drawing of a right hemicolectomy, which is a surgery to remove part of the right side of the colon (the large intestine). It illustrates how doctors cut through the tissue to take out the colon while keeping important blood vessels safe. 
+
+Here are the labeled parts:
+- ICA (ileocolic artery): This is a blood vessel that supplies blood to the area where the small intestine meets the colon.
+- MCA (middle colic artery): This artery provides blood to the middle part of the colon.
+- RCA (right colic artery): This artery supplies blood to the right side of the colon.
+- SMA (superior mesenteric artery): This is a large artery that gives blood to most of the small intestine and part of the colon.
+
+This diagram helps us understand how the surgery is done and which blood vessels are important to consider during the operation."

@@ -1,0 +1,10 @@
+"This diagram shows different types of intestinal polyps. Intestinal polyps are small growths that can form on the lining of the intestines. 
+
+The diagram helps us understand the various kinds of polyps and how they can be classified. 
+
+1. **Adenomatous Polyps**: These are the most common type and can sometimes turn into cancer if not removed.
+2. **Hyperplastic Polyps**: These are usually not harmful and rarely turn into cancer.
+3. **Sessile Serrated Polyps**: These can also lead to cancer, but they look different from adenomatous polyps.
+4. **Familial Adenomatous Polyposis (FAP)**: This is a genetic condition that causes many polyps to form, increasing cancer risk.
+
+Each type of polyp is important to know because some can be more dangerous than others."
