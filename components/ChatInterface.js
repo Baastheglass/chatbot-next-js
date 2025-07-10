@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
-import { useSession } from "next-auth/react";
 import api, { apiPost,apiGet } from "@/lib/requests";
 import { Menu, MoreVertical, Trash2, Plus, GitBranchIcon, VideoIcon, ListChecksIcon, SendIcon } from 'lucide-react'; // e.g. for toggle icon
 import { KeyboardAwareContainer } from './ui/keyboard-aware-container';
@@ -32,8 +31,8 @@ const ChatInterface = () => {
   const [chats, setChats] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const { data: session } = useSession();
-  const userEmail = session?.user?.email; 
+  // Authentication disabled - no session/user email required
+  const userEmail = "demo@example.com"; // Demo user for development 
 
   useEffect(() => {
     const fetchChats = async () => {

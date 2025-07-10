@@ -15,7 +15,12 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],  # Allow both frontend ports
+    allow_origins=[
+        "http://localhost:3000", 
+        "http://localhost:3001",
+        "https://consultant.axonbuild.com",  # Production domain
+        "http://consultant.axonbuild.com"    # HTTP fallback
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -27,17 +32,18 @@ async def health_check():
     """Health check endpoint that doesn't require authentication"""
     return {"status": "healthy", "message": "Backend is running"}
 
-@app.middleware("http")
-async def auth_middleware(request, call_next):
-    # Skip authentication for health check and OPTIONS requests
-    if request.url.path == "/health" or request.method == "OPTIONS":
-        response = await call_next(request)
-        return response
-    
-    # Apply authentication for all other routes
-    await verify_token(request)
-    response = await call_next(request)
-    return response
+# Authentication middleware disabled for demo/development
+# @app.middleware("http")
+# async def auth_middleware(request, call_next):
+#     # Skip authentication for health check and OPTIONS requests
+#     if request.url.path == "/health" or request.method == "OPTIONS":
+#         response = await call_next(request)
+#         return response
+#     
+#     # Apply authentication for all other routes
+#     await verify_token(request)
+#     response = await call_next(request)
+#     return response
 
 # Initialize managers
 vectordb = VectorDBManager(
@@ -77,11 +83,12 @@ class NewMessageRequest(BaseModel):
 
 @app.post("/chats")
 async def create_chat_endpoint(req: CreateChatRequest, request: Request):
-    # Get user info from request state (set by auth middleware)
-    user_email = getattr(request.state, 'user_email', None)
-    if not user_email:
-        raise HTTPException(status_code=401, detail="User not authenticated")
+    # Authentication disabled for demo/development
+    # user_email = getattr(request.state, 'user_email', None)
+    # if not user_email:
+    #     raise HTTPException(status_code=401, detail="User not authenticated")
     
+    user_email = "demo@example.com"  # Use demo email for development
     chat_title = req.title
     chat_id = await chat_manager.create_chat(user_email, chat_title)
     return {"chatId": chat_id}
@@ -92,10 +99,10 @@ async def create_chat_endpoint(req: CreateChatRequest, request: Request):
 async def create_session(request: Request):
     """Create a new chat session"""
     try:
-        # Get user info from request state (set by auth middleware)
-        user_email = getattr(request.state, 'user_email', None)
-        if not user_email:
-            raise HTTPException(status_code=401, detail="User not authenticated")
+        # Authentication disabled for demo/development
+        # user_email = getattr(request.state, 'user_email', None)
+        # if not user_email:
+        #     raise HTTPException(status_code=401, detail="User not authenticated")
         
         session_id = chat_manager.create_session()
         return {"session_id": session_id}
@@ -106,10 +113,10 @@ async def create_session(request: Request):
 async def chat_endpoint(chat_message: ChatMessage, request: Request):
     """Handle chat messages"""
     try:
-        # Get user info from request state (set by auth middleware)
-        user_email = getattr(request.state, 'user_email', None)
-        if not user_email:
-            raise HTTPException(status_code=401, detail="User not authenticated")
+        # Authentication disabled for demo/development
+        # user_email = getattr(request.state, 'user_email', None)
+        # if not user_email:
+        #     raise HTTPException(status_code=401, detail="User not authenticated")
         
         # Create new session if none provided
         session_id = chat_message.session_id
@@ -173,10 +180,10 @@ async def chat_endpoint(chat_message: ChatMessage, request: Request):
 async def extract_topic_endpoint(topic_request: TopicRequest, request: Request):
     """Extract topic from chat history"""
     try:
-        # Get user info from request state (set by auth middleware)
-        user_email = getattr(request.state, 'user_email', None)
-        if not user_email:
-            raise HTTPException(status_code=401, detail="User not authenticated")
+        # Authentication disabled for demo/development
+        # user_email = getattr(request.state, 'user_email', None)
+        # if not user_email:
+        #     raise HTTPException(status_code=401, detail="User not authenticated")
         
         result = await chat_manager.extract_topic_from_chat(topic_request.session_id)
         
@@ -193,10 +200,10 @@ async def extract_topic_endpoint(topic_request: TopicRequest, request: Request):
 async def mcq_endpoint(mcq_request: MCQRequest, request: Request):
     """Generate MCQ based on chat context"""
     try:
-        # Get user info from request state (set by auth middleware)
-        user_email = getattr(request.state, 'user_email', None)
-        if not user_email:
-            raise HTTPException(status_code=401, detail="User not authenticated")
+        # Authentication disabled for demo/development
+        # user_email = getattr(request.state, 'user_email', None)
+        # if not user_email:
+        #     raise HTTPException(status_code=401, detail="User not authenticated")
         
         mcq_result = await chat_manager.generate_mcq(mcq_request.session_id)
         
@@ -213,10 +220,10 @@ async def mcq_endpoint(mcq_request: MCQRequest, request: Request):
 async def diagram_endpoint(diagram_request: DiagramRequest, request: Request):
     """Get relevant diagram based on user query + chat context"""
     try:
-        # Get user info from request state (set by auth middleware)
-        user_email = getattr(request.state, 'user_email', None)
-        if not user_email:
-            raise HTTPException(status_code=401, detail="User not authenticated")
+        # Authentication disabled for demo/development
+        # user_email = getattr(request.state, 'user_email', None)
+        # if not user_email:
+        #     raise HTTPException(status_code=401, detail="User not authenticated")
         
         result = await chat_manager.get_relevant_diagram(
             session_id=diagram_request.session_id
@@ -236,10 +243,10 @@ async def diagram_endpoint(diagram_request: DiagramRequest, request: Request):
 async def video_endpoint(topic_request: TopicRequest, request: Request):
     """Get relevant videos based on chat context"""
     try:
-        # Get user info from request state (set by auth middleware)
-        user_email = getattr(request.state, 'user_email', None)
-        if not user_email:
-            raise HTTPException(status_code=401, detail="User not authenticated")
+        # Authentication disabled for demo/development
+        # user_email = getattr(request.state, 'user_email', None)
+        # if not user_email:
+        #     raise HTTPException(status_code=401, detail="User not authenticated")
         
         result = await chat_manager.get_relevant_videos(topic_request.session_id)
         
