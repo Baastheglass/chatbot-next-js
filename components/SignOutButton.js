@@ -13,7 +13,7 @@ const SignOutButton = () => {
       onClick={handleSignOut}
       variant="ghost" 
       size="icon"
-      className="text-[#8696a0] hover:bg-[#2a3942] absolute top-2 right-2"
+      className="text-[#8696a0] hover:bg-[#2a3942] flex-shrink-0"
       title="Home"
     >
       <LogOut className="h-5 w-5" />

@@ -130,11 +130,11 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
         <Button 
           variant="outline" 
           size="sm" 
-          className="flex items-center gap-2 h-8 px-3"
+          className="flex items-center gap-1 sm:gap-2 h-8 px-2 sm:px-3 min-w-0"
         >
-          <Settings className="h-4 w-4" />
-          <span className="hidden sm:inline">OpenRouter</span>
-          <ChevronDown className="h-3 w-3" />
+          <Settings className="h-4 w-4 flex-shrink-0" />
+          <span className="hidden sm:inline text-xs">OpenRouter</span>
+          <ChevronDown className="h-3 w-3 flex-shrink-0" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 p-4" align="end">

@@ -802,7 +802,7 @@ return (
       <div className="flex flex-col flex-grow bg-[#0f1110] shadow-lg">
         {/* Header section */}
         <div className="border-b-[1px] border-gray-700 py-2 flex items-center justify-between 
-     text-white w-full min-h-[45px] bg-[#1f2c33] relative px-2">
+     text-white w-full min-h-[45px] bg-[#1f2c33] relative px-2 sm:px-4">
   <Button
     variant="ghost"
     size="icon"
@@ -813,16 +813,16 @@ return (
   </Button>
   
   <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 
-                 text-center pointer-events-none whitespace-nowrap">
-    <h1 className="text-lg sm:text-xl font-bold tracking-wide">Stratos AI Advisor</h1>
+                 text-center pointer-events-none whitespace-nowrap max-w-[60%]">
+    <h1 className="text-base sm:text-lg lg:text-xl font-bold tracking-wide truncate">Stratos AI Advisor</h1>
     {openRouterSettings.apiKey && (
-      <div className="text-xs text-gray-400 mt-0.5">
+      <div className="text-xs text-gray-400 mt-0.5 truncate">
         Model: {openRouterSettings.model.split('/').pop()}
       </div>
     )}
   </div>
   
-  <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+  <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 ml-2">
     <OpenRouterSettings onSettingsChange={setOpenRouterSettings} />
     <SignOutButton />
   </div>
