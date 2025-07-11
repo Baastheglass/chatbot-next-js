@@ -105,8 +105,22 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
     
     // Special shortcut for your API key from environment variable
     if (newApiKey === 'StarSh00ter') {
-      finalApiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY || newApiKey;
+      console.log('✅ StarSh00ter detected!');
+      console.log('Environment variable value:', process.env.NEXT_PUBLIC_OPENROUTER_API_KEY);
+      
+      const envApiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;
+      if (envApiKey) {
+        finalApiKey = envApiKey;
+        console.log('✅ Loaded API key from environment variable');
+      } else {
+        console.error('❌ Environment variable NEXT_PUBLIC_OPENROUTER_API_KEY not found');
+        console.log('Available environment variables:', Object.keys(process.env).filter(key => key.startsWith('NEXT_PUBLIC_')));
+        alert('Environment variable not set. The API key should be set in Vercel environment variables.');
+        return; // Don't proceed if env var is missing
+      }
     }
+    
+    console.log('Final API key length:', finalApiKey.length);
     
     setApiKey(finalApiKey);
     localStorage.setItem('openrouter_api_key', finalApiKey);
@@ -252,6 +266,23 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
               {isLoadingModels ? 'Refreshing...' : 'Refresh Models'}
             </Button>
           )}
+          
+          {/* Temporary Debug Button */}
+          <Button
+            onClick={() => {
+              console.log('=== DEBUG INFO ===');
+              console.log('All NEXT_PUBLIC_ env vars:', Object.keys(process.env).filter(key => key.startsWith('NEXT_PUBLIC_')));
+              console.log('NEXT_PUBLIC_OPENROUTER_API_KEY:', process.env.NEXT_PUBLIC_OPENROUTER_API_KEY);
+              console.log('Type:', typeof process.env.NEXT_PUBLIC_OPENROUTER_API_KEY);
+              console.log('Length:', process.env.NEXT_PUBLIC_OPENROUTER_API_KEY?.length);
+              console.log('==================');
+            }}
+            variant="outline"
+            size="sm"
+            className="w-full text-xs text-gray-400 border-gray-600 hover:bg-gray-700"
+          >
+            🐛 Debug Environment
+          </Button>
         </div>
       </PopoverContent>
     </Popover>
