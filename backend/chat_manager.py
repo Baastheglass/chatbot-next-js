@@ -622,6 +622,7 @@ Provide me with 3 routes to market"""
             try:
                 if openrouter_api_key and openrouter_model:
                     # Use OpenRouter (preferred)
+                    log_info(f"Using OpenRouter with model: {openrouter_model}")
                     assistant_response = await self._get_openrouter_response(
                         messages, 
                         openrouter_api_key, 
@@ -629,6 +630,7 @@ Provide me with 3 routes to market"""
                     )
                 elif openrouter_api_key:
                     # Use OpenRouter with default model
+                    log_info(f"Using OpenRouter with default model: {self.DEFAULT_OPENROUTER_MODEL}")
                     assistant_response = await self._get_openrouter_response(
                         messages, 
                         openrouter_api_key, 
@@ -636,6 +638,7 @@ Provide me with 3 routes to market"""
                     )
                 else:
                     # Fallback to OpenAI
+                    log_info("Using OpenAI (fallback) - no OpenRouter API key provided")
                     assistant_response = await self._get_openai_response(messages)
                 
                 # Add assistant response with preserved contexts
@@ -658,6 +661,7 @@ Provide me with 3 routes to market"""
 
     async def _get_openrouter_response(self, messages: list, api_key: str, model: str) -> str:
         """Get response from OpenRouter API"""
+        log_info(f"Making request to OpenRouter API with model: {model}")
         async with httpx.AsyncClient(timeout=60.0) as client_http:
             response = await client_http.post(
                 f"{self.OPENROUTER_BASE_URL}/chat/completions",
@@ -674,8 +678,10 @@ Provide me with 3 routes to market"""
             
             if response.status_code == 200:
                 data = response.json()
+                log_info(f"OpenRouter API response successful for model: {model}")
                 return data["choices"][0]["message"]["content"]
             else:
+                log_error(f"OpenRouter API error: {response.status_code} - {response.text}")
                 raise Exception(f"OpenRouter API error: {response.status_code} - {response.text}")
 
     async def _get_openai_response(self, messages: list) -> str:

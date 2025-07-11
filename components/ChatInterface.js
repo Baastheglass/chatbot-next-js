@@ -800,18 +800,13 @@ return (
 
       {/* Main chat area */}
       <div className="flex flex-col flex-grow bg-[#0f1110] shadow-lg">
-        {/* 3) Add a small button in the header to toggle sidebar */}
-        <div className="border-b-[1px] border-gray-700 py-2 flex items-center justify-between text-white w-full h-[45px] bg-[#1f2c33] px-2">
-        {/* <div className="text-xl font-bold tracking-wide mx-auto">Thymus Alpha</div> */}
-          
-
-        {/* Update the header section */}
+        {/* Header section */}
         <div className="border-b-[1px] border-gray-700 py-2 flex items-center justify-between 
-     text-white w-full min-h-[45px] bg-[#1f2c33] relative">
+     text-white w-full min-h-[45px] bg-[#1f2c33] relative px-2">
   <Button
     variant="ghost"
     size="icon"
-    className="text-[#8696a0] hover:bg-[#2a3942] ml-0"
+    className="text-[#8696a0] hover:bg-[#2a3942] ml-0 flex-shrink-0"
     onClick={() => setSidebarOpen(!sidebarOpen)}
   >
     <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -819,7 +814,7 @@ return (
   
   <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 
                  text-center pointer-events-none whitespace-nowrap">
-    <h1 className="text-xl font-bold tracking-wide">Stratos AI Advisor</h1>
+    <h1 className="text-lg sm:text-xl font-bold tracking-wide">Stratos AI Advisor</h1>
     {openRouterSettings.apiKey && (
       <div className="text-xs text-gray-400 mt-0.5">
         Model: {openRouterSettings.model.split('/').pop()}
@@ -827,12 +822,11 @@ return (
     )}
   </div>
   
-  <div className="flex items-center gap-2">
+  <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
     <OpenRouterSettings onSettingsChange={setOpenRouterSettings} />
-    <SignOutButton className="ml-0" />
+    <SignOutButton />
   </div>
 </div>
-        </div>
 
         <ScrollArea className="flex-grow mb-4 p-2 sm:p-4">
           {messages.length === 0 ? (
