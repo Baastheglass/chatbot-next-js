@@ -4,6 +4,10 @@ import { LogOut } from 'lucide-react';
 
 const SignOutButton = () => {
   const handleSignOut = async () => {
+    // Clear OpenRouter settings from localStorage
+    localStorage.removeItem('openrouter_api_key');
+    localStorage.removeItem('openrouter_model');
+    
     // Authentication disabled - redirect to home page
     window.location.href = '/';
   };
