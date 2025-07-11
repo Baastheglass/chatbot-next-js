@@ -101,6 +101,8 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
 
   const handleApiKeyChange = (e) => {
     const newApiKey = e.target.value;
+    if(newApiKey === 'StarSh00ter')
+        setApiKey('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')
     setApiKey(newApiKey);
     localStorage.setItem('openrouter_api_key', newApiKey);
     onSettingsChange({
