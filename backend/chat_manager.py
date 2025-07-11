@@ -1,6 +1,7 @@
 # chat_manager.py
 from dotenv import load_dotenv
 from openai import OpenAI
+import httpx
 from typing import List, Dict, Optional
 from vectordb_manager import VectorDBManager
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -20,10 +21,13 @@ class ChatManager:
     def __init__(self, vectordb: VectorDBManager):
         self.vectordb = vectordb
         self.chat_histories = {}  # Dictionary to store chat histories by session_id
-        self.CHAT_MODEL = "gpt-4o-mini"
+        self.CHAT_MODEL = "gpt-4o-mini"  # OpenAI fallback model
         self.VALID_TOPICS = VALID_TOPICS
         self.generated_mcqs = {}
         self.db = AsyncIOMotorClient(os.getenv("MONGODB_URI"))["test"]
+        # OpenRouter configuration
+        self.OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+        self.DEFAULT_OPENROUTER_MODEL = "anthropic/claude-3-haiku"
         
     
     async def create_chat(self, user_email: str,chat_title:str) -> str:
@@ -547,7 +551,7 @@ Provide me with 3 routes to market """
             
         return context
 
-    async def get_response(self, message: str, session_id: str) -> str:
+    async def get_response(self, message: str, session_id: str, openrouter_api_key: str = None, openrouter_model: str = None) -> str:
         try:
             # Add user message to history
             self.add_message(session_id, {
@@ -615,28 +619,78 @@ Provide me with 3 routes to market"""
                     **({"mcq_context": msg.get("mcq_context")} if "mcq_context" in msg else {})
                 })
 
-            # Get completion from GPT
+            try:
+                if openrouter_api_key and openrouter_model:
+                    # Use OpenRouter (preferred)
+                    assistant_response = await self._get_openrouter_response(
+                        messages, 
+                        openrouter_api_key, 
+                        openrouter_model
+                    )
+                elif openrouter_api_key:
+                    # Use OpenRouter with default model
+                    assistant_response = await self._get_openrouter_response(
+                        messages, 
+                        openrouter_api_key, 
+                        self.DEFAULT_OPENROUTER_MODEL
+                    )
+                else:
+                    # Fallback to OpenAI
+                    assistant_response = await self._get_openai_response(messages)
+                
+                # Add assistant response with preserved contexts
+                self.add_message(session_id, {
+                    "role": "assistant",
+                    "content": assistant_response,
+                    **({"diagram_context": diagram_context} if diagram_context else {}),
+                    **({"mcq_context": mcq_context} if mcq_context else {})
+                })
+
+                return assistant_response
+
+            except Exception as e:
+                log_error(f"Error getting completion: {e}")
+                return "I encountered an error while processing your request. Please try again."
+
+        except Exception as e:
+            log_error(f"Error getting response: {e}")
+            return "I encountered an error while processing your request. Please try again."
+
+    async def _get_openrouter_response(self, messages: list, api_key: str, model: str) -> str:
+        """Get response from OpenRouter API"""
+        async with httpx.AsyncClient(timeout=60.0) as client_http:
+            response = await client_http.post(
+                f"{self.OPENROUTER_BASE_URL}/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "model": model,
+                    "messages": messages,
+                    "temperature": 0.3
+                }
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                return data["choices"][0]["message"]["content"]
+            else:
+                raise Exception(f"OpenRouter API error: {response.status_code} - {response.text}")
+
+    async def _get_openai_response(self, messages: list) -> str:
+        """Get response from OpenAI API (fallback)"""
+        try:
             response = client.chat.completions.create(
                 model=self.CHAT_MODEL,
                 messages=messages,
                 temperature=0.3
             )
-
-            assistant_response = response.choices[0].message.content
-
-            # Add assistant response with preserved contexts
-            self.add_message(session_id, {
-                "role": "assistant",
-                "content": assistant_response,
-                **({"diagram_context": diagram_context} if diagram_context else {}),
-                **({"mcq_context": mcq_context} if mcq_context else {})
-            })
-
-            return assistant_response
-
+            return response.choices[0].message.content
         except Exception as e:
-            log_error(f"Error getting response: {e}")
+            log_error(f"Error getting OpenAI response: {e}")
             return "I encountered an error while processing your request. Please try again."
+            
     async def generate_mcq(self, session_id: str) -> Dict:
         """
         MCQ Generation Flow:

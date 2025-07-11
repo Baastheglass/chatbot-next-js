@@ -117,6 +117,10 @@ async def chat_endpoint(chat_message: ChatMessage, request: Request):
         # if not user_email:
         #     raise HTTPException(status_code=401, detail="User not authenticated")
         
+        # Get OpenRouter settings from request headers
+        openrouter_api_key = request.headers.get("X-OpenRouter-API-Key")
+        openrouter_model = request.headers.get("X-OpenRouter-Model")
+        
         # Create new session if none provided
         session_id = chat_message.session_id
         if not session_id:
@@ -163,7 +167,9 @@ async def chat_endpoint(chat_message: ChatMessage, request: Request):
         # If no special intent or low confidence, get normal response
         response = await chat_manager.get_response(
             message=chat_message.message,
-            session_id=session_id
+            session_id=session_id,
+            openrouter_api_key=openrouter_api_key,
+            openrouter_model=openrouter_model
         )
         
         return ChatResponse(
