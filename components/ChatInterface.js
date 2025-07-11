@@ -741,117 +741,144 @@ const ChatInterface = () => {
 
 return (
   <KeyboardAwareContainer scrollToBottom={scrollToBottom}>
-    <div className="flex h-full bg-[#0f1110] max-w-[100vw]">
+    <div className="flex h-full bg-gradient-to-br from-[#0a0e13] to-[#1a1f2e] max-w-[100vw]">
       
-      {/* 2) Condition for showing/hiding or collapsing the sidebar */}
+      {/* Enhanced Sidebar */}
       {sidebarOpen && (
-    <div className="flex flex-col w-64 bg-[#1f2c33] p-2 text-white overflow-y-auto
-                    border-r border-gray-800">
-          <Button
-  onClick={handleNewChat}
-  disabled={isLoading} // Already had this, good!
-  className={`w-full bg-blue-600 hover:bg-blue-700 text-white py-2 mb-4 rounded-lg
-            flex items-center text-left pl-2 mx-2 pr-4 ${
-              isLoading ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
->
-  <Plus className="h-4 w-4 mr-2" />
-  <span className="mr-7">New Chat</span> 
-</Button>
+    <div className="flex flex-col w-64 bg-gradient-to-b from-[#1e2936] to-[#2a3441] p-2 text-white overflow-y-auto
+                    border-r border-[#3a4553] shadow-2xl backdrop-blur-sm">
+          {/* New Chat Button with better styling */}
+          <div className="p-2 border-b border-[#3a4553]/50">
+            <Button
+              onClick={handleNewChat}
+              disabled={isLoading}
+              className={`w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 
+                        text-white py-3 rounded-xl font-medium transition-all duration-200 
+                        shadow-lg hover:shadow-xl transform hover:scale-[1.02] flex items-center justify-center gap-2
+                        ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              <Plus className="h-4 w-4" />
+              <span>New Chat</span>
+            </Button>
+          </div>
 
 
-{chats?.map((chat) => (
-  <div key={chat.chatId} className="flex items-center group w-full mb-2 relative"> {/* Added relative */}
-    <Button
-      variant="ghost"
-      className={`w-full text-left pl-4 py-3 text-[#e9edef] hover:bg-[#2a3942] rounded-lg ${
-        selectedChat === chat.chatId ? 'bg-[#2a3942]' : ''
-      }`}
-      onClick={() => handleChatSelect(chat.chatId)}
-      disabled={isLoading}
-    >
-      {chat.title}
-    </Button>
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          className="absolute right-0 text-[#8696a0] hover:bg-[#2a3942] z-10"
-        >
-          <MoreVertical className="h-5 w-5" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent side="right" align="start" className="w-32 bg-[#233138] border-none">
-        <Button
-          variant="ghost"
-          className="w-full justify-start text-[#e9edef] hover:bg-[#182229] text-sm"
-          onClick={() => handleDeleteChat(chat.chatId)}
-        >
-          <Trash2 className="mr-2 h-4 w-4 text-[#8696a0]" />
-          Delete
-        </Button>
-      </PopoverContent>
-    </Popover>
-  </div>
-))}
+          {/* Chat List with enhanced styling */}
+          <div className="flex-1 overflow-y-auto p-1 space-y-2">
+            {chats?.map((chat) => (
+              <div key={chat.chatId} className="group relative">
+                <Button
+                  variant="ghost"
+                  className={`w-full text-left p-3 rounded-xl font-medium transition-all duration-200
+                            ${selectedChat === chat.chatId 
+                              ? 'bg-gradient-to-r from-blue-600/20 to-blue-700/20 text-white border border-blue-500/30 shadow-md' 
+                              : 'text-[#e9edef] hover:bg-[#3a4553]/50 hover:text-white'
+                            }`}
+                  onClick={() => handleChatSelect(chat.chatId)}
+                  disabled={isLoading}
+                >
+                  <div className="truncate">{chat.title}</div>
+                </Button>
+                
+                {/* Enhanced Chat Options */}
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 
+                               opacity-0 group-hover:opacity-100 transition-opacity duration-200
+                               text-[#8696a0] hover:bg-[#3a4553] hover:text-white rounded-lg"
+                    >
+                      <MoreVertical className="h-4 w-4" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent 
+                    side="right" 
+                    align="start" 
+                    className="w-40 bg-[#2a3441] border-[#3a4553] shadow-xl rounded-xl"
+                  >
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start text-[#e9edef] hover:bg-red-600/20 hover:text-red-400 
+                               rounded-lg transition-all duration-200"
+                      onClick={() => handleDeleteChat(chat.chatId)}
+                    >
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Delete
+                    </Button>
+                  </PopoverContent>
+                </Popover>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
-      {/* Main chat area */}
-      <div className="flex flex-col flex-grow bg-[#0f1110] shadow-lg">
-        {/* Header section */}
-        <div className="border-b-[1px] border-gray-700 py-2 flex items-center justify-between 
-     text-white w-full min-h-[45px] bg-[#1f2c33] relative px-2 sm:px-4">
-  <Button
-    variant="ghost"
-    size="icon"
-    className="text-[#8696a0] hover:bg-[#2a3942] ml-0 flex-shrink-0"
-    onClick={() => setSidebarOpen(!sidebarOpen)}
-  >
-    <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
-  </Button>
-  
-  <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 
-                 text-center pointer-events-none whitespace-nowrap max-w-[60%]">
-    <h1 className="text-base sm:text-lg lg:text-xl font-bold tracking-wide truncate">Stratos AI Advisor</h1>
-    {openRouterSettings.apiKey && (
-      <div className="text-xs text-gray-400 mt-0.5 truncate">
-        Model: {openRouterSettings.model.split('/').pop()}
-      </div>
-    )}
-  </div>
-  
-  <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 ml-2">
-    <OpenRouterSettings onSettingsChange={setOpenRouterSettings} />
-    <SignOutButton />
-  </div>
-</div>
+      {/* Main chat area with enhanced styling */}
+      <div className="flex flex-col flex-grow bg-gradient-to-br from-[#0f1419] via-[#1a1f2e] to-[#0a0e13] shadow-2xl">
+        {/* Enhanced Header section */}
+        <div className="border-b border-[#374151] py-3 flex items-center justify-between 
+                       text-white w-full min-h-[60px] bg-gradient-to-r from-[#111827] to-[#1f2937] 
+                       relative px-4 shadow-lg backdrop-blur-sm">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-[#8696a0] hover:bg-[#374151]/50 hover:text-white rounded-lg 
+                     transition-all duration-200 flex-shrink-0"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
+          </Button>
+          
+          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                         text-center pointer-events-none whitespace-nowrap max-w-[60%]">
+            <h1 className="text-lg sm:text-xl lg:text-2xl font-bold tracking-wide truncate 
+                         bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              Stratos AI Advisor
+            </h1>
+            {openRouterSettings.apiKey && (
+              <div className="text-xs text-gray-400 mt-1 truncate font-medium">
+                Model: {openRouterSettings.model.split('/').pop()}
+              </div>
+            )}
+          </div>
+          
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 ml-2">
+            <OpenRouterSettings onSettingsChange={setOpenRouterSettings} />
+            <SignOutButton />
+          </div>
+        </div>
 
-        <ScrollArea className="flex-grow mb-4 p-2 sm:p-4">
+        <ScrollArea className="flex-grow mb-4 p-4 bg-gradient-to-b from-transparent to-[#0a0e13]/30">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center space-y-12 px-4">
-              <div className="text-3xl font-medium text-[#e9edef] text-center">
+              <div className="text-3xl font-bold text-white text-center bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                 How can AI transform your business today?
               </div>
-              <div className="text-base text-[#8696a0] text-center">
-                Share your business challenge and discover AI solutions
+              <div className="text-lg text-[#8696a0] text-center max-w-2xl">
+                Share your business challenge and discover AI solutions tailored to your needs
               </div>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-6">
               {messages.map((message, index) => (
                 <div
                   key={index}
                   className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[85vw] sm:max-w-md p-2 sm:p-3 rounded-lg ${message.type === 'user'
-                        ? 'bg-[#015c4b] text-white'
-                        : 'bg-[#1f2c33] text-[#e9edef]'
+                    className={`max-w-[85vw] sm:max-w-md p-4 rounded-2xl shadow-lg backdrop-blur-sm 
+                              transition-all duration-200 hover:shadow-xl ${message.type === 'user'
+                        ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white border border-blue-500/30'
+                        : 'bg-gradient-to-r from-[#1f2937] to-[#374151] text-[#e9edef] border border-[#4b5563]/30'
                       }`}
                   >
-                    {message.content === '...' ? '•••' : renderMessage(message)}
+                    {message.content === '...' ? 
+                      <div className="flex items-center gap-2">
+                        <div className="animate-pulse">•••</div>
+                      </div> 
+                      : renderMessage(message)}
                   </div>
                 </div>
               ))}
@@ -859,21 +886,22 @@ return (
             </div>
           )}
         </ScrollArea>
-        <div className="px-2 sm:px-4 py-2 bg-[#1f2c33]">
-          <div className="flex items-center gap-1 sm:gap-2">
+        <div className="px-4 py-4 bg-gradient-to-r from-[#111827] to-[#1f2937] border-t border-[#374151] shadow-lg">
+          <div className="flex items-center gap-3 max-w-4xl mx-auto">
             <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
               <PopoverTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-[#8696a0] hover:bg-[#2a3942]"
+                  className="text-[#8696a0] hover:bg-[#374151]/50 hover:text-white rounded-xl
+                           transition-all duration-200 shadow-md"
                   disabled={isLoading || loadingType !== null}
                 >
                   <Plus className="h-5 w-5 sm:h-6 sm:w-6" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent side="top" className="w-56 sm:w-64 bg-[#233138] border-none">
-                <div className="space-y-1 sm:space-y-2">
+              <PopoverContent side="top" className="w-64 bg-[#2a3441] border-[#3a4553] shadow-xl rounded-xl">
+                <div className="space-y-2">
                   {[
                     { type: 'diagram', icon: GitBranchIcon, label: 'Create Diagram' },
                     { type: 'video', icon: VideoIcon, label: 'Recommend Video' },
@@ -882,31 +910,39 @@ return (
                     <Button
                       key={type}
                       variant="ghost"
-                      className="w-full justify-start text-[#e9edef] hover:bg-[#182229] text-sm sm:text-base"
+                      className="w-full justify-start text-[#e9edef] hover:bg-[#3a4553]/50 hover:text-white
+                               rounded-lg transition-all duration-200"
                       onClick={() => handleAttachmentOption(type)}
                       disabled={isLoading}
                     >
-                      <Icon className="mr-2 h-4 w-4 sm:h-5 sm:w-5 text-[#8696a0]" />
+                      <Icon className="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-[#8696a0]" />
                       {label}
                     </Button>
                   ))}
                 </div>
               </PopoverContent>
             </Popover>
-            <div className="flex-grow bg-[#2a3942] rounded-lg">
+            
+            <div className="flex-grow bg-gradient-to-r from-[#374151] to-[#4b5563] rounded-2xl 
+                          shadow-lg border border-[#6b7280]/30 backdrop-blur-sm">
               <Input
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 placeholder="Describe your business challenge or AI needs..."
-                className="border-none bg-transparent text-[#e9edef] placeholder-[#8696a0] focus-visible:ring-0 focus-visible:ring-offset-0 text-sm sm:text-base h-10 sm:h-12"
+                className="border-none bg-transparent text-white placeholder-[#9ca3af] 
+                         focus-visible:ring-0 focus-visible:ring-offset-0 text-base h-12 px-4
+                         font-medium"
                 onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                 disabled={isLoading}
               />
             </div>
+            
             <Button
               onClick={handleSend}
               size="icon"
-              className="bg-transparent hover:bg-[#2a3942] text-[#8696a0]"
+              className={`bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 
+                        text-white rounded-xl shadow-lg transition-all duration-200 transform
+                        ${isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'}`}
               disabled={isLoading}
             >
               <SendIcon className="h-5 w-5 sm:h-6 sm:w-6" />

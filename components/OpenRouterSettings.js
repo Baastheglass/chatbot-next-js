@@ -137,24 +137,32 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
         <Button 
           variant="outline" 
           size="sm" 
-          className="flex items-center gap-1 sm:gap-2 h-8 px-2 sm:px-3 min-w-0"
+          className="flex items-center gap-2 h-10 px-3 min-w-0 bg-gradient-to-r from-[#374151] to-[#4b5563] 
+                   border-[#6b7280]/30 text-white hover:from-[#4b5563] hover:to-[#6b7280] 
+                   transition-all duration-200 shadow-md hover:shadow-lg rounded-xl"
         >
           <Settings className="h-4 w-4 flex-shrink-0" />
-          <span className="hidden sm:inline text-xs">OpenRouter</span>
+          <span className="hidden sm:inline text-sm font-medium">OpenRouter</span>
           <ChevronDown className="h-3 w-3 flex-shrink-0" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 p-4" align="end">
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 text-sm font-medium">
-            <Cpu className="h-4 w-4" />
-            OpenRouter Settings
+      <PopoverContent 
+        className="w-80 p-6 bg-gradient-to-br from-[#1f2937] to-[#374151] border-[#4b5563] 
+                 shadow-2xl rounded-2xl backdrop-blur-sm" 
+        align="end"
+      >
+        <div className="space-y-6">
+          <div className="flex items-center gap-2 text-lg font-bold text-white">
+            <Cpu className="h-5 w-5 text-blue-400" />
+            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              OpenRouter Settings
+            </span>
           </div>
           
           {/* API Key Input */}
-          <div className="space-y-2">
-            <label className="text-xs font-medium text-gray-600 flex items-center gap-1">
-              <Key className="h-3 w-3" />
+          <div className="space-y-3">
+            <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
+              <Key className="h-4 w-4 text-blue-400" />
               API Key
             </label>
             <Input
@@ -162,15 +170,16 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
               placeholder="Paste your OpenRouter API key"
               value={apiKey}
               onChange={handleApiKeyChange}
-              className="text-xs"
+              className="bg-[#4b5563] border-[#6b7280] text-white placeholder-gray-400 
+                       focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
             />
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-400">
               Get your API key from{' '}
               <a 
                 href="https://openrouter.ai/keys" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-blue-500 hover:underline"
+                className="text-blue-400 hover:text-blue-300 hover:underline transition-colors"
               >
                 openrouter.ai/keys
               </a>
@@ -178,48 +187,54 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
           </div>
 
           {/* Model Selection */}
-          <div className="space-y-2">
-            <label className="text-xs font-medium text-gray-600">
+          <div className="space-y-3">
+            <label className="text-sm font-medium text-gray-300">
               AI Model
             </label>
             <div className="relative">
               <select
                 value={selectedModel}
                 onChange={handleModelChange}
-                className="w-full p-2 text-xs border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
+                className="w-full p-3 text-sm bg-[#4b5563] border border-[#6b7280] rounded-xl 
+                         text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 
+                         focus:border-blue-500 appearance-none transition-all duration-200"
                 disabled={isLoadingModels}
               >
                 {models.length > 0 ? (
                   models.map((model) => (
-                    <option key={model.id} value={model.id}>
+                    <option key={model.id} value={model.id} className="bg-[#4b5563]">
                       {model.name || model.id}
                     </option>
                   ))
                 ) : (
-                  <option value={selectedModel}>
+                  <option value={selectedModel} className="bg-[#4b5563]">
                     {getCurrentModelName()}
                   </option>
                 )}
               </select>
-              <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-gray-400 pointer-events-none" />
+              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
             </div>
             {isLoadingModels && (
-              <p className="text-xs text-gray-500">Loading available models...</p>
+              <p className="text-sm text-blue-400 animate-pulse">Loading available models...</p>
             )}
           </div>
 
           {/* Current Settings Summary */}
-          <div className="pt-2 border-t border-gray-100">
-            <div className="text-xs text-gray-600 space-y-1">
-              <div className="flex justify-between">
+          <div className="pt-4 border-t border-[#4b5563]">
+            <div className="text-sm text-gray-300 space-y-2">
+              <div className="flex justify-between items-center">
                 <span>Status:</span>
-                <span className={apiKey ? "text-green-600 font-medium" : "text-orange-600"}>
+                <span className={`font-medium px-2 py-1 rounded-lg text-xs ${
+                  apiKey 
+                    ? "text-green-400 bg-green-400/10" 
+                    : "text-orange-400 bg-orange-400/10"
+                }`}>
                   {apiKey ? "Ready" : "API key needed"}
                 </span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span>Model:</span>
-                <span className="font-medium">{getCurrentModelName()}</span>
+                <span className="font-medium text-blue-400">{getCurrentModelName()}</span>
               </div>
             </div>
           </div>
@@ -230,7 +245,8 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
               onClick={fetchModels}
               variant="outline"
               size="sm"
-              className="w-full text-xs"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 
+                       text-white border-none shadow-lg transition-all duration-200 transform hover:scale-[1.02] rounded-xl"
               disabled={isLoadingModels}
             >
               {isLoadingModels ? 'Refreshing...' : 'Refresh Models'}
