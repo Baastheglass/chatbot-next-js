@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Optional
 import uvicorn
+import httpx
 from vectordb_manager import VectorDBManager
 from chat_manager import ChatManager
 import os
@@ -336,6 +337,31 @@ async def load_recent_context(chatId: str, sessionId: str, request: Request):
     # Possibly verify user owns chatId if needed
     await chat_manager.load_recent_context_for_chat(chatId, sessionId)
     return {"status": "ok"}
+
+@app.get("/openrouter/models")
+async def get_openrouter_models(request: Request):
+    """Proxy OpenRouter models API to avoid CORS issues"""
+    try:
+        api_key = request.headers.get("X-OpenRouter-API-Key")
+        if not api_key:
+            raise HTTPException(status_code=400, detail="OpenRouter API key required")
+        
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                "https://openrouter.ai/api/v1/models",
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json"
+                }
+            )
+            
+            if response.status_code == 200:
+                return response.json()
+            else:
+                raise HTTPException(status_code=response.status_code, detail="Failed to fetch models")
+                
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8007, reload=True)

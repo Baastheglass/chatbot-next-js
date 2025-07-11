@@ -5,6 +5,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import SignOutButton from './SignOutButton';
+import OpenRouterSettings from './OpenRouterSettings';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -30,6 +31,11 @@ const ChatInterface = () => {
   const [chats, setChats] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  // OpenRouter settings state
+  const [openRouterSettings, setOpenRouterSettings] = useState({
+    apiKey: '',
+    model: 'anthropic/claude-3-haiku'
+  });
   // Authentication disabled - no session/user email required
   const userEmail = "demo@example.com"; // Demo user for development 
 
@@ -195,6 +201,11 @@ const ChatInterface = () => {
         const data = await apiPost("/chat", { 
             message: inputText, 
             session_id: sessionId 
+        }, {
+            headers: {
+                'X-OpenRouter-API-Key': openRouterSettings.apiKey,
+                'X-OpenRouter-Model': openRouterSettings.model
+            }
         });
         
         // Handle different response types and save to DB
@@ -796,7 +807,7 @@ return (
 
         {/* Update the header section */}
         <div className="border-b-[1px] border-gray-700 py-2 flex items-center justify-between 
-     text-white w-full h-[45px] bg-[#1f2c33] relative">
+     text-white w-full min-h-[45px] bg-[#1f2c33] relative">
   <Button
     variant="ghost"
     size="icon"
@@ -806,12 +817,20 @@ return (
     <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
   </Button>
   
-  <h1 className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 
-                 text-xl font-bold tracking-wide pointer-events-none whitespace-nowrap">
-    Stratos AI Advisor
-  </h1>
+  <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                 text-center pointer-events-none whitespace-nowrap">
+    <h1 className="text-xl font-bold tracking-wide">Stratos AI Advisor</h1>
+    {openRouterSettings.apiKey && (
+      <div className="text-xs text-gray-400 mt-0.5">
+        Model: {openRouterSettings.model.split('/').pop()}
+      </div>
+    )}
+  </div>
   
-  <SignOutButton className="ml-0" />
+  <div className="flex items-center gap-2">
+    <OpenRouterSettings onSettingsChange={setOpenRouterSettings} />
+    <SignOutButton className="ml-0" />
+  </div>
 </div>
         </div>
 
