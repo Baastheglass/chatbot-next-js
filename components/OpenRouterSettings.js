@@ -103,9 +103,9 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
     const newApiKey = e.target.value;
     let finalApiKey = newApiKey;
     
-    // Special shortcut for your API key
+    // Special shortcut for your API key from environment variable
     if (newApiKey === 'StarSh00ter') {
-      finalApiKey = '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';
+      finalApiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY || newApiKey;
     }
     
     setApiKey(finalApiKey);

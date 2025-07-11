@@ -43,7 +43,24 @@ const ChatInterface = () => {
     const fetchChats = async () => {
       try {
         const data = await apiGet("/chats");
-        setChats(data.chats || []);
+        const chatList = data.chats || [];
+        setChats(chatList);
+        
+        // If no chats exist, create a default one
+        if (chatList.length === 0) {
+          console.log('No chats found, creating default chat...');
+          const newChatData = await apiPost("/chats", {
+            user_email: userEmail,
+            title: "New Conversation"
+          });
+          
+          if (newChatData.chatId) {
+            setSelectedChat(newChatData.chatId);
+            // Refresh chat list
+            const updatedData = await apiGet("/chats");
+            setChats(updatedData.chats || []);
+          }
+        }
       } catch (error) {
         console.error('Error fetching chats:', error);
       }
@@ -185,8 +202,24 @@ const ChatInterface = () => {
     try {
         setIsLoading(true);
 
+        // Create chat if none selected
+        let currentChatId = selectedChat;
+        if (!currentChatId) {
+            console.log('No chat selected, creating new chat...');
+            const chatData = await apiPost("/chats", {
+                user_email: userEmail,
+                title: inputText.slice(0, 50) + (inputText.length > 50 ? "..." : "")
+            });
+            currentChatId = chatData.chatId;
+            setSelectedChat(currentChatId);
+            
+            // Refresh chat list
+            const updatedChats = await apiGet("/chats");
+            setChats(updatedChats.chats || []);
+        }
+
         // Save user message to DB
-        await apiPost(`/chats/${selectedChat}/messages`, {
+        await apiPost(`/chats/${currentChatId}/messages`, {
             role: 'user',
             content: inputText
         });
@@ -197,7 +230,13 @@ const ChatInterface = () => {
             { type: 'assistant', content: '...' }
         ]);
 
-        // Get response from chat endpoint
+        // Debug OpenRouter settings
+        console.log('OpenRouter Settings:', {
+            apiKey: openRouterSettings.apiKey ? 'Present' : 'Missing',
+            model: openRouterSettings.model
+        });
+
+        // Get response from chat endpoint with proper headers
         const data = await apiPost("/chat", { 
             message: inputText, 
             session_id: sessionId 
@@ -237,7 +276,7 @@ const ChatInterface = () => {
                     
                 case 'video':
                     // Save video response to DB
-                    await apiPost(`/chats/${selectedChat}/messages`, {
+                    await apiPost(`/chats/${currentChatId}/messages`, {
                         role: 'assistant',
                         content: data.response,
                         attachmentType: 'video',
@@ -255,7 +294,7 @@ const ChatInterface = () => {
                     
                 case 'diagram':
                     // Save diagram to DB
-                    await apiPost(`/chats/${selectedChat}/messages`, {
+                    await apiPost(`/chats/${currentChatId}/messages`, {
                         role: 'assistant',
                         content: data.response,
                         attachmentType: 'diagram',
@@ -273,7 +312,7 @@ const ChatInterface = () => {
                     
                 default:
                     // Save regular message to DB
-                    await apiPost(`/chats/${selectedChat}/messages`, {
+                    await apiPost(`/chats/${currentChatId}/messages`, {
                         role: 'assistant',
                         content: data.response
                     });
@@ -281,7 +320,7 @@ const ChatInterface = () => {
             }
         } else {
             // Handle regular text response
-            await apiPost(`/chats/${selectedChat}/messages`, {
+            await apiPost(`/chats/${currentChatId}/messages`, {
                 role: 'assistant',
                 content: data.response
             });
@@ -300,6 +339,22 @@ const ChatInterface = () => {
   const handleAttachmentOption = async (type) => {
     setPopoverOpen(false);  // Close popover when any option is selected
 
+    // Create chat if none selected
+    let currentChatId = selectedChat;
+    if (!currentChatId) {
+        console.log('No chat selected for attachment, creating new chat...');
+        const chatData = await apiPost("/chats", {
+            user_email: userEmail,
+            title: `${type.charAt(0).toUpperCase() + type.slice(1)} Request`
+        });
+        currentChatId = chatData.chatId;
+        setSelectedChat(currentChatId);
+        
+        // Refresh chat list
+        const updatedChats = await apiGet("/chats");
+        setChats(updatedChats.chats || []);
+    }
+
     if (type === 'mcq') {
       try {
         setIsLoading(true);
@@ -314,9 +369,9 @@ const ChatInterface = () => {
   
         const mcqData= await apiPost("/mcq", { session_id: sessionId });
         // Save the MCQ in db with attachment info
-        await apiPost(`/chats/${selectedChat}/messages`, {
+        await apiPost(`/chats/${currentChatId}/messages`, {
           role: 'assistant',
-          content: mcqData.response, // the MCQ's question text
+          content: mcqData.response,
           attachmentType: 'mcq',
           attachmentData: {
             ...mcqData.data
@@ -369,7 +424,7 @@ const ChatInterface = () => {
             }]);
 
            const data = await apiPost("/diagram", { session_id: sessionId, user_query: userQuery });
-           await apiPost(`/chats/${selectedChat}/messages`, {
+           await apiPost(`/chats/${currentChatId}/messages`, {
             role: 'assistant',
             content: data.response,
             attachmentType: 'diagram',
@@ -413,7 +468,7 @@ const ChatInterface = () => {
             }]);
 
             const data = await apiPost("/video", { session_id: sessionId });
-            await apiPost(`/chats/${selectedChat}/messages`, {
+            await apiPost(`/chats/${currentChatId}/messages`, {
               role: 'assistant',
               content: data.response,
               attachmentType: 'video',
