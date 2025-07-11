@@ -27,7 +27,6 @@ const ChatInterface = () => {
   const [answeredMCQs, setAnsweredMCQs] = useState(new Set());
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [loadingType, setLoadingType] = useState(null);
-  const [TOPICS, setTopics] = useState(null);
   const [chats, setChats] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -46,44 +45,6 @@ const ChatInterface = () => {
     fetchChats();
   }, []);
 
-  useEffect(() => {
-    setTopics(randomPick([
-      "Tuberculosis",
-      "Turner Syndrome",
-      "Trigeminal Neuralgia",
-      "Colorectal Cancer",
-      "Lumbar Disc Herniation"
-    ], 3));
-  }, []);
-
-
-  const TOPIC_COLORS = [
-    "bg-blue-500 hover:bg-blue-600",
-    "bg-purple-500 hover:bg-purple-600",
-    "bg-rose-500 hover:bg-rose-600"
-  ];
-  
-  const handleTopicSelect = async (topic) => {
-    try {
-      setIsLoading(true);
-      const message = `Briefly talk about ${topic}`;
-      
-      // Add user message
-      setMessages(prev => [...prev, 
-        { type: 'user', content: message }, 
-        { type: 'assistant', content: '...' }
-      ]);
-  
-     const data = await apiPost("/chat", { message, session_id: sessionId });
-      await textStreamRoutine(data.response);
-  
-    } catch (error) {
-      console.error('Error:', error);
-      await textStreamRoutine('Sorry, something went wrong. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
   const handleNewChat = async () => {
     try {
       const chatTitle = window.prompt("Enter a name for the new chat:");
@@ -765,9 +726,6 @@ const ChatInterface = () => {
 );
 }
 
-if (!TOPICS)
-  return <></>
-
 // ...existing code...
 
 return (
@@ -850,7 +808,7 @@ return (
   
   <h1 className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 
                  text-xl font-bold tracking-wide pointer-events-none whitespace-nowrap">
-    Thymus Alpha
+    Stratos AI Advisor
   </h1>
   
   <SignOutButton className="ml-0" />
@@ -861,27 +819,10 @@ return (
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center space-y-12 px-4">
               <div className="text-3xl font-medium text-[#e9edef] text-center">
-                What would you like to learn today?
+                How can AI transform your business today?
               </div>
-              <div className="grid grid-cols-3 gap-4 w-full max-w-2xl px-4">
-  {TOPICS?.map((topic, idx) => (
-    <Button
-      key={topic}
-      onClick={() => handleTopicSelect(topic)}
-      disabled={isLoading}
-      className={`${TOPIC_COLORS[idx]} text-white px-4 py-2
-                text-xs sm:text-sm rounded-full font-medium transition-all duration-200 
-                shadow-md hover:shadow-xl hover:scale-105
-                flex items-center justify-center min-h-[40px] h-auto
-                border border-opacity-30 border-white
-                break-words whitespace-normal text-center`}
-    >
-      {topic}
-    </Button>
-  ))}
-</div>
               <div className="text-base text-[#8696a0] text-center">
-                Or type your own message to get started
+                Share your business challenge and discover AI solutions
               </div>
             </div>
           ) : (
@@ -943,7 +884,7 @@ return (
               <Input
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                placeholder="Type a message"
+                placeholder="Describe your business challenge or AI needs..."
                 className="border-none bg-transparent text-[#e9edef] placeholder-[#8696a0] focus-visible:ring-0 focus-visible:ring-offset-0 text-sm sm:text-base h-10 sm:h-12"
                 onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                 disabled={isLoading}

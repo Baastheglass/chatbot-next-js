@@ -279,7 +279,7 @@ class ChatManager:
     # -------------------------------------------------
     async def extract_topic_from_chat(self, session_id: str) -> Dict:
         """
-        Extract the medical topic being discussed from chat history,
+        Extract the business topic being discussed from chat history,
         using only first 50 words from each message to save tokens.
         """
         try:
