@@ -1,6 +1,6 @@
 # chat_manager.py
 from dotenv import load_dotenv
-from openai import OpenAI
+from openai import AsyncOpenAI
 import httpx
 from typing import List, Dict, Optional
 from vectordb_manager import VectorDBManager
@@ -14,8 +14,9 @@ import json
 from constants import VALID_TOPICS
 MCQ_STORE_PATH = "mcq_store.json"
 load_dotenv()
-client = OpenAI()
-client.api_key = os.getenv("OPENAI_API_KEY")
+
+# Create OpenAI client for fallback
+openai_client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 class ChatManager:
     def __init__(self, vectordb: VectorDBManager):
@@ -229,7 +230,7 @@ class ChatManager:
                 {"role": "user", "content": user_query}
             ]
 
-            response = client.chat.completions.create(
+            response = await openai_client.chat.completions.create(
                 model=self.CHAT_MODEL,
                 messages=messages,
                 temperature=0.1
@@ -354,7 +355,7 @@ Provide me with 3 routes to market """
                 }
             ]
 
-            response = client.chat.completions.create(
+            response = await openai_client.chat.completions.create(
                 model=self.CHAT_MODEL,
                 messages=messages,
                 temperature=0.1
@@ -510,7 +511,7 @@ Provide me with 3 routes to market """
 
         try:
             # Get classification from GPT
-            response = client.chat.completions.create(
+            response = await openai_client.chat.completions.create(
                 model=self.CHAT_MODEL,
                 messages=messages,
                 temperature=0.1
@@ -667,34 +668,33 @@ Provide me with 3 routes to market"""
             return "I encountered an error while processing your request. Please try again."
 
     async def _get_openrouter_response(self, messages: list, api_key: str, model: str) -> str:
-        """Get response from OpenRouter API"""
+        """Get response from OpenRouter API using OpenAI SDK"""
         log_info(f"Making request to OpenRouter API with model: {model}")
-        async with httpx.AsyncClient(timeout=60.0) as client_http:
-            response = await client_http.post(
-                f"{self.OPENROUTER_BASE_URL}/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {api_key}",
-                    "Content-Type": "application/json"
-                },
-                json={
-                    "model": model,
-                    "messages": messages,
-                    "temperature": 0.3
-                }
+        
+        try:
+            # Create OpenRouter client using OpenAI SDK with custom base URL
+            openrouter_client = AsyncOpenAI(
+                api_key=api_key,
+                base_url=self.OPENROUTER_BASE_URL
             )
             
-            if response.status_code == 200:
-                data = response.json()
-                log_info(f"OpenRouter API response successful for model: {model}")
-                return data["choices"][0]["message"]["content"]
-            else:
-                log_error(f"OpenRouter API error: {response.status_code} - {response.text}")
-                raise Exception(f"OpenRouter API error: {response.status_code} - {response.text}")
+            response = await openrouter_client.chat.completions.create(
+                model=model,
+                messages=messages,
+                temperature=0.3
+            )
+            
+            log_info(f"OpenRouter API response successful for model: {model}")
+            return response.choices[0].message.content
+            
+        except Exception as e:
+            log_error(f"OpenRouter API error: {e}")
+            raise Exception(f"OpenRouter API error: {e}")
 
     async def _get_openai_response(self, messages: list) -> str:
-        """Get response from OpenAI API (fallback)"""
+        """Get response from OpenAI API (fallback) using OpenAI SDK"""
         try:
-            response = client.chat.completions.create(
+            response = await openai_client.chat.completions.create(
                 model=self.CHAT_MODEL,
                 messages=messages,
                 temperature=0.3
@@ -702,7 +702,7 @@ Provide me with 3 routes to market"""
             return response.choices[0].message.content
         except Exception as e:
             log_error(f"Error getting OpenAI response: {e}")
-            return "I encountered an error while processing your request. Please try again."
+            raise Exception(f"Error getting OpenAI response: {e}")
             
     async def generate_mcq(self, session_id: str) -> Dict:
         """
@@ -794,7 +794,7 @@ Provide me with 3 routes to market"""
             ]
 
             # Call GPT
-            response = client.chat.completions.create(
+            response = await openai_client.chat.completions.create(
                 model=self.CHAT_MODEL,
                 messages=messages,
                 temperature=0.3
@@ -1008,7 +1008,7 @@ Provide me with 3 routes to market"""
             ]
 
             # Call GPT with low temperature for consistent summarization
-            response = client.chat.completions.create(
+            response = await openai_client.chat.completions.create(
                 model=self.CHAT_MODEL,
                 messages=messages,
                 temperature=0.2
