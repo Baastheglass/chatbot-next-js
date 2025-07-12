@@ -47,45 +47,67 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
       
       if (response.ok) {
         const data = await response.json();
-        // Filter and sort models for better UX
-        const sortedModels = data.data
-          .filter(model => !model.id.includes('free') && model.context_length > 4000)
+        // Filter for specific model families: OpenAI, Claude, Llama, Gemini, XAI, Deepseek
+        const allowedFamilies = ['openai/', 'anthropic/', 'meta-llama/', 'google/', 'xai/', 'deepseek/'];
+        
+        const filteredModels = data.data
+          .filter(model => {
+            // Check if model belongs to allowed families
+            const isAllowedFamily = allowedFamilies.some(family => model.id.toLowerCase().includes(family));
+            // Also filter out free models and ensure decent context length
+            return isAllowedFamily && !model.id.includes('free') && model.context_length > 4000;
+          })
           .sort((a, b) => {
-            // Prioritize popular models
+            // Prioritize popular models from allowed families
             const priority = {
-              'anthropic/claude-3-haiku': 1,
-              'anthropic/claude-3-sonnet': 2,
-              'openai/gpt-4o-mini': 3,
-              'openai/gpt-4o': 4,
-              'meta-llama/llama-3.1-8b-instruct': 5,
-              'google/gemini-pro': 6
+              'openai/gpt-4o': 1,
+              'openai/gpt-4o-mini': 2,
+              'anthropic/claude-3-5-sonnet': 3,
+              'anthropic/claude-3-haiku': 4,
+              'anthropic/claude-3-sonnet': 5,
+              'meta-llama/llama-3.3-70b-instruct': 6,
+              'meta-llama/llama-3.1-8b-instruct': 7,
+              'google/gemini-pro-1.5': 8,
+              'google/gemini-flash-1.5': 9,
+              'xai/grok-beta': 10,
+              'deepseek/deepseek-chat': 11
             };
             return (priority[a.id] || 999) - (priority[b.id] || 999);
           });
         
-        setModels(sortedModels);
+        setModels(filteredModels);
       } else {
         console.error('Failed to fetch models from OpenRouter');
-        // Use fallback models if API fails
+        // Use fallback models from specified families only
         setModels([
+          { id: 'openai/gpt-4o', name: 'GPT-4o' },
+          { id: 'openai/gpt-4o-mini', name: 'GPT-4o Mini' },
+          { id: 'anthropic/claude-3-5-sonnet', name: 'Claude 3.5 Sonnet' },
           { id: 'anthropic/claude-3-haiku', name: 'Claude 3 Haiku' },
           { id: 'anthropic/claude-3-sonnet', name: 'Claude 3 Sonnet' },
-          { id: 'openai/gpt-4o-mini', name: 'GPT-4o Mini' },
-          { id: 'openai/gpt-4o', name: 'GPT-4o' },
+          { id: 'meta-llama/llama-3.3-70b-instruct', name: 'Llama 3.3 70B' },
           { id: 'meta-llama/llama-3.1-8b-instruct', name: 'Llama 3.1 8B' },
-          { id: 'google/gemini-pro', name: 'Gemini Pro' }
+          { id: 'google/gemini-pro-1.5', name: 'Gemini Pro 1.5' },
+          { id: 'google/gemini-flash-1.5', name: 'Gemini Flash 1.5' },
+          { id: 'xai/grok-beta', name: 'Grok Beta' },
+          { id: 'deepseek/deepseek-chat', name: 'DeepSeek Chat' }
         ]);
       }
     } catch (error) {
       console.error('Error fetching models:', error);
-      // Use fallback models
+      // Use fallback models from specified families only
       setModels([
+        { id: 'openai/gpt-4o', name: 'GPT-4o' },
+        { id: 'openai/gpt-4o-mini', name: 'GPT-4o Mini' },
+        { id: 'anthropic/claude-3-5-sonnet', name: 'Claude 3.5 Sonnet' },
         { id: 'anthropic/claude-3-haiku', name: 'Claude 3 Haiku' },
         { id: 'anthropic/claude-3-sonnet', name: 'Claude 3 Sonnet' },
-        { id: 'openai/gpt-4o-mini', name: 'GPT-4o Mini' },
-        { id: 'openai/gpt-4o', name: 'GPT-4o' },
+        { id: 'meta-llama/llama-3.3-70b-instruct', name: 'Llama 3.3 70B' },
         { id: 'meta-llama/llama-3.1-8b-instruct', name: 'Llama 3.1 8B' },
-        { id: 'google/gemini-pro', name: 'Gemini Pro' }
+        { id: 'google/gemini-pro-1.5', name: 'Gemini Pro 1.5' },
+        { id: 'google/gemini-flash-1.5', name: 'Gemini Flash 1.5' },
+        { id: 'xai/grok-beta', name: 'Grok Beta' },
+        { id: 'deepseek/deepseek-chat', name: 'DeepSeek Chat' }
       ]);
     } finally {
       setIsLoadingModels(false);
