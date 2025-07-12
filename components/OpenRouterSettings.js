@@ -12,6 +12,7 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [apiKey, setApiKey] = useState('');
   const [selectedModel, setSelectedModel] = useState('anthropic/claude-3-haiku');
+  const [systemPrompt, setSystemPrompt] = useState('You are a helpful AI assistant focused on business and strategic advice. Provide clear, actionable insights while being professional and concise.');
   const [models, setModels] = useState([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
 
@@ -19,6 +20,7 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
   useEffect(() => {
     const savedApiKey = localStorage.getItem('openrouter_api_key');
     const savedModel = localStorage.getItem('openrouter_model');
+    const savedSystemPrompt = localStorage.getItem('openrouter_system_prompt');
     
     if (savedApiKey) {
       setApiKey(savedApiKey);
@@ -26,11 +28,15 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
     if (savedModel) {
       setSelectedModel(savedModel);
     }
+    if (savedSystemPrompt) {
+      setSystemPrompt(savedSystemPrompt);
+    }
     
     // Notify parent component of initial settings
     onSettingsChange({
       apiKey: savedApiKey || '',
-      model: savedModel || 'anthropic/claude-3-haiku'
+      model: savedModel || 'anthropic/claude-3-haiku',
+      systemPrompt: savedSystemPrompt || 'You are a helpful AI assistant focused on business and strategic advice. Provide clear, actionable insights while being professional and concise.'
     });
   }, [onSettingsChange]);
 
@@ -148,7 +154,8 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
     localStorage.setItem('openrouter_api_key', finalApiKey);
     onSettingsChange({
       apiKey: finalApiKey,
-      model: selectedModel
+      model: selectedModel,
+      systemPrompt: systemPrompt
     });
   };
 
@@ -158,7 +165,30 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
     localStorage.setItem('openrouter_model', newModel);
     onSettingsChange({
       apiKey: apiKey,
-      model: newModel
+      model: newModel,
+      systemPrompt: systemPrompt
+    });
+  };
+
+  const handleSystemPromptChange = (e) => {
+    const newSystemPrompt = e.target.value;
+    setSystemPrompt(newSystemPrompt);
+    localStorage.setItem('openrouter_system_prompt', newSystemPrompt);
+    onSettingsChange({
+      apiKey: apiKey,
+      model: selectedModel,
+      systemPrompt: newSystemPrompt
+    });
+  };
+
+  const resetSystemPrompt = () => {
+    const defaultPrompt = 'You are a helpful AI assistant focused on business and strategic advice. Provide clear, actionable insights while being professional and concise.';
+    setSystemPrompt(defaultPrompt);
+    localStorage.setItem('openrouter_system_prompt', defaultPrompt);
+    onSettingsChange({
+      apiKey: apiKey,
+      model: selectedModel,
+      systemPrompt: defaultPrompt
     });
   };
 
@@ -253,6 +283,36 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
             {isLoadingModels && (
               <p className="text-sm text-blue-400 animate-pulse">Loading available models...</p>
             )}
+          </div>
+
+          {/* System Prompt Section */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
+                <Settings className="h-4 w-4 text-blue-400" />
+                System Prompt
+              </label>
+              <Button
+                onClick={resetSystemPrompt}
+                variant="ghost"
+                size="sm"
+                className="text-xs text-gray-400 hover:text-white px-2 py-1 h-auto"
+              >
+                Reset
+              </Button>
+            </div>
+            <textarea
+              value={systemPrompt}
+              onChange={handleSystemPromptChange}
+              placeholder="Enter system instructions for the AI..."
+              className="w-full p-3 text-sm bg-[#4b5563] border border-[#6b7280] rounded-xl 
+                       text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500/20 
+                       resize-none transition-all duration-200 min-h-[80px]"
+              rows={3}
+            />
+            <p className="text-xs text-gray-400">
+              Define how the AI should behave and respond to your queries
+            </p>
           </div>
 
           {/* Current Settings Summary */}

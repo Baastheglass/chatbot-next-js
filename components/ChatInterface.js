@@ -34,7 +34,8 @@ const ChatInterface = () => {
   // OpenRouter settings state
   const [openRouterSettings, setOpenRouterSettings] = useState({
     apiKey: '',
-    model: 'anthropic/claude-3-haiku'
+    model: 'anthropic/claude-3-haiku',
+    systemPrompt: ''
   });
   // Authentication disabled - no session/user email required
   const userEmail = "demo@example.com"; // Demo user for development 
@@ -233,7 +234,8 @@ const ChatInterface = () => {
         // Debug OpenRouter settings
         console.log('OpenRouter Settings:', {
             apiKey: openRouterSettings.apiKey ? 'Present' : 'Missing',
-            model: openRouterSettings.model
+            model: openRouterSettings.model,
+            systemPrompt: openRouterSettings.systemPrompt ? 'Present' : 'Missing'
         });
 
         // Get response from chat endpoint with proper headers
@@ -243,7 +245,8 @@ const ChatInterface = () => {
         }, {
             headers: {
                 'X-OpenRouter-API-Key': openRouterSettings.apiKey,
-                'X-OpenRouter-Model': openRouterSettings.model
+                'X-OpenRouter-Model': openRouterSettings.model,
+                'X-System-Prompt': openRouterSettings.systemPrompt || ''
             }
         });
         
