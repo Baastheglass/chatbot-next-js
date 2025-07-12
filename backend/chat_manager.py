@@ -551,7 +551,7 @@ Provide me with 3 routes to market """
             
         return context
 
-    async def get_response(self, message: str, session_id: str, openrouter_api_key: str = None, openrouter_model: str = None) -> str:
+    async def get_response(self, message: str, session_id: str, openrouter_api_key: str = None, openrouter_model: str = None, system_prompt: str = None) -> str:
         try:
             # Add user message to history
             self.add_message(session_id, {
@@ -569,8 +569,12 @@ Provide me with 3 routes to market """
                 if "mcq_context" in msg:
                     mcq_context = msg["mcq_context"]
 
-            # --- BYPASS VECTOR DB: Always use GPT with system prompt and chat history ---
-            system_content = """You are a business advisor for ai powered applications/tools.
+            # Use custom system prompt if provided, otherwise use default business advisor prompt
+            if system_prompt and system_prompt.strip():
+                system_content = system_prompt.strip()
+                log_info(f"Using custom system prompt: {system_content[:100]}...")
+            else:
+                system_content = """You are a business advisor for ai powered applications/tools.
 Overview:
 I want to build an ai-powered SAAS targeted towards businesses that want to understand how ai can help solve the businesses challenges. The SAAS will be in the form of an online browser based application. The aim of the SAAS is simple, it's a tool that businesses owners, directors and managers can use to gain an understanding of the possibilities of ai within their business, and consequently, helping generate leads for stratos ai.
 Target market
@@ -596,6 +600,9 @@ Give me feedback on the overall idea
 Highlight my blindspots and what I have overlooked
 Provide with simple stress tests for the idea
 Provide me with 3 routes to market"""
+                log_info("Using default business advisor system prompt")
+            
+            # Add context enhancements for diagrams and MCQs
             if diagram_context:
                 system_content += f"\n\nThere is a diagram being discussed that shows: {diagram_context['description']}"
             if mcq_context and mcq_context.get("isAnswered"):

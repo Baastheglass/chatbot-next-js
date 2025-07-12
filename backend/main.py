@@ -121,6 +121,12 @@ async def chat_endpoint(chat_message: ChatMessage, request: Request):
         # Get OpenRouter settings from request headers
         openrouter_api_key = request.headers.get("X-OpenRouter-API-Key")
         openrouter_model = request.headers.get("X-OpenRouter-Model")
+        system_prompt = request.headers.get("X-System-Prompt", "")
+        
+        # Debug log the received headers
+        print(f"Received headers - API Key: {'Present' if openrouter_api_key else 'Missing'}, Model: {openrouter_model}, System Prompt: {'Present' if system_prompt else 'Missing'}")
+        if system_prompt:
+            print(f"System Prompt (first 100 chars): {system_prompt[:100]}...")
         
         # Create new session if none provided
         session_id = chat_message.session_id
@@ -170,7 +176,8 @@ async def chat_endpoint(chat_message: ChatMessage, request: Request):
             message=chat_message.message,
             session_id=session_id,
             openrouter_api_key=openrouter_api_key,
-            openrouter_model=openrouter_model
+            openrouter_model=openrouter_model,
+            system_prompt=system_prompt
         )
         
         return ChatResponse(
