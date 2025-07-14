@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ConfirmDialog from './ui/confirm-dialog';
+import InputDialog from './ui/input-dialog';
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import api, { apiPost,apiGet } from "@/lib/requests";
@@ -36,6 +37,13 @@ const ChatInterface = () => {
     chatId: null,
     title: '',
     message: ''
+  });
+  // Input dialog state for new chat
+  const [inputDialog, setInputDialog] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    placeholder: ''
   });
   // OpenRouter settings state
   const [openRouterSettings, setOpenRouterSettings] = useState({
@@ -76,10 +84,17 @@ const ChatInterface = () => {
   }, []);
 
   const handleNewChat = async () => {
+    // Show custom input dialog
+    setInputDialog({
+      isOpen: true,
+      title: 'Create New Chat',
+      message: 'Enter a name for your new conversation:',
+      placeholder: 'e.g., Marketing Strategy, Product Development...'
+    });
+  };
+
+  const confirmCreateChat = async (chatTitle) => {
     try {
-      const chatTitle = window.prompt("Enter a name for the new chat:");
-      if (!chatTitle) return;
-  
       const data = await apiPost("/chats", {
         user_email: userEmail,
         title: chatTitle
@@ -552,6 +567,20 @@ return (
       confirmText="Delete"
       cancelText="Cancel"
       variant="destructive"
+    />
+    
+    {/* Custom Input Dialog for New Chat */}
+    <InputDialog
+      isOpen={inputDialog.isOpen}
+      onClose={() => setInputDialog({ ...inputDialog, isOpen: false })}
+      onConfirm={confirmCreateChat}
+      title={inputDialog.title}
+      message={inputDialog.message}
+      placeholder={inputDialog.placeholder}
+      confirmText="Create Chat"
+      cancelText="Cancel"
+      variant="primary"
+      maxLength={80}
     />
   </KeyboardAwareContainer>
 );
