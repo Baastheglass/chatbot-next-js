@@ -9,6 +9,7 @@ import OpenRouterSettings from './OpenRouterSettings';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import ConfirmDialog from './ui/confirm-dialog';
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import api, { apiPost,apiGet } from "@/lib/requests";
@@ -29,6 +30,13 @@ const ChatInterface = () => {
   const [chats, setChats] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  // Confirmation dialog state
+  const [confirmDialog, setConfirmDialog] = useState({
+    isOpen: false,
+    chatId: null,
+    title: '',
+    message: ''
+  });
   // OpenRouter settings state
   const [openRouterSettings, setOpenRouterSettings] = useState({
     apiKey: '',
@@ -90,10 +98,22 @@ const ChatInterface = () => {
     }
   };
   const handleDeleteChat = async (chatId) => {
-    // Add confirmation
-    const confirmed = window.confirm("Are you sure you want to delete this chat?");
-    if (!confirmed) return;
-  
+    // Find the chat to get its title
+    const chat = chats.find(c => c.chatId === chatId);
+    const chatTitle = chat ? chat.title : 'this chat';
+    
+    // Show custom confirmation dialog
+    setConfirmDialog({
+      isOpen: true,
+      chatId: chatId,
+      title: 'Delete Chat',
+      message: `Are you sure you want to delete "${chatTitle}"? This action cannot be undone.`
+    });
+  };
+
+  const confirmDeleteChat = async () => {
+    const chatId = confirmDialog.chatId;
+    
     try {
       const response = await apiPost(`/chats/${chatId}/delete`);
       if (response.status === "ok") {
@@ -521,6 +541,18 @@ return (
         </div>
       </div>
     </div>
+    
+    {/* Custom Confirmation Dialog */}
+    <ConfirmDialog
+      isOpen={confirmDialog.isOpen}
+      onClose={() => setConfirmDialog({ ...confirmDialog, isOpen: false })}
+      onConfirm={confirmDeleteChat}
+      title={confirmDialog.title}
+      message={confirmDialog.message}
+      confirmText="Delete"
+      cancelText="Cancel"
+      variant="destructive"
+    />
   </KeyboardAwareContainer>
 );
 }
