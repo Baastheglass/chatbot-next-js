@@ -230,7 +230,7 @@ const ChatInterface = () => {
             headers: {
                 'X-OpenRouter-API-Key': openRouterSettings.apiKey,
                 'X-OpenRouter-Model': openRouterSettings.model,
-                'X-System-Prompt': openRouterSettings.systemPrompt || ''
+                'X-System-Prompt': encodeURIComponent(openRouterSettings.systemPrompt || '')
             }
         });
         

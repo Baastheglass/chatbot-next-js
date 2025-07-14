@@ -8,6 +8,7 @@ from vectordb_manager import VectorDBManager
 from chat_manager import ChatManager
 import os
 from dotenv import load_dotenv
+import urllib.parse
 # from auth_middleware import verify_token  # Authentication disabled for demo/development
 
 load_dotenv()
@@ -121,7 +122,10 @@ async def chat_endpoint(chat_message: ChatMessage, request: Request):
         # Get OpenRouter settings from request headers
         openrouter_api_key = request.headers.get("X-OpenRouter-API-Key")
         openrouter_model = request.headers.get("X-OpenRouter-Model")
-        system_prompt = request.headers.get("X-System-Prompt", "")
+        system_prompt_encoded = request.headers.get("X-System-Prompt", "")
+        
+        # Decode the URL-encoded system prompt
+        system_prompt = urllib.parse.unquote(system_prompt_encoded) if system_prompt_encoded else ""
         
         # Debug log the received headers
         print(f"Received headers - API Key: {'Present' if openrouter_api_key else 'Missing'}, Model: {openrouter_model}, System Prompt: {'Present' if system_prompt else 'Missing'}")
