@@ -32,7 +32,7 @@ const ChatInterface = () => {
   // OpenRouter settings state
   const [openRouterSettings, setOpenRouterSettings] = useState({
     apiKey: '',
-    model: 'anthropic/claude-3-haiku',
+    model: 'deepseek/deepseek-chat:free',
     systemPrompt: DEFAULT_SYSTEM_PROMPT
   });
   // Authentication disabled - no session/user email required

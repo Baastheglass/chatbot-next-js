@@ -12,7 +12,7 @@ import { DEFAULT_SYSTEM_PROMPT } from "@/lib/constants";
 const OpenRouterSettings = ({ onSettingsChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [apiKey, setApiKey] = useState('');
-  const [selectedModel, setSelectedModel] = useState('anthropic/claude-3-haiku');
+  const [selectedModel, setSelectedModel] = useState('deepseek/deepseek-chat:free');
   const [systemPrompt, setSystemPrompt] = useState(DEFAULT_SYSTEM_PROMPT);
   const [models, setModels] = useState([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
@@ -36,7 +36,7 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
     // Notify parent component of initial settings
     onSettingsChange({
       apiKey: savedApiKey || '',
-      model: savedModel || 'anthropic/claude-3-haiku',
+      model: savedModel || 'deepseek/deepseek-chat:free',
       systemPrompt: savedSystemPrompt || DEFAULT_SYSTEM_PROMPT
     });
   }, [onSettingsChange]);
@@ -59,25 +59,54 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
         
         const filteredModels = data.data
           .filter(model => {
-            // Check if model belongs to allowed families
+            // Check if model belongs to allowed families or is a free model
             const isAllowedFamily = allowedFamilies.some(family => model.id.toLowerCase().includes(family));
-            // Also filter out free models and ensure decent context length
-            return isAllowedFamily && !model.id.includes('free') && model.context_length > 4000;
+            const isFreeModel = model.id.includes(':free') || 
+                               model.pricing?.prompt === '0' || 
+                               model.pricing?.completion === '0' ||
+                               model.id.includes('free');
+            
+            // Include models from allowed families OR free models with decent context length
+            return (isAllowedFamily || isFreeModel) && model.context_length > 4000;
           })
           .sort((a, b) => {
-            // Prioritize popular models from allowed families
+            // Prioritize free models first, then popular paid models
+            const aIsFree = a.id.includes(':free') || a.id.includes('free') || 
+                           a.pricing?.prompt === '0' || a.pricing?.completion === '0';
+            const bIsFree = b.id.includes(':free') || b.id.includes('free') || 
+                           b.pricing?.prompt === '0' || b.pricing?.completion === '0';
+            
+            if (aIsFree && !bIsFree) return -1;
+            if (!aIsFree && bIsFree) return 1;
+            
+            // Within same tier (free vs paid), prioritize by specific models
             const priority = {
-              'openai/gpt-4o': 1,
-              'openai/gpt-4o-mini': 2,
-              'anthropic/claude-3-5-sonnet': 3,
-              'anthropic/claude-3-haiku': 4,
-              'anthropic/claude-3-sonnet': 5,
-              'meta-llama/llama-3.3-70b-instruct': 6,
-              'meta-llama/llama-3.1-8b-instruct': 7,
-              'google/gemini-pro-1.5': 8,
-              'google/gemini-flash-1.5': 9,
-              'xai/grok-beta': 10,
-              'deepseek/deepseek-chat': 11
+              // Free models (highest priority)
+              'deepseek/deepseek-chat:free': 1,
+              'meta-llama/llama-3.1-8b-instruct:free': 2,
+              'meta-llama/llama-3.2-3b-instruct:free': 3,
+              'google/gemini-flash-1.5:free': 4,
+              'mistralai/mistral-7b-instruct:free': 5,
+              'huggingfaceh4/zephyr-7b-beta:free': 6,
+              'openchat/openchat-7b:free': 7,
+              'gryphe/mythomist-7b:free': 8,
+              'undi95/toppy-m-7b:free': 9,
+              'nousresearch/nous-capybara-7b:free': 10,
+              'microsoft/wizardlm-2-8x22b:free': 11,
+              'teknium/openhermes-2.5-mistral-7b:free': 12,
+              'openrouter/auto': 13,
+              // Paid models
+              'openai/gpt-4o': 50,
+              'openai/gpt-4o-mini': 51,
+              'anthropic/claude-3-5-sonnet': 52,
+              'anthropic/claude-3-haiku': 53,
+              'anthropic/claude-3-sonnet': 54,
+              'meta-llama/llama-3.3-70b-instruct': 55,
+              'meta-llama/llama-3.1-8b-instruct': 56,
+              'google/gemini-pro-1.5': 57,
+              'google/gemini-flash-1.5': 58,
+              'xai/grok-beta': 59,
+              'deepseek/deepseek-chat': 60
             };
             return (priority[a.id] || 999) - (priority[b.id] || 999);
           });
@@ -85,8 +114,23 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
         setModels(filteredModels);
       } else {
         console.error('Failed to fetch models from OpenRouter');
-        // Use fallback models from specified families only
+        // Use fallback models including free models
         setModels([
+          // Free models (top priority)
+          { id: 'deepseek/deepseek-chat:free', name: '🆓 DeepSeek Chat (Free)' },
+          { id: 'meta-llama/llama-3.1-8b-instruct:free', name: '🆓 Llama 3.1 8B (Free)' },
+          { id: 'meta-llama/llama-3.2-3b-instruct:free', name: '🆓 Llama 3.2 3B (Free)' },
+          { id: 'google/gemini-flash-1.5:free', name: '🆓 Gemini Flash 1.5 (Free)' },
+          { id: 'mistralai/mistral-7b-instruct:free', name: '🆓 Mistral 7B (Free)' },
+          { id: 'huggingfaceh4/zephyr-7b-beta:free', name: '🆓 Zephyr 7B Beta (Free)' },
+          { id: 'openchat/openchat-7b:free', name: '🆓 OpenChat 7B (Free)' },
+          { id: 'gryphe/mythomist-7b:free', name: '🆓 Mythomist 7B (Free)' },
+          { id: 'undi95/toppy-m-7b:free', name: '🆓 Toppy M 7B (Free)' },
+          { id: 'nousresearch/nous-capybara-7b:free', name: '🆓 Nous Capybara 7B (Free)' },
+          { id: 'microsoft/wizardlm-2-8x22b:free', name: '🆓 WizardLM 2 8x22B (Free)' },
+          { id: 'teknium/openhermes-2.5-mistral-7b:free', name: '🆓 OpenHermes 2.5 (Free)' },
+          { id: 'openrouter/auto', name: '🆓 Auto (Cheapest for prompt)' },
+          // Paid models
           { id: 'openai/gpt-4o', name: 'GPT-4o' },
           { id: 'openai/gpt-4o-mini', name: 'GPT-4o Mini' },
           { id: 'anthropic/claude-3-5-sonnet', name: 'Claude 3.5 Sonnet' },
@@ -102,8 +146,23 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
       }
     } catch (error) {
       console.error('Error fetching models:', error);
-      // Use fallback models from specified families only
+      // Use fallback models including free models
       setModels([
+        // Free models (top priority)
+        { id: 'deepseek/deepseek-chat:free', name: '🆓 DeepSeek Chat (Free)' },
+        { id: 'meta-llama/llama-3.1-8b-instruct:free', name: '🆓 Llama 3.1 8B (Free)' },
+        { id: 'meta-llama/llama-3.2-3b-instruct:free', name: '🆓 Llama 3.2 3B (Free)' },
+        { id: 'google/gemini-flash-1.5:free', name: '🆓 Gemini Flash 1.5 (Free)' },
+        { id: 'mistralai/mistral-7b-instruct:free', name: '🆓 Mistral 7B (Free)' },
+        { id: 'huggingfaceh4/zephyr-7b-beta:free', name: '🆓 Zephyr 7B Beta (Free)' },
+        { id: 'openchat/openchat-7b:free', name: '🆓 OpenChat 7B (Free)' },
+        { id: 'gryphe/mythomist-7b:free', name: '🆓 Mythomist 7B (Free)' },
+        { id: 'undi95/toppy-m-7b:free', name: '🆓 Toppy M 7B (Free)' },
+        { id: 'nousresearch/nous-capybara-7b:free', name: '🆓 Nous Capybara 7B (Free)' },
+        { id: 'microsoft/wizardlm-2-8x22b:free', name: '🆓 WizardLM 2 8x22B (Free)' },
+        { id: 'teknium/openhermes-2.5-mistral-7b:free', name: '🆓 OpenHermes 2.5 (Free)' },
+        { id: 'openrouter/auto', name: '🆓 Auto (Cheapest for prompt)' },
+        // Paid models
         { id: 'openai/gpt-4o', name: 'GPT-4o' },
         { id: 'openai/gpt-4o-mini', name: 'GPT-4o Mini' },
         { id: 'anthropic/claude-3-5-sonnet', name: 'Claude 3.5 Sonnet' },
