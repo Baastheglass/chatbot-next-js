@@ -13,6 +13,7 @@ import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import api, { apiPost,apiGet } from "@/lib/requests";
 import { Menu, MoreVertical, Trash2, Plus, GitBranchIcon, VideoIcon, ListChecksIcon, SendIcon } from 'lucide-react'; // e.g. for toggle icon
+import { DEFAULT_SYSTEM_PROMPT } from "@/lib/constants";
 import { KeyboardAwareContainer } from './ui/keyboard-aware-container';
 import { randomPick, sleep } from '@/lib/utils';
 
@@ -35,7 +36,7 @@ const ChatInterface = () => {
   const [openRouterSettings, setOpenRouterSettings] = useState({
     apiKey: '',
     model: 'anthropic/claude-3-haiku',
-    systemPrompt: ''
+    systemPrompt: DEFAULT_SYSTEM_PROMPT
   });
   // Authentication disabled - no session/user email required
   const userEmail = "demo@example.com"; // Demo user for development 

@@ -7,12 +7,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Settings, ChevronDown, Key, Cpu } from 'lucide-react';
+import { DEFAULT_SYSTEM_PROMPT } from "@/lib/constants";
 
 const OpenRouterSettings = ({ onSettingsChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [apiKey, setApiKey] = useState('');
   const [selectedModel, setSelectedModel] = useState('anthropic/claude-3-haiku');
-  const [systemPrompt, setSystemPrompt] = useState('You are a helpful AI assistant focused on business and strategic advice. Provide clear, actionable insights while being professional and concise.');
+  const [systemPrompt, setSystemPrompt] = useState(DEFAULT_SYSTEM_PROMPT);
   const [models, setModels] = useState([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
 
@@ -36,7 +37,7 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
     onSettingsChange({
       apiKey: savedApiKey || '',
       model: savedModel || 'anthropic/claude-3-haiku',
-      systemPrompt: savedSystemPrompt || 'You are a helpful AI assistant focused on business and strategic advice. Provide clear, actionable insights while being professional and concise.'
+      systemPrompt: savedSystemPrompt || DEFAULT_SYSTEM_PROMPT
     });
   }, [onSettingsChange]);
 
@@ -182,13 +183,12 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
   };
 
   const resetSystemPrompt = () => {
-    const defaultPrompt = 'You are a helpful AI assistant focused on business and strategic advice. Provide clear, actionable insights while being professional and concise.';
-    setSystemPrompt(defaultPrompt);
-    localStorage.setItem('openrouter_system_prompt', defaultPrompt);
+    setSystemPrompt(DEFAULT_SYSTEM_PROMPT);
+    localStorage.setItem('openrouter_system_prompt', DEFAULT_SYSTEM_PROMPT);
     onSettingsChange({
       apiKey: apiKey,
       model: selectedModel,
-      systemPrompt: defaultPrompt
+      systemPrompt: DEFAULT_SYSTEM_PROMPT
     });
   };
 
