@@ -70,6 +70,46 @@ const PromptEditor = ({
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
+  // Prevent body interactions when dialog is open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Store original styles
+    const originalOverflow = document.body.style.overflow;
+    const originalPointerEvents = document.body.style.pointerEvents;
+    
+    // Disable scrolling and pointer events on body
+    document.body.style.overflow = 'hidden';
+    
+    // Prevent all interactions with elements outside the dialog
+    const handleInteraction = (e) => {
+      const dialogElement = document.querySelector('[data-prompt-editor]');
+      if (dialogElement && !dialogElement.contains(e.target)) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
+      }
+    };
+
+    // Add event listeners for all interaction types
+    const events = ['click', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'keydown', 'keyup'];
+    events.forEach(event => {
+      document.addEventListener(event, handleInteraction, { capture: true, passive: false });
+    });
+
+    return () => {
+      // Restore original styles
+      document.body.style.overflow = originalOverflow;
+      document.body.style.pointerEvents = originalPointerEvents;
+      
+      // Remove event listeners
+      events.forEach(event => {
+        document.removeEventListener(event, handleInteraction, { capture: true });
+      });
+    };
+  }, [isOpen]);
+
   const handlePromptChange = (e) => {
     const newPrompt = e.target.value;
     setPrompt(newPrompt);
@@ -134,23 +174,38 @@ const PromptEditor = ({
 
   return (
     <div 
-      className="fixed inset-0 flex items-center justify-center z-[99999] animate-in fade-in duration-300" 
+      className="fixed inset-0 flex items-center justify-center animate-in fade-in duration-300" 
       style={{ 
-        backgroundColor: '#000000',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
         position: 'fixed',
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
         width: '100vw',
-        height: '100vh'
+        height: '100vh',
+        zIndex: 999999,
+        pointerEvents: 'all'
       }}
       onClick={onClose}
+      onMouseDown={(e) => e.stopPropagation()}
+      onMouseUp={(e) => e.stopPropagation()}
+      onTouchStart={(e) => e.stopPropagation()}
+      onTouchEnd={(e) => e.stopPropagation()}
     >
       <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl shadow-2xl w-[95vw] h-[95vh] flex flex-col border border-slate-700/50 animate-in zoom-in-95 duration-300 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
+        onMouseUp={(e) => e.stopPropagation()}
+        onTouchStart={(e) => e.stopPropagation()}
+        onTouchEnd={(e) => e.stopPropagation()}
         data-prompt-editor
         tabIndex={-1}
+        style={{ 
+          pointerEvents: 'all',
+          position: 'relative',
+          zIndex: 999999
+        }}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-8 border-b border-slate-700/50 bg-slate-800/30 rounded-t-3xl flex-shrink-0">
