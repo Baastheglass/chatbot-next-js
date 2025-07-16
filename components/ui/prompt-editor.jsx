@@ -88,7 +88,7 @@ const PromptEditor = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 animate-in fade-in duration-300">
+    <div className="fixed inset-0 bg-slate-900 flex items-center justify-center z-50 animate-in fade-in duration-300">
       <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl shadow-2xl w-[95vw] h-[95vh] flex flex-col border border-slate-700/50 animate-in zoom-in-95 duration-300 overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-8 border-b border-slate-700/50 bg-slate-800/30 rounded-t-3xl flex-shrink-0">
@@ -166,7 +166,7 @@ const PromptEditor = ({
 
         {/* Content */}
         <div className="flex-1 p-8 overflow-hidden">
-          <div className="h-full relative">
+          <div className="h-full">
             <textarea
               ref={textareaRef}
               value={prompt}
@@ -175,8 +175,6 @@ const PromptEditor = ({
               placeholder="Enter your custom system prompt here..."
               className="w-full h-full bg-slate-800/90 text-slate-100 rounded-xl p-6 border border-slate-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 resize-none outline-none transition-all duration-200 font-mono text-base leading-7 backdrop-blur-sm"
             />
-            {/* Optional: Add a subtle border glow effect when focused */}
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 pointer-events-none transition-opacity duration-200 peer-focus:opacity-100" />
           </div>
         </div>
 
