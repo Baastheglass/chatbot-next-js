@@ -6,8 +6,9 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Settings, ChevronDown, Key, Cpu } from 'lucide-react';
+import { Settings, ChevronDown, Key, Cpu, Bot, Edit } from 'lucide-react';
 import { DEFAULT_SYSTEM_PROMPT } from "@/lib/constants";
+import PromptEditor from './ui/prompt-editor';
 
 const OpenRouterSettings = ({ onSettingsChange }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +17,7 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
   const [systemPrompt, setSystemPrompt] = useState(DEFAULT_SYSTEM_PROMPT);
   const [models, setModels] = useState([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
+  const [isPromptEditorOpen, setIsPromptEditorOpen] = useState(false);
 
   // Load saved settings from localStorage
   useEffect(() => {
@@ -230,17 +232,6 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
     });
   };
 
-  const handleSystemPromptChange = (e) => {
-    const newSystemPrompt = e.target.value;
-    setSystemPrompt(newSystemPrompt);
-    localStorage.setItem('openrouter_system_prompt', newSystemPrompt);
-    onSettingsChange({
-      apiKey: apiKey,
-      model: selectedModel,
-      systemPrompt: newSystemPrompt
-    });
-  };
-
   const resetSystemPrompt = () => {
     setSystemPrompt(DEFAULT_SYSTEM_PROMPT);
     localStorage.setItem('openrouter_system_prompt', DEFAULT_SYSTEM_PROMPT);
@@ -249,6 +240,18 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
       model: selectedModel,
       systemPrompt: DEFAULT_SYSTEM_PROMPT
     });
+  };
+
+  const handlePromptSave = (newPrompt) => {
+    setSystemPrompt(newPrompt);
+    localStorage.setItem('openrouter_system_prompt', newPrompt);
+    if (onSettingsChange) {
+      onSettingsChange({
+        apiKey,
+        model: selectedModel,
+        systemPrompt: newPrompt
+      });
+    }
   };
 
   const getCurrentModelName = () => {
@@ -348,7 +351,7 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
-                <Settings className="h-4 w-4 text-blue-400" />
+                <Bot className="h-4 w-4 text-blue-400" />
                 System Prompt
               </label>
               <Button
@@ -360,18 +363,31 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
                 Reset
               </Button>
             </div>
-            <textarea
-              value={systemPrompt}
-              onChange={handleSystemPromptChange}
-              placeholder="Enter system instructions for the AI..."
-              className="w-full p-3 text-sm bg-[#4b5563] border border-[#6b7280] rounded-xl 
-                       text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500/20 
-                       resize-none transition-all duration-200 min-h-[80px]"
-              rows={3}
-            />
-            <p className="text-xs text-gray-400">
-              Define how the AI should behave and respond to your queries
-            </p>
+            
+            <div className="relative">
+              <div 
+                onClick={() => setIsPromptEditorOpen(true)}
+                className="w-full h-20 bg-[#4b5563] rounded-xl p-3 border border-[#6b7280] hover:border-blue-500 transition-colors cursor-pointer group"
+              >
+                <div className="text-gray-300 text-sm leading-relaxed overflow-hidden" 
+                     style={{ 
+                       display: '-webkit-box',
+                       WebkitLineClamp: 3,
+                       WebkitBoxOrient: 'vertical',
+                       textOverflow: 'ellipsis'
+                     }}>
+                  {systemPrompt || "Click to edit system prompt..."}
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Edit className="w-4 h-4 text-gray-400" />
+                </div>
+              </div>
+              
+              <div className="mt-2 text-xs text-gray-400">
+                Click to open full editor • {systemPrompt.length} characters
+              </div>
+            </div>
           </div>
 
           {/* Current Settings Summary */}
@@ -426,6 +442,15 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
           </Button>
         </div>
       </PopoverContent>
+
+      {/* Add the PromptEditor */}
+      <PromptEditor
+        isOpen={isPromptEditorOpen}
+        onClose={() => setIsPromptEditorOpen(false)}
+        onSave={handlePromptSave}
+        initialPrompt={systemPrompt}
+        title="Edit System Prompt"
+      />
     </Popover>
   );
 };
