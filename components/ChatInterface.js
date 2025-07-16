@@ -13,6 +13,7 @@ import ConfirmDialog from './ui/confirm-dialog';
 import InputDialog from './ui/input-dialog';
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
+import { enhanceMarkdownFormatting, addBusinessResponseEnhancements } from '../lib/markdown-utils';
 import api, { apiPost,apiGet } from "@/lib/requests";
 import { Menu, MoreVertical, Trash2, SendIcon } from 'lucide-react';
 import { DEFAULT_SYSTEM_PROMPT } from "@/lib/constants";
@@ -313,67 +314,144 @@ const ChatInterface = () => {
     <ReactMarkdown
         rehypePlugins={[rehypeRaw]}
         components={{
-            // Override default elements with custom styling
+            // Enhanced paragraph styling with better spacing
             p: ({children}) => (
-                <p className="text-[#e9edef]">{children}</p>
+                <p className="text-[#e9edef] mb-4 leading-relaxed">{children}</p>
             ),
+            // Enhanced text formatting
             strong: ({children}) => (
-                <strong className="font-bold text-white">{children}</strong>
+                <strong className="font-bold text-white bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">{children}</strong>
             ),
             em: ({children}) => (
-                <em className="italic text-white">{children}</em>
+                <em className="italic text-blue-300">{children}</em>
             ),
+            // Enhanced heading hierarchy with better visual distinction
             h1: ({children}) => (
-                <h1 className="text-xl font-bold text-white mb-2">{children}</h1>
+                <h1 className="text-2xl font-bold text-white mb-6 mt-6 pb-2 border-b border-blue-500/30 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    {children}
+                </h1>
             ),
             h2: ({children}) => (
-                <h2 className="text-lg font-bold text-white mb-2">{children}</h2>
+                <h2 className="text-xl font-bold text-white mb-4 mt-5 flex items-center">
+                    <span className="w-2 h-6 bg-gradient-to-b from-blue-400 to-purple-400 mr-3 rounded"></span>
+                    {children}
+                </h2>
             ),
             h3: ({children}) => (
-                <h3 className="text-base font-bold text-white mb-1">{children}</h3>
+                <h3 className="text-lg font-semibold text-blue-300 mb-3 mt-4 flex items-center">
+                    <span className="w-1.5 h-5 bg-blue-400 mr-2 rounded"></span>
+                    {children}
+                </h3>
             ),
+            h4: ({children}) => (
+                <h4 className="text-base font-semibold text-purple-300 mb-2 mt-3">{children}</h4>
+            ),
+            h5: ({children}) => (
+                <h5 className="text-sm font-semibold text-gray-300 mb-2 mt-2">{children}</h5>
+            ),
+            h6: ({children}) => (
+                <h6 className="text-sm font-medium text-gray-400 mb-1 mt-2">{children}</h6>
+            ),
+            // Enhanced lists with better styling and spacing
             ul: ({children}) => (
-              <ul className="list-disc list-inside space-y-4 text-[#e9edef] mb-2">{children}</ul>            ),
+                <ul className="space-y-2 mb-4 ml-2">{children}</ul>
+            ),
             ol: ({children}) => (
-                <ol className="list-decimal list-inside text-[#e9edef] mb-2">{children}</ol>
+                <ol className="space-y-2 mb-4 ml-2 counter-reset-list">{children}</ol>
             ),
-            li: ({children}) => (
-              <li className="text-[#e9edef] flex items-start">
-                  <span className="mr-2">•</span>
-                  <span className="flex-1">{children}</span>
-              </li>
+            li: ({children, index}) => (
+                <li className="text-[#e9edef] flex items-start group">
+                    <span className="text-blue-400 mr-3 mt-1 text-sm font-bold">•</span>
+                    <span className="flex-1 leading-relaxed group-hover:text-white transition-colors duration-200">
+                        {children}
+                    </span>
+                </li>
             ),
+            // Enhanced code formatting
             code: ({node, inline, className, children, ...props}) => (
                 <code
-                    className={`${inline ? 'bg-[#182229] px-1 py-0.5 rounded' : ''} text-[#e9edef]`}
+                    className={`${
+                        inline 
+                            ? 'bg-slate-800/80 text-blue-300 px-2 py-1 rounded-md border border-slate-600/50 text-sm font-mono' 
+                            : 'text-[#e9edef]'
+                    }`}
                     {...props}
                 >
                     {children}
                 </code>
             ),
             pre: ({children}) => (
-                <pre className="bg-[#182229] p-3 rounded-lg mb-2 overflow-x-auto">
+                <pre className="bg-slate-900/90 border border-slate-600/50 p-4 rounded-xl mb-4 overflow-x-auto shadow-lg">
+                    <div className="flex items-center mb-2 pb-2 border-b border-slate-700/50">
+                        <div className="flex space-x-2">
+                            <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                        </div>
+                        <span className="ml-4 text-xs text-gray-400">Code</span>
+                    </div>
                     {children}
                 </pre>
             ),
+            // Enhanced blockquotes
             blockquote: ({children}) => (
-                <blockquote className="border-l-4 border-[#8696a0] pl-4 my-2 text-[#e9edef] italic">
-                    {children}
+                <blockquote className="border-l-4 border-gradient-to-b from-blue-400 to-purple-400 pl-6 py-2 my-4 bg-slate-800/30 rounded-r-lg italic">
+                    <div className="text-blue-200 relative">
+                        <span className="text-blue-400 text-2xl absolute -top-2 -left-2">"</span>
+                        {children}
+                    </div>
                 </blockquote>
             ),
+            // Enhanced links
             a: ({children, href}) => (
                 <a 
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-400 hover:underline"
+                    className="text-blue-400 hover:text-blue-300 underline decoration-blue-400/50 hover:decoration-blue-300 transition-all duration-200 font-medium"
                 >
                     {children}
                 </a>
             ),
+            // Add horizontal rule styling
+            hr: () => (
+                <hr className="my-6 border-0 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent" />
+            ),
+            // Add table styling
+            table: ({children}) => (
+                <div className="overflow-x-auto mb-4">
+                    <table className="w-full border-collapse border border-slate-600/50 rounded-lg overflow-hidden">
+                        {children}
+                    </table>
+                </div>
+            ),
+            thead: ({children}) => (
+                <thead className="bg-slate-800/60">{children}</thead>
+            ),
+            tbody: ({children}) => (
+                <tbody>{children}</tbody>
+            ),
+            tr: ({children}) => (
+                <tr className="border-b border-slate-600/30 hover:bg-slate-800/30 transition-colors">
+                    {children}
+                </tr>
+            ),
+            th: ({children}) => (
+                <th className="border border-slate-600/30 px-4 py-2 text-left font-semibold text-blue-300 bg-slate-800/40">
+                    {children}
+                </th>
+            ),
+            td: ({children}) => (
+                <td className="border border-slate-600/30 px-4 py-2 text-[#e9edef]">
+                    {children}
+                </td>
+            ),
         }}
     >
-        {message.content}
+        {message.type === 'bot' 
+            ? addBusinessResponseEnhancements(enhanceMarkdownFormatting(message.content))
+            : message.content
+        }
     </ReactMarkdown>
 );
 }
