@@ -88,71 +88,71 @@ const PromptEditor = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-start justify-center z-50 p-4 pt-8 animate-in fade-in duration-200 overflow-y-auto">
-      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col border border-slate-700/50 animate-in zoom-in-95 duration-200 my-8">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 animate-in fade-in duration-300">
+      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl shadow-2xl w-[95vw] h-[95vh] flex flex-col border border-slate-700/50 animate-in zoom-in-95 duration-300 overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-slate-700/50 bg-slate-800/30 rounded-t-2xl">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
-              <FileText className="w-5 h-5 text-white" />
+        <div className="flex items-center justify-between p-8 border-b border-slate-700/50 bg-slate-800/30 rounded-t-3xl flex-shrink-0">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+              <FileText className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h2 className="text-xl font-semibold text-white">{title}</h2>
-              <p className="text-sm text-slate-400">Customize how your AI assistant behaves</p>
+              <h2 className="text-2xl font-semibold text-white">{title}</h2>
+              <p className="text-base text-slate-400">Customize how your AI assistant behaves</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-lg bg-slate-700/50 hover:bg-slate-600 flex items-center justify-center text-slate-300 hover:text-white transition-all duration-200 hover:scale-105"
+            className="w-10 h-10 rounded-xl bg-slate-700/50 hover:bg-slate-600 flex items-center justify-center text-slate-300 hover:text-white transition-all duration-200 hover:scale-105"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Toolbar */}
-        <div className="flex items-center gap-2 p-4 border-b border-slate-700/50 bg-slate-800/40">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3 px-8 py-5 border-b border-slate-700/50 bg-slate-800/40 flex-shrink-0">
+          <div className="flex items-center gap-3">
             <button
               onClick={() => insertText('**', '**')}
-              className="px-3 py-1.5 text-xs font-bold bg-slate-700/80 hover:bg-slate-600 text-white rounded-md transition-all duration-200 hover:scale-105 shadow-sm"
+              className="px-4 py-2 text-sm font-bold bg-slate-700/80 hover:bg-slate-600 text-white rounded-lg transition-all duration-200 hover:scale-105 shadow-sm"
               title="Bold (Ctrl+B)"
             >
               B
             </button>
             <button
               onClick={() => insertText('*', '*')}
-              className="px-3 py-1.5 text-xs font-medium bg-slate-700/80 hover:bg-slate-600 text-white rounded-md transition-all duration-200 hover:scale-105 italic shadow-sm"
+              className="px-4 py-2 text-sm font-medium bg-slate-700/80 hover:bg-slate-600 text-white rounded-lg transition-all duration-200 hover:scale-105 italic shadow-sm"
               title="Italic (Ctrl+I)"
             >
               I
             </button>
             <button
               onClick={() => insertText('### ', '')}
-              className="px-3 py-1.5 text-xs font-medium bg-slate-700/80 hover:bg-slate-600 text-white rounded-md transition-all duration-200 hover:scale-105 shadow-sm"
+              className="px-4 py-2 text-sm font-medium bg-slate-700/80 hover:bg-slate-600 text-white rounded-lg transition-all duration-200 hover:scale-105 shadow-sm"
               title="Heading"
             >
               H3
             </button>
             <button
               onClick={() => insertText('- ', '')}
-              className="px-3 py-1.5 text-xs font-medium bg-slate-700/80 hover:bg-slate-600 text-white rounded-md transition-all duration-200 hover:scale-105 shadow-sm"
+              className="px-4 py-2 text-sm font-medium bg-slate-700/80 hover:bg-slate-600 text-white rounded-lg transition-all duration-200 hover:scale-105 shadow-sm"
               title="List Item"
             >
               •
             </button>
             <button
               onClick={() => insertText('\n---\n', '')}
-              className="px-3 py-1.5 text-xs font-medium bg-slate-700/80 hover:bg-slate-600 text-white rounded-md transition-all duration-200 hover:scale-105 shadow-sm"
+              className="px-4 py-2 text-sm font-medium bg-slate-700/80 hover:bg-slate-600 text-white rounded-lg transition-all duration-200 hover:scale-105 shadow-sm"
               title="Horizontal Rule"
             >
               ⎯
             </button>
           </div>
           
-          <div className="h-4 w-px bg-slate-600/50 mx-2" />
+          <div className="h-6 w-px bg-slate-600/50 mx-3" />
           
-          <div className="flex items-center gap-2 text-xs text-slate-400">
-            <Type className="w-3 h-3" />
+          <div className="flex items-center gap-3 text-sm text-slate-400">
+            <Type className="w-4 h-4" />
             <span>{prompt.length} characters</span>
             <span>•</span>
             <span>{prompt.split('\n').length} lines</span>
@@ -165,7 +165,7 @@ const PromptEditor = ({
         </div>
 
         {/* Content */}
-        <div className="flex-1 p-6 overflow-hidden">
+        <div className="flex-1 p-8 overflow-hidden">
           <div className="h-full relative">
             <textarea
               ref={textareaRef}
@@ -173,49 +173,49 @@ const PromptEditor = ({
               onChange={handlePromptChange}
               onKeyDown={handleKeyDown}
               placeholder="Enter your custom system prompt here..."
-              className="w-full h-full bg-slate-800/90 text-slate-100 rounded-lg p-4 border border-slate-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 resize-none outline-none transition-all duration-200 font-mono text-sm leading-6 backdrop-blur-sm"
-              style={{ minHeight: '400px', maxHeight: 'calc(100vh - 300px)' }}
+              className="w-full h-full bg-slate-800/90 text-slate-100 rounded-xl p-6 border border-slate-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 resize-none outline-none transition-all duration-200 font-mono text-base leading-7 backdrop-blur-sm"
             />
             {/* Optional: Add a subtle border glow effect when focused */}
-            <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 pointer-events-none transition-opacity duration-200 peer-focus:opacity-100" />
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 pointer-events-none transition-opacity duration-200 peer-focus:opacity-100" />
           </div>
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between p-6 border-t border-slate-700/50 bg-slate-800/30 rounded-b-2xl">
-          <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between p-8 border-t border-slate-700/50 bg-slate-800/30 rounded-b-3xl flex-shrink-0">
+          <div className="flex items-center gap-6">
             <Button
               onClick={handleReset}
               variant="ghost"
-              size="sm"
-              className="text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all duration-200"
+              size="lg"
+              className="text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all duration-200 text-base"
             >
-              <RotateCcw className="w-4 h-4 mr-2" />
+              <RotateCcw className="w-5 h-5 mr-3" />
               Reset to Default
             </Button>
             
-            <div className="text-xs text-slate-500 hidden sm:block">
-              <kbd className="px-1.5 py-0.5 bg-slate-700/60 rounded text-xs border border-slate-600">Ctrl+S</kbd> to save
-              <span className="mx-2">•</span>
-              <kbd className="px-1.5 py-0.5 bg-slate-700/60 rounded text-xs border border-slate-600">Esc</kbd> to close
+            <div className="text-sm text-slate-500 hidden sm:block">
+              <kbd className="px-2 py-1 bg-slate-700/60 rounded-md text-sm border border-slate-600">Ctrl+S</kbd> to save
+              <span className="mx-3">•</span>
+              <kbd className="px-2 py-1 bg-slate-700/60 rounded-md text-sm border border-slate-600">Esc</kbd> to close
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <Button
               onClick={onClose}
               variant="ghost"
-              size="sm"
-              className="text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all duration-200"
+              size="lg"
+              className="text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all duration-200 text-base"
             >
               Cancel
             </Button>
             <Button
               onClick={handleSave}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              size="lg"
+              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-base px-8"
               disabled={!hasChanges}
             >
-              <Save className="w-4 h-4 mr-2" />
+              <Save className="w-5 h-5 mr-3" />
               Save Changes
             </Button>
           </div>
