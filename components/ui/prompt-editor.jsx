@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { X, Save, RotateCcw, Type, FileText, Sparkles } from 'lucide-react';
 import { DEFAULT_SYSTEM_PROMPT } from "@/lib/constants";
+import { createPortal } from 'react-dom';
 
 const PromptEditor = ({ 
   isOpen, 
@@ -81,6 +82,30 @@ const PromptEditor = ({
     // Disable scrolling and pointer events on body
     document.body.style.overflow = 'hidden';
     
+    // Inject critical CSS to ensure modal is on top
+    const style = document.createElement('style');
+    style.id = 'prompt-editor-critical-styles';
+    style.innerHTML = `
+      .prompt-editor-overlay {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 2147483647 !important;
+        pointer-events: all !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .prompt-editor-overlay * {
+        pointer-events: all !important;
+      }
+    `;
+    document.head.appendChild(style);
+    
     // Prevent all interactions with elements outside the dialog
     const handleInteraction = (e) => {
       const dialogElement = document.querySelector('[data-prompt-editor]');
@@ -102,6 +127,12 @@ const PromptEditor = ({
       // Restore original styles
       document.body.style.overflow = originalOverflow;
       document.body.style.pointerEvents = originalPointerEvents;
+      
+      // Remove injected styles
+      const injectedStyle = document.getElementById('prompt-editor-critical-styles');
+      if (injectedStyle) {
+        injectedStyle.remove();
+      }
       
       // Remove event listeners
       events.forEach(event => {
@@ -172,20 +203,23 @@ const PromptEditor = ({
 
   if (!isOpen) return null;
 
-  return (
+  const modalContent = (
     <div 
-      className="fixed inset-0 flex items-center justify-center animate-in fade-in duration-300" 
+      className="prompt-editor-overlay"
       style={{ 
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        width: '100vw',
-        height: '100vh',
-        zIndex: 999999,
-        pointerEvents: 'all'
+        position: 'fixed !important',
+        top: '0 !important',
+        left: '0 !important',
+        right: '0 !important',
+        bottom: '0 !important',
+        width: '100vw !important',
+        height: '100vh !important',
+        zIndex: '2147483647 !important',
+        backgroundColor: 'rgba(0, 0, 0, 0.9) !important',
+        display: 'flex !important',
+        alignItems: 'center !important',
+        justifyContent: 'center !important',
+        pointerEvents: 'all !important'
       }}
       onClick={onClose}
       onMouseDown={(e) => e.stopPropagation()}
@@ -193,7 +227,7 @@ const PromptEditor = ({
       onTouchStart={(e) => e.stopPropagation()}
       onTouchEnd={(e) => e.stopPropagation()}
     >
-      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl shadow-2xl w-[95vw] h-[95vh] flex flex-col border border-slate-700/50 animate-in zoom-in-95 duration-300 overflow-hidden"
+      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl shadow-2xl w-[95vw] h-[95vh] flex flex-col border border-slate-700/50 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
         onMouseDown={(e) => e.stopPropagation()}
         onMouseUp={(e) => e.stopPropagation()}
@@ -202,9 +236,11 @@ const PromptEditor = ({
         data-prompt-editor
         tabIndex={-1}
         style={{ 
-          pointerEvents: 'all',
-          position: 'relative',
-          zIndex: 999999
+          pointerEvents: 'all !important',
+          position: 'relative !important',
+          zIndex: '2147483647 !important',
+          maxWidth: '95vw !important',
+          maxHeight: '95vh !important'
         }}
       >
         {/* Header */}
@@ -338,6 +374,11 @@ const PromptEditor = ({
       </div>
     </div>
   );
+
+  // Use createPortal to render the modal at the document body level
+  return typeof document !== 'undefined' 
+    ? createPortal(modalContent, document.body)
+    : modalContent;
 };
 
 export default PromptEditor;
