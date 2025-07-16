@@ -21,8 +21,53 @@ const PromptEditor = ({
 
   useEffect(() => {
     if (isOpen && textareaRef.current) {
-      textareaRef.current.focus();
+      // Add a small delay to ensure the element is rendered
+      const timer = setTimeout(() => {
+        textareaRef.current?.focus();
+        // Also set cursor to end of text
+        const length = textareaRef.current?.value.length || 0;
+        textareaRef.current?.setSelectionRange(length, length);
+      }, 100);
+      
+      return () => clearTimeout(timer);
     }
+  }, [isOpen]);
+
+  // Focus trap - prevent focus from leaving the dialog
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e) => {
+      // Only trap focus if the event is from within the dialog
+      const dialogElement = document.querySelector('[data-prompt-editor]');
+      if (!dialogElement || !dialogElement.contains(e.target)) return;
+
+      if (e.key === 'Tab') {
+        // Get all focusable elements within the dialog
+        const focusableElements = dialogElement.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey) {
+          // Shift + Tab - moving backwards
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement?.focus();
+          }
+        } else {
+          // Tab - moving forwards
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement?.focus();
+          }
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
   const handlePromptChange = (e) => {
@@ -100,8 +145,13 @@ const PromptEditor = ({
         width: '100vw',
         height: '100vh'
       }}
+      onClick={onClose}
     >
-      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl shadow-2xl w-[95vw] h-[95vh] flex flex-col border border-slate-700/50 animate-in zoom-in-95 duration-300 overflow-hidden">
+      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl shadow-2xl w-[95vw] h-[95vh] flex flex-col border border-slate-700/50 animate-in zoom-in-95 duration-300 overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+        data-prompt-editor
+        tabIndex={-1}
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-8 border-b border-slate-700/50 bg-slate-800/30 rounded-t-3xl flex-shrink-0">
           <div className="flex items-center gap-4">
