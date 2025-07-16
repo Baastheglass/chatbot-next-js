@@ -88,7 +88,19 @@ const PromptEditor = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-slate-900/100 flex items-center justify-center z-[9999] animate-in fade-in duration-300" style={{ backgroundColor: '#0f172a' }}>
+    <div 
+      className="fixed inset-0 flex items-center justify-center z-[99999] animate-in fade-in duration-300" 
+      style={{ 
+        backgroundColor: '#000000',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100vw',
+        height: '100vh'
+      }}
+    >
       <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl shadow-2xl w-[95vw] h-[95vh] flex flex-col border border-slate-700/50 animate-in zoom-in-95 duration-300 overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-8 border-b border-slate-700/50 bg-slate-800/30 rounded-t-3xl flex-shrink-0">
