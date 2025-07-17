@@ -14,6 +14,8 @@ import InputDialog from './ui/input-dialog';
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import { enhanceMarkdownFormatting, addBusinessResponseEnhancements } from '../lib/markdown-utils';
+import EnhancedLoadingMessage from './EnhancedLoadingMessage';
+// import SimpleLoadingMessage from './SimpleLoadingMessage'; // Alternative lighter loading component
 import api, { apiPost,apiGet } from "@/lib/requests";
 import { Menu, MoreVertical, Trash2, SendIcon } from 'lucide-react';
 import { DEFAULT_SYSTEM_PROMPT } from "@/lib/constants";
@@ -600,6 +602,8 @@ return (
                   </div>
                 </div>
               ))}
+              {/* Enhanced loading component */}
+              {isLoading && <EnhancedLoadingMessage />}
               <div ref={scrollDiv} />
             </div>
           )}
