@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { apiPost } from '@/lib/api-client';
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -38,16 +39,10 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8007/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: formData.username,
-          password: formData.password,
-          email: formData.email || null
-        }),
+      const response = await apiPost('/auth/signup', {
+        username: formData.username,
+        password: formData.password,
+        email: formData.email || null
       });
 
       const data = await response.json();
