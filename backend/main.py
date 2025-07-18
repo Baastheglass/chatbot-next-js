@@ -24,10 +24,13 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000", 
         "http://localhost:3001",
-        "https://chatbot-next-js-wheat.vercel.app"
+        "https://chatbot-next-js-wheat.vercel.app",
+        "https://consultant.axonbuild.com",
+        "https://*.vercel.app",  # Allow all Vercel preview deployments
+        "https://vercel.app"
     ],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
     expose_headers=["*"]
 )
@@ -527,4 +530,5 @@ async def get_current_user(request: Request):
         raise HTTPException(status_code=500, detail="Internal server error")
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8007, reload=True)
+    port = int(os.environ.get("PORT", 8007))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)
