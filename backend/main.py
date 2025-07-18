@@ -9,6 +9,10 @@ from chat_manager import ChatManager
 import os
 from dotenv import load_dotenv
 import urllib.parse
+from user_manager import UserManager
+import jwt
+from datetime import datetime, timedelta
+
 # from auth_middleware import verify_token  # Authentication disabled for demo/development
 
 load_dotenv()
@@ -52,6 +56,8 @@ vectordb = VectorDBManager(
     api_key=os.getenv("QDRANT_API_KEY")
 )
 chat_manager = ChatManager(vectordb)
+# Initialize user manager
+user_manager = UserManager()
 
 class ChatMessage(BaseModel):
     message: str
@@ -81,6 +87,20 @@ class NewMessageRequest(BaseModel):
     content: str
     attachmentType: Optional[str] = None
     attachmentData: Optional[Dict] = None
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+class SignupRequest(BaseModel):
+    username: str
+    password: str
+    email: Optional[str] = None
+
+class AuthResponse(BaseModel):
+    success: bool
+    user: Optional[Dict] = None
+    message: Optional[str] = None
 
 @app.post("/chats")
 async def create_chat_endpoint(req: CreateChatRequest, request: Request):
@@ -373,6 +393,138 @@ async def get_openrouter_models(request: Request):
                 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/auth/login", response_model=AuthResponse)
+async def login_endpoint(login_request: LoginRequest):
+    """Handle user login"""
+    try:
+        if not login_request.username or not login_request.password:
+            raise HTTPException(status_code=400, detail="Username and password are required")
+        
+        result = await user_manager.authenticate_user(login_request.username, login_request.password)
+        
+        if not result["success"]:
+            raise HTTPException(status_code=401, detail=result["message"])
+        
+        # Create JWT token
+        jwt_secret = os.getenv("JWT_SECRET")
+        if not jwt_secret:
+            raise HTTPException(status_code=500, detail="JWT secret not configured")
+        
+        token = jwt.encode(
+            {
+                "userId": result["user"]["id"],
+                "username": result["user"]["username"],
+                "exp": datetime.utcnow() + timedelta(days=7)
+            },
+            jwt_secret,
+            algorithm="HS256"
+        )
+        
+        return AuthResponse(
+            success=True,
+            user={
+                "username": result["user"]["username"],
+                "email": result["user"]["email"],
+                "token": token
+            }
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Login error: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+@app.post("/auth/signup", response_model=AuthResponse)
+async def signup_endpoint(signup_request: SignupRequest):
+    """Handle user registration"""
+    try:
+        if not signup_request.username or not signup_request.password:
+            raise HTTPException(status_code=400, detail="Username and password are required")
+        
+        if len(signup_request.password) < 6:
+            raise HTTPException(status_code=400, detail="Password must be at least 6 characters long")
+        
+        result = await user_manager.add_user(
+            signup_request.username, 
+            signup_request.password, 
+            signup_request.email
+        )
+        
+        if not result["success"]:
+            if result["message"] == "Username already exists":
+                raise HTTPException(status_code=409, detail=result["message"])
+            else:
+                raise HTTPException(status_code=500, detail=result["message"])
+        
+        # Create JWT token for the new user
+        jwt_secret = os.getenv("JWT_SECRET")
+        if not jwt_secret:
+            raise HTTPException(status_code=500, detail="JWT secret not configured")
+        
+        token = jwt.encode(
+            {
+                "userId": result["userId"],
+                "username": result["username"],
+                "exp": datetime.utcnow() + timedelta(days=7)
+            },
+            jwt_secret,
+            algorithm="HS256"
+        )
+        
+        return AuthResponse(
+            success=True,
+            user={
+                "username": result["username"],
+                "email": signup_request.email,
+                "token": token
+            }
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Signup error: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+@app.get("/auth/me")
+async def get_current_user(request: Request):
+    """Get current user information from JWT token"""
+    try:
+        # Get token from Authorization header
+        auth_header = request.headers.get("Authorization")
+        if not auth_header or not auth_header.startswith("Bearer "):
+            raise HTTPException(status_code=401, detail="Not authenticated")
+        
+        token = auth_header.split(" ")[1]
+        jwt_secret = os.getenv("JWT_SECRET")
+        if not jwt_secret:
+            raise HTTPException(status_code=500, detail="JWT secret not configured")
+        
+        # Verify JWT token
+        try:
+            decoded = jwt.decode(token, jwt_secret, algorithms=["HS256"])
+        except jwt.ExpiredSignatureError:
+            raise HTTPException(status_code=401, detail="Token expired")
+        except jwt.InvalidTokenError:
+            raise HTTPException(status_code=401, detail="Invalid token")
+        
+        user = await user_manager.get_user_by_username(decoded["username"])
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        return {
+            "success": True,
+            "user": {
+                "username": user["username"],
+                "email": user["email"],
+                "createdAt": user["createdAt"]
+            }
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Get user error: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8007, reload=True)

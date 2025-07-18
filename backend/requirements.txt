@@ -8,3 +8,5 @@ pyjwt
 fastapi
 motor
 uvicorn
+bcrypt
+pymongo

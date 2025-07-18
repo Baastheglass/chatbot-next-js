@@ -1,67 +1,37 @@
-import { getAuthenticatedUser, createAuthResponse, createUnauthorizedResponse } from '@/lib/auth-utils';
-import { UserManager } from '@/lib/user-manager';
+import { apiGet, apiPost } from '@/lib/api-client';
 
 export async function GET(request) {
   try {
-    const user = await getAuthenticatedUser(request);
+    // Forward request to Python backend
+    const response = await apiGet('/chats');
     
-    if (!user) {
-      return createUnauthorizedResponse();
+    if (response) {
+      const data = await response.json();
+      return Response.json(data, { status: response.status });
     }
-
-    const userManager = new UserManager();
-    const chats = await userManager.getUserChats(user.username);
     
-    return createAuthResponse({ chats });
+    return Response.json({ error: 'Failed to process request' }, { status: 500 });
   } catch (error) {
-    console.error('Error fetching chats:', error);
-    return Response.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    console.error('Get chats API error:', error);
+    return Response.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
 export async function POST(request) {
   try {
-    const user = await getAuthenticatedUser(request);
+    const body = await request.json();
     
-    if (!user) {
-      return createUnauthorizedResponse();
-    }
-
-    const { title } = await request.json();
+    // Forward request to Python backend
+    const response = await apiPost('/chats', body);
     
-    if (!title) {
-      return Response.json(
-        { error: 'Title is required' },
-        { status: 400 }
-      );
+    if (response) {
+      const data = await response.json();
+      return Response.json(data, { status: response.status });
     }
-
-    // Forward request to FastAPI backend
-    const backendResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/chats`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title,
-        user_email: user.username
-      }),
-    });
-
-    if (!backendResponse.ok) {
-      throw new Error('Backend request failed');
-    }
-
-    const data = await backendResponse.json();
-    return createAuthResponse(data);
+    
+    return Response.json({ error: 'Failed to process request' }, { status: 500 });
   } catch (error) {
-    console.error('Error creating chat:', error);
-    return Response.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    console.error('Create chat API error:', error);
+    return Response.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

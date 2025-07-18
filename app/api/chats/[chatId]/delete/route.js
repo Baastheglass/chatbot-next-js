@@ -1,34 +1,20 @@
-import { getAuthenticatedUser, createAuthResponse, createUnauthorizedResponse } from '@/lib/auth-utils';
+import { apiPost } from '@/lib/api-client';
 
 export async function POST(request, { params }) {
   try {
-    const user = await getAuthenticatedUser(request);
-    
-    if (!user) {
-      return createUnauthorizedResponse();
-    }
-
     const { chatId } = params;
-
-    // Forward request to FastAPI backend
-    const backendResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/chats/${chatId}/delete`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!backendResponse.ok) {
-      throw new Error('Backend request failed');
+    
+    // Forward request to Python backend
+    const response = await apiPost(`/chats/${chatId}/delete`, {});
+    
+    if (response) {
+      const data = await response.json();
+      return Response.json(data, { status: response.status });
     }
-
-    const data = await backendResponse.json();
-    return createAuthResponse(data);
+    
+    return Response.json({ error: 'Failed to process request' }, { status: 500 });
   } catch (error) {
-    console.error('Error deleting chat:', error);
-    return Response.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    console.error('Delete chat API error:', error);
+    return Response.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

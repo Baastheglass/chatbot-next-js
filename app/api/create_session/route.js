@@ -1,32 +1,18 @@
-import { getAuthenticatedUser, createAuthResponse, createUnauthorizedResponse } from '@/lib/auth-utils';
+import { apiPost } from '@/lib/api-client';
 
 export async function POST(request) {
   try {
-    const user = await getAuthenticatedUser(request);
+    // Forward request to Python backend
+    const response = await apiPost('/create_session', {});
     
-    if (!user) {
-      return createUnauthorizedResponse();
+    if (response) {
+      const data = await response.json();
+      return Response.json(data, { status: response.status });
     }
-
-    // Forward request to FastAPI backend
-    const backendResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/create_session`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!backendResponse.ok) {
-      throw new Error('Backend request failed');
-    }
-
-    const data = await backendResponse.json();
-    return createAuthResponse(data);
+    
+    return Response.json({ error: 'Failed to process request' }, { status: 500 });
   } catch (error) {
-    console.error('Error creating session:', error);
-    return Response.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    console.error('Create session API error:', error);
+    return Response.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

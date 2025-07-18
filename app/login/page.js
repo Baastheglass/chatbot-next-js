@@ -25,7 +25,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch("http://localhost:8007/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,10 +39,12 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (response.ok) {
+        // Store token in localStorage for now (you may want to use httpOnly cookies)
+        localStorage.setItem('auth-token', data.user.token);
         // Login successful, redirect to chat
         router.push("/chat");
       } else {
-        setError(data.error || "Login failed");
+        setError(data.detail || "Login failed");
       }
     } catch (error) {
       console.error("Login error:", error);

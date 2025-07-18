@@ -38,7 +38,7 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/auth/signup", {
+      const response = await fetch("http://localhost:8007/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,10 +53,12 @@ export default function SignupPage() {
       const data = await response.json();
 
       if (response.ok) {
+        // Store token in localStorage for now (you may want to use httpOnly cookies)
+        localStorage.setItem('auth-token', data.user.token);
         // Signup successful, redirect to chat
         router.push("/chat");
       } else {
-        setError(data.error || "Signup failed");
+        setError(data.detail || "Signup failed");
       }
     } catch (error) {
       console.error("Signup error:", error);

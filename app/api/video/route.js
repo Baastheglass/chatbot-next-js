@@ -5,7 +5,7 @@ export async function POST(request) {
     const body = await request.json();
     
     // Forward request to Python backend
-    const response = await apiPost('/mcq', body);
+    const response = await apiPost('/video', body);
     
     if (response) {
       const data = await response.json();
@@ -14,7 +14,7 @@ export async function POST(request) {
     
     return Response.json({ error: 'Failed to process request' }, { status: 500 });
   } catch (error) {
-    console.error('MCQ API error:', error);
+    console.error('Video API error:', error);
     return Response.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
