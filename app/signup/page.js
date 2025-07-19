@@ -45,6 +45,12 @@ export default function SignupPage() {
         email: formData.email || null
       });
 
+      // Check if response exists (apiPost returns undefined on 401)
+      if (!response) {
+        setError("Signup failed. Please try again.");
+        return;
+      }
+
       const data = await response.json();
 
       if (response.ok) {
@@ -53,7 +59,7 @@ export default function SignupPage() {
         // Signup successful, redirect to chat
         router.push("/chat");
       } else {
-        setError(data.detail || "Signup failed");
+        setError(data.detail || data.error || "Signup failed");
       }
     } catch (error) {
       console.error("Signup error:", error);

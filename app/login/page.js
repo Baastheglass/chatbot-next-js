@@ -31,6 +31,12 @@ export default function LoginPage() {
         password: formData.password
       });
 
+      // Check if response exists (apiPost returns undefined on 401)
+      if (!response) {
+        setError("Authentication failed. Please check your credentials.");
+        return;
+      }
+
       const data = await response.json();
 
       if (response.ok) {
@@ -39,7 +45,7 @@ export default function LoginPage() {
         // Login successful, redirect to chat
         router.push("/chat");
       } else {
-        setError(data.detail || "Login failed");
+        setError(data.detail || data.error || "Login failed");
       }
     } catch (error) {
       console.error("Login error:", error);
