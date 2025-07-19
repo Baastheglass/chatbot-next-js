@@ -73,6 +73,13 @@ export default function LoginPage() {
         }
         
         console.log("🚀 Redirecting to Stratos chat...");
+        
+        // Force auth context to refresh after successful login
+        if (typeof window !== 'undefined') {
+          // Dispatch a custom event to notify auth context
+          window.dispatchEvent(new CustomEvent('authStateChanged'));
+        }
+        
         // Redirect to chat page
         router.push("/chat");
         

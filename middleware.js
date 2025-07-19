@@ -41,7 +41,11 @@ export function middleware(request) {
 
   const useragent= userAgent(request)
   const response = NextResponse.rewrite(request.nextUrl);
-  response.cookies.set("user-agent", useragent.ua, { path: "/" });
+  response.cookies.set("user-agent", useragent.ua, { 
+    path: "/", 
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production"
+  });
 
   return response;
 }
