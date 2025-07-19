@@ -16,9 +16,9 @@ class UserManager:
         self.db = None
     
     def get_database(self):
-        if not self.client:
+        if self.client is None:
             self.client = MongoClient(self.mongo_uri)
-        if not self.db:
+        if self.db is None:
             self.db = self.client[self.db_name]
         return self.db
     
