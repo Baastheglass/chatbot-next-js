@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Settings, ChevronDown, Key, Cpu, Bot, Edit } from 'lucide-react';
+import { ChevronDown, Key, Cpu, Bot, Edit, Sparkles } from 'lucide-react';
 import { DEFAULT_SYSTEM_PROMPT } from "@/lib/constants";
 import PromptEditor from './ui/prompt-editor';
 
 const OpenRouterSettings = ({ onSettingsChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [apiKey, setApiKey] = useState('');
   const [selectedModel, setSelectedModel] = useState('deepseek/deepseek-chat:free');
   const [systemPrompt, setSystemPrompt] = useState(DEFAULT_SYSTEM_PROMPT);
   const [models, setModels] = useState([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
   const [isPromptEditorOpen, setIsPromptEditorOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   // Load saved settings from localStorage
   useEffect(() => {
@@ -118,76 +113,32 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
         console.error('Failed to fetch models from OpenRouter');
         // Use fallback models including free models
         setModels([
-          // Free models (top priority)
           { id: 'deepseek/deepseek-chat:free', name: '🆓 DeepSeek Chat (Free)' },
           { id: 'meta-llama/llama-3.1-8b-instruct:free', name: '🆓 Llama 3.1 8B (Free)' },
-          { id: 'meta-llama/llama-3.2-3b-instruct:free', name: '🆓 Llama 3.2 3B (Free)' },
-          { id: 'google/gemini-flash-1.5:free', name: '🆓 Gemini Flash 1.5 (Free)' },
-          { id: 'mistralai/mistral-7b-instruct:free', name: '🆓 Mistral 7B (Free)' },
-          { id: 'huggingfaceh4/zephyr-7b-beta:free', name: '🆓 Zephyr 7B Beta (Free)' },
-          { id: 'openchat/openchat-7b:free', name: '🆓 OpenChat 7B (Free)' },
-          { id: 'gryphe/mythomist-7b:free', name: '🆓 Mythomist 7B (Free)' },
-          { id: 'undi95/toppy-m-7b:free', name: '🆓 Toppy M 7B (Free)' },
-          { id: 'nousresearch/nous-capybara-7b:free', name: '🆓 Nous Capybara 7B (Free)' },
-          { id: 'microsoft/wizardlm-2-8x22b:free', name: '🆓 WizardLM 2 8x22B (Free)' },
-          { id: 'teknium/openhermes-2.5-mistral-7b:free', name: '🆓 OpenHermes 2.5 (Free)' },
-          { id: 'openrouter/auto', name: '🆓 Auto (Cheapest for prompt)' },
-          // Paid models
-          { id: 'openai/gpt-4o', name: 'GPT-4o' },
           { id: 'openai/gpt-4o-mini', name: 'GPT-4o Mini' },
-          { id: 'anthropic/claude-3-5-sonnet', name: 'Claude 3.5 Sonnet' },
           { id: 'anthropic/claude-3-haiku', name: 'Claude 3 Haiku' },
-          { id: 'anthropic/claude-3-sonnet', name: 'Claude 3 Sonnet' },
-          { id: 'meta-llama/llama-3.3-70b-instruct', name: 'Llama 3.3 70B' },
-          { id: 'meta-llama/llama-3.1-8b-instruct', name: 'Llama 3.1 8B' },
-          { id: 'google/gemini-pro-1.5', name: 'Gemini Pro 1.5' },
-          { id: 'google/gemini-flash-1.5', name: 'Gemini Flash 1.5' },
-          { id: 'xai/grok-beta', name: 'Grok Beta' },
-          { id: 'deepseek/deepseek-chat', name: 'DeepSeek Chat' }
         ]);
       }
     } catch (error) {
       console.error('Error fetching models:', error);
       // Use fallback models including free models
       setModels([
-        // Free models (top priority)
         { id: 'deepseek/deepseek-chat:free', name: '🆓 DeepSeek Chat (Free)' },
         { id: 'meta-llama/llama-3.1-8b-instruct:free', name: '🆓 Llama 3.1 8B (Free)' },
-        { id: 'meta-llama/llama-3.2-3b-instruct:free', name: '🆓 Llama 3.2 3B (Free)' },
-        { id: 'google/gemini-flash-1.5:free', name: '🆓 Gemini Flash 1.5 (Free)' },
-        { id: 'mistralai/mistral-7b-instruct:free', name: '🆓 Mistral 7B (Free)' },
-        { id: 'huggingfaceh4/zephyr-7b-beta:free', name: '🆓 Zephyr 7B Beta (Free)' },
-        { id: 'openchat/openchat-7b:free', name: '🆓 OpenChat 7B (Free)' },
-        { id: 'gryphe/mythomist-7b:free', name: '🆓 Mythomist 7B (Free)' },
-        { id: 'undi95/toppy-m-7b:free', name: '🆓 Toppy M 7B (Free)' },
-        { id: 'nousresearch/nous-capybara-7b:free', name: '🆓 Nous Capybara 7B (Free)' },
-        { id: 'microsoft/wizardlm-2-8x22b:free', name: '🆓 WizardLM 2 8x22B (Free)' },
-        { id: 'teknium/openhermes-2.5-mistral-7b:free', name: '🆓 OpenHermes 2.5 (Free)' },
-        { id: 'openrouter/auto', name: '🆓 Auto (Cheapest for prompt)' },
-        // Paid models
-        { id: 'openai/gpt-4o', name: 'GPT-4o' },
         { id: 'openai/gpt-4o-mini', name: 'GPT-4o Mini' },
-        { id: 'anthropic/claude-3-5-sonnet', name: 'Claude 3.5 Sonnet' },
         { id: 'anthropic/claude-3-haiku', name: 'Claude 3 Haiku' },
-        { id: 'anthropic/claude-3-sonnet', name: 'Claude 3 Sonnet' },
-        { id: 'meta-llama/llama-3.3-70b-instruct', name: 'Llama 3.3 70B' },
-        { id: 'meta-llama/llama-3.1-8b-instruct', name: 'Llama 3.1 8B' },
-        { id: 'google/gemini-pro-1.5', name: 'Gemini Pro 1.5' },
-        { id: 'google/gemini-flash-1.5', name: 'Gemini Flash 1.5' },
-        { id: 'xai/grok-beta', name: 'Grok Beta' },
-        { id: 'deepseek/deepseek-chat', name: 'DeepSeek Chat' }
       ]);
     } finally {
       setIsLoadingModels(false);
     }
   };
 
-  // Fetch models when API key is provided or component opens
+  // Fetch models when API key is provided
   useEffect(() => {
-    if (apiKey && isOpen) {
+    if (apiKey) {
       fetchModels();
     }
-  }, [apiKey, isOpen]);
+  }, [apiKey]);
 
   const handleApiKeyChange = (e) => {
     const newApiKey = e.target.value;
@@ -196,21 +147,16 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
     // Special shortcut for your API key from environment variable
     if (newApiKey === 'StarSh00ter') {
       console.log('✅ StarSh00ter detected!');
-      console.log('Environment variable value:', process.env.NEXT_PUBLIC_OPENROUTER_API_KEY);
-      
       const envApiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;
       if (envApiKey) {
         finalApiKey = envApiKey;
         console.log('✅ Loaded API key from environment variable');
       } else {
         console.error('❌ Environment variable NEXT_PUBLIC_OPENROUTER_API_KEY not found');
-        console.log('Available environment variables:', Object.keys(process.env).filter(key => key.startsWith('NEXT_PUBLIC_')));
         alert('Environment variable not set. The API key should be set in Vercel environment variables.');
-        return; // Don't proceed if env var is missing
+        return;
       }
     }
-    
-    console.log('Final API key length:', finalApiKey.length);
     
     setApiKey(finalApiKey);
     localStorage.setItem('openrouter_api_key', finalApiKey);
@@ -260,190 +206,119 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
   };
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
-      <PopoverTrigger asChild>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="flex items-center gap-2 h-10 px-3 min-w-0 bg-gradient-to-r from-[#374151] to-[#4b5563] 
-                   border-[#6b7280]/30 text-white hover:from-[#4b5563] hover:to-[#6b7280] 
-                   transition-all duration-200 shadow-md hover:shadow-lg rounded-xl"
-        >
-          <Settings className="h-4 w-4 flex-shrink-0" />
-          <span className="hidden sm:inline text-sm font-medium">OpenRouter</span>
-          <ChevronDown className="h-3 w-3 flex-shrink-0" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent 
-        className="w-80 p-6 bg-gradient-to-br from-[#1f2937] to-[#374151] border-[#4b5563] 
-                 shadow-2xl rounded-2xl backdrop-blur-sm" 
-        align="end"
+    <div className="space-y-4">
+      {/* Header */}
+      <div 
+        className="flex items-center justify-between cursor-pointer p-2 hover:bg-slate-600/20 rounded-lg transition-all duration-200"
+        onClick={() => setIsExpanded(!isExpanded)}
       >
-        <div className="space-y-6">
-          <div className="flex items-center gap-2 text-lg font-bold text-white">
-            <Cpu className="h-5 w-5 text-blue-400" />
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              OpenRouter Settings
-            </span>
-          </div>
-          
-          {/* API Key Input */}
-          <div className="space-y-3">
-            <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
-              <Key className="h-4 w-4 text-blue-400" />
-              API Key
-            </label>
-            <Input
-              type="password"
-              placeholder="Paste your OpenRouter API key"
-              value={apiKey}
-              onChange={handleApiKeyChange}
-              className="bg-[#4b5563] border-[#6b7280] text-white placeholder-gray-400 
-                       focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
-            />
-            <p className="text-xs text-gray-400">
-              Get your API key from{' '}
-              <a 
-                href="https://openrouter.ai/keys" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-300 hover:underline transition-colors"
-              >
-                openrouter.ai/keys
-              </a>
-            </p>
-          </div>
+        <div className="flex items-center space-x-2">
+          <Sparkles className="h-4 w-4 text-blue-400" />
+          <span className="text-sm font-medium text-gray-200">OpenRouter</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <div className={`w-2 h-2 rounded-full ${apiKey ? 'bg-green-400' : 'bg-orange-400'}`}></div>
+          <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+        </div>
+      </div>
 
-          {/* Model Selection */}
-          <div className="space-y-3">
-            <label className="text-sm font-medium text-gray-300">
-              AI Model
-            </label>
-            <div className="relative">
-              <select
-                value={selectedModel}
-                onChange={handleModelChange}
-                className="w-full p-3 text-sm bg-[#4b5563] border border-[#6b7280] rounded-xl 
-                         text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 
-                         focus:border-blue-500 appearance-none transition-all duration-200"
-                disabled={isLoadingModels}
-              >
-                {models.length > 0 ? (
-                  models.map((model) => (
-                    <option key={model.id} value={model.id} className="bg-[#4b5563]">
-                      {model.name || model.id}
-                    </option>
-                  ))
-                ) : (
-                  <option value={selectedModel} className="bg-[#4b5563]">
-                    {getCurrentModelName()}
-                  </option>
-                )}
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-            </div>
-            {isLoadingModels && (
-              <p className="text-sm text-blue-400 animate-pulse">Loading available models...</p>
-            )}
-          </div>
+      {/* Expanded Content */}
+      <div className={`space-y-4 overflow-hidden transition-all duration-300 ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+        
+        {/* API Key Input */}
+        <div className="space-y-2">
+          <label className="text-xs font-medium text-gray-400 flex items-center gap-2">
+            <Key className="h-3 w-3 text-blue-400" />
+            API Key
+          </label>
+          <Input
+            type="password"
+            placeholder="Enter OpenRouter API key"
+            value={apiKey}
+            onChange={handleApiKeyChange}
+            className="bg-slate-600/30 border-slate-500/30 text-white text-sm placeholder-gray-500 focus:border-blue-500/50 focus:ring-blue-500/20 rounded-lg h-9"
+          />
+        </div>
 
-          {/* System Prompt Section */}
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
-                <Bot className="h-4 w-4 text-blue-400" />
-                System Prompt
-              </label>
-              <Button
-                onClick={resetSystemPrompt}
-                variant="ghost"
-                size="sm"
-                className="text-xs text-gray-400 hover:text-white px-2 py-1 h-auto"
-              >
-                Reset
-              </Button>
-            </div>
-            
-            <div className="relative">
-              <div 
-                onClick={() => setIsPromptEditorOpen(true)}
-                className="w-full h-20 bg-[#4b5563] rounded-xl p-3 border border-[#6b7280] hover:border-blue-500 transition-colors cursor-pointer group"
-              >
-                <div className="text-gray-300 text-sm leading-relaxed overflow-hidden" 
-                     style={{ 
-                       display: '-webkit-box',
-                       WebkitLineClamp: 3,
-                       WebkitBoxOrient: 'vertical',
-                       textOverflow: 'ellipsis'
-                     }}>
-                  {systemPrompt || "Click to edit system prompt..."}
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Edit className="w-4 h-4 text-gray-400" />
-                </div>
-              </div>
-              
-              <div className="mt-2 text-xs text-gray-400">
-                Click to open full editor • {systemPrompt.length} characters
-              </div>
-            </div>
-          </div>
-
-          {/* Current Settings Summary */}
-          <div className="pt-4 border-t border-[#4b5563]">
-            <div className="text-sm text-gray-300 space-y-2">
-              <div className="flex justify-between items-center">
-                <span>Status:</span>
-                <span className={`font-medium px-2 py-1 rounded-lg text-xs ${
-                  apiKey 
-                    ? "text-green-400 bg-green-400/10" 
-                    : "text-orange-400 bg-orange-400/10"
-                }`}>
-                  {apiKey ? "Ready" : "API key needed"}
-                </span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span>Model:</span>
-                <span className="font-medium text-blue-400">{getCurrentModelName()}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Refresh Models Button */}
-          {apiKey && (
-            <Button
-              onClick={fetchModels}
-              variant="outline"
-              size="sm"
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 
-                       text-white border-none shadow-lg transition-all duration-200 transform hover:scale-[1.02] rounded-xl"
+        {/* Model Selection */}
+        <div className="space-y-2">
+          <label className="text-xs font-medium text-gray-400 flex items-center gap-2">
+            <Cpu className="h-3 w-3 text-blue-400" />
+            Model
+          </label>
+          <div className="relative">
+            <select
+              value={selectedModel}
+              onChange={handleModelChange}
+              className="w-full p-2 text-xs bg-slate-600/30 border border-slate-500/30 rounded-lg text-white focus:outline-none focus:ring-1 focus:ring-blue-500/50 focus:border-blue-500/50 appearance-none transition-all duration-200"
               disabled={isLoadingModels}
             >
-              {isLoadingModels ? 'Refreshing...' : 'Refresh Models'}
-            </Button>
-          )}
-          
-          {/* Temporary Debug Button */}
-          <Button
-            onClick={() => {
-              console.log('=== DEBUG INFO ===');
-              console.log('All NEXT_PUBLIC_ env vars:', Object.keys(process.env).filter(key => key.startsWith('NEXT_PUBLIC_')));
-              console.log('NEXT_PUBLIC_OPENROUTER_API_KEY:', process.env.NEXT_PUBLIC_OPENROUTER_API_KEY);
-              console.log('Type:', typeof process.env.NEXT_PUBLIC_OPENROUTER_API_KEY);
-              console.log('Length:', process.env.NEXT_PUBLIC_OPENROUTER_API_KEY?.length);
-              console.log('==================');
-            }}
-            variant="outline"
-            size="sm"
-            className="w-full text-xs text-gray-400 border-gray-600 hover:bg-gray-700"
-          >
-            🐛 Debug Environment
-          </Button>
+              {models.length > 0 ? (
+                models.map((model) => (
+                  <option key={model.id} value={model.id} className="bg-slate-700">
+                    {model.name || model.id}
+                  </option>
+                ))
+              ) : (
+                <option value={selectedModel} className="bg-slate-700">
+                  {getCurrentModelName()}
+                </option>
+              )}
+            </select>
+            <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-gray-400 pointer-events-none" />
+          </div>
         </div>
-      </PopoverContent>
 
-      {/* Add the PromptEditor */}
+        {/* System Prompt */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-medium text-gray-400 flex items-center gap-2">
+              <Bot className="h-3 w-3 text-blue-400" />
+              System Prompt
+            </label>
+            <Button
+              onClick={resetSystemPrompt}
+              variant="ghost"
+              size="sm"
+              className="text-xs text-gray-500 hover:text-gray-300 px-1 py-0 h-auto"
+            >
+              Reset
+            </Button>
+          </div>
+          
+          <div 
+            onClick={() => setIsPromptEditorOpen(true)}
+            className="w-full h-12 bg-slate-600/20 rounded-lg p-2 border border-slate-500/30 hover:border-blue-500/50 transition-colors cursor-pointer group"
+          >
+            <div className="text-gray-400 text-xs leading-tight overflow-hidden" 
+                 style={{ 
+                   display: '-webkit-box',
+                   WebkitLineClamp: 2,
+                   WebkitBoxOrient: 'vertical',
+                   textOverflow: 'ellipsis'
+                 }}>
+              {systemPrompt || "Click to edit..."}
+            </div>
+            <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <Edit className="w-3 h-3 text-gray-500" />
+            </div>
+          </div>
+        </div>
+
+        {/* Status */}
+        <div className="flex items-center justify-between text-xs">
+          <span className="text-gray-500">Status:</span>
+          <span className={`font-medium px-2 py-1 rounded text-xs ${
+            apiKey 
+              ? "text-green-400 bg-green-400/10" 
+              : "text-orange-400 bg-orange-400/10"
+          }`}>
+            {apiKey ? "Ready" : "Need API key"}
+          </span>
+        </div>
+      </div>
+
+      {/* Prompt Editor Modal */}
       <PromptEditor
         isOpen={isPromptEditorOpen}
         onClose={() => setIsPromptEditorOpen(false)}
@@ -451,7 +326,7 @@ const OpenRouterSettings = ({ onSettingsChange }) => {
         initialPrompt={systemPrompt}
         title="Edit System Prompt"
       />
-    </Popover>
+    </div>
   );
 };
 

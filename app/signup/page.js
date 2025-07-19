@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { apiPost } from '@/lib/api-client';
+import { Sparkles, User, Lock, Mail, Eye, EyeOff } from 'lucide-react';
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,8 @@ export default function SignupPage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -86,6 +89,12 @@ export default function SignupPage() {
         }
         
         console.log("🚀 Redirecting to Stratos chat...");
+        
+        // Force auth context to refresh after successful signup
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('authStateChanged'));
+        }
+        
         // Redirect to chat page
         router.push("/chat");
         
@@ -110,101 +119,158 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Create your account
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Or{" "}
-            <Link
-              href="/login"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
-              sign in to your existing account
-            </Link>
-          </p>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="username" className="sr-only">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-4">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      <div className="relative w-full max-w-md animate-fade-in">
+        {/* Main card */}
+        <div className="bg-slate-800/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-700/50 p-8 transform transition-all duration-500 hover:scale-[1.02]">
+          
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center mb-4">
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-600 rounded-2xl flex items-center justify-center animate-pulse">
+                <Sparkles className="h-8 w-8 text-white" />
+              </div>
+            </div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              Join Stratos
+            </h1>
+            <p className="text-gray-400 mt-2">Create your account to get started</p>
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            
+            {/* Username Input */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
+                <User className="h-4 w-4 text-blue-400" />
                 Username
               </label>
               <input
-                id="username"
                 name="username"
                 type="text"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Username"
                 value={formData.username}
                 onChange={handleChange}
+                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 outline-none"
+                placeholder="Choose a username"
               />
             </div>
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email (Optional)
+
+            {/* Email Input */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
+                <Mail className="h-4 w-4 text-blue-400" />
+                Email <span className="text-gray-500 text-xs">(Optional)</span>
               </label>
               <input
-                id="email"
                 name="email"
                 type="email"
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email (Optional)"
                 value={formData.email}
                 onChange={handleChange}
+                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 outline-none"
+                placeholder="your@email.com (optional)"
               />
             </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
+
+            {/* Password Input */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
+                <Lock className="h-4 w-4 text-blue-400" />
                 Password
               </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-              />
+              <div className="relative">
+                <input
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  required
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 pr-12 bg-slate-700/50 border border-slate-600/50 rounded-xl text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 outline-none"
+                  placeholder="Create a password (min 6 characters)"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors"
+                >
+                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                </button>
+              </div>
             </div>
-            <div>
-              <label htmlFor="confirmPassword" className="sr-only">
+
+            {/* Confirm Password Input */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
+                <Lock className="h-4 w-4 text-blue-400" />
                 Confirm Password
               </label>
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Confirm Password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-              />
+              <div className="relative">
+                <input
+                  name="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  required
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 pr-12 bg-slate-700/50 border border-slate-600/50 rounded-xl text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 outline-none"
+                  placeholder="Confirm your password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors"
+                >
+                  {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                </button>
+              </div>
             </div>
-          </div>
 
-          {error && (
-            <div className="rounded-md bg-red-50 p-4">
-              <div className="text-sm text-red-800">{error}</div>
-            </div>
-          )}
+            {/* Error Message */}
+            {error && (
+              <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl animate-shake">
+                <p className="text-red-400 text-sm text-center">{error}</p>
+              </div>
+            )}
 
-          <div>
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 px-4 bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 disabled:from-gray-600 disabled:to-gray-700 text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-[1.02] disabled:scale-100 shadow-lg hover:shadow-xl disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {loading ? "Creating account..." : "Sign up"}
+              {loading ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                  Creating account...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="h-5 w-5" />
+                  Create Account
+                </>
+              )}
             </button>
+          </form>
+
+          {/* Footer */}
+          <div className="mt-8 text-center">
+            <p className="text-gray-400 text-sm">
+              Already have an account?{" "}
+              <Link
+                href="/login"
+                className="text-blue-400 hover:text-blue-300 font-medium transition-colors hover:underline"
+              >
+                Sign in here
+              </Link>
+            </p>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

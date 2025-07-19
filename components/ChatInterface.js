@@ -1,9 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import SignOutButton from './SignOutButton';
 import OpenRouterSettings from './OpenRouterSettings';
 import { Button } from "@/components/ui/button";
@@ -15,9 +10,8 @@ import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import { enhanceMarkdownFormatting, addBusinessResponseEnhancements } from '../lib/markdown-utils';
 import EnhancedLoadingMessage from './EnhancedLoadingMessage';
-// import SimpleLoadingMessage from './SimpleLoadingMessage'; // Alternative lighter loading component
 import api, { apiPost,apiGet } from "@/lib/requests";
-import { Menu, MoreVertical, Trash2, SendIcon } from 'lucide-react';
+import { Menu, MoreVertical, Trash2, SendIcon, Plus, MessageSquare, Sparkles } from 'lucide-react';
 import { DEFAULT_SYSTEM_PROMPT } from "@/lib/constants";
 import { KeyboardAwareContainer } from './ui/keyboard-aware-container';
 import { randomPick, sleep } from '@/lib/utils';
@@ -57,24 +51,32 @@ const ChatInterface = () => {
     systemPrompt: DEFAULT_SYSTEM_PROMPT
   });
 
-  // Show loading screen while checking authentication
+  // Show elegant loading screen while checking authentication
   if (authLoading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-100">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+        <div className="text-center animate-fade-in">
+          <div className="relative">
+            <div className="animate-spin rounded-full h-32 w-32 border-4 border-transparent bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-border mx-auto"></div>
+            <div className="absolute inset-2 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-full flex items-center justify-center">
+              <Sparkles className="h-8 w-8 text-blue-400 animate-pulse" />
+            </div>
+          </div>
+          <p className="mt-6 text-gray-300 text-lg font-medium animate-pulse">Loading Stratos...</p>
         </div>
       </div>
     );
   }
 
-  // If no user is authenticated, show error (middleware should redirect, but just in case)
+  // If no user is authenticated, show elegant error
   if (!user) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-100">
-        <div className="text-center">
-          <p className="text-red-600">Authentication required. Please log in.</p>
+      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+        <div className="text-center animate-fade-in">
+          <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-8 backdrop-blur-sm">
+            <p className="text-red-400 text-lg font-medium">Authentication required</p>
+            <p className="text-gray-400 mt-2">Please log in to continue</p>
+          </div>
         </div>
       </div>
     );
@@ -485,116 +487,155 @@ const ChatInterface = () => {
 
   return (
     <KeyboardAwareContainer>
-      <div className="flex h-screen bg-[#0b141a] text-white">
-        {/* Sidebar */}
-        <div className={`${sidebarOpen ? 'w-80' : 'w-0'} transition-all duration-300 overflow-hidden bg-[#202c33] border-r border-[#3c4043]`}>
-          <div className="p-4 border-b border-[#3c4043]">
-            <div className="flex items-center justify-between mb-4">
-              <h1 className="text-xl font-semibold text-white">Chats</h1>
+      <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
+        {/* Enhanced Sidebar with Animations */}
+        <div className={`${sidebarOpen ? 'w-80' : 'w-0'} transition-all duration-500 ease-in-out overflow-hidden bg-gradient-to-b from-slate-800/90 to-slate-900/90 backdrop-blur-lg border-r border-slate-700/50`}>
+          <div className="p-6 border-b border-slate-700/50">
+            {/* Header with Logo */}
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                  <Sparkles className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    Stratos
+                  </h1>
+                  <p className="text-xs text-gray-400">AI Assistant</p>
+                </div>
+              </div>
               <Button
                 onClick={handleNewChat}
                 size="sm"
-                className="bg-[#00a884] hover:bg-[#00976c] text-white"
+                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
+                <Plus className="h-4 w-4 mr-2" />
                 New Chat
               </Button>
             </div>
-            <div className="flex items-center space-x-2">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" size="sm" className="border-[#3c4043] text-white hover:bg-[#3c4043]">
-                    Settings
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-96 bg-[#202c33] border-[#3c4043]">
-                  <OpenRouterSettings 
-                    settings={openRouterSettings}
-                    onSettingsChange={setOpenRouterSettings}
-                  />
-                </PopoverContent>
-              </Popover>
-              <SignOutButton />
+
+            {/* User Info and OpenRouter Settings */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-xl border border-slate-600/30">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">{user?.username?.charAt(0).toUpperCase()}</span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-300">{user?.username}</span>
+                </div>
+                <SignOutButton />
+              </div>
+
+              {/* OpenRouter Settings - Now prominently displayed */}
+              <div className="bg-slate-700/20 rounded-xl p-4 border border-slate-600/30">
+                <OpenRouterSettings 
+                  onSettingsChange={setOpenRouterSettings}
+                />
+              </div>
             </div>
           </div>
           
+          {/* Chat List */}
           <ScrollArea className="flex-1">
-            <div className="p-2">
-              {chats.map((chat) => (
+            <div className="p-3 space-y-2">
+              {chats.map((chat, index) => (
                 <div
                   key={chat.chatId}
-                  className={`flex items-center justify-between p-3 mb-2 rounded-lg cursor-pointer hover:bg-[#3c4043] transition-colors ${
-                    selectedChat === chat.chatId ? 'bg-[#3c4043]' : ''
+                  className={`group flex items-center justify-between p-4 rounded-xl cursor-pointer transition-all duration-300 transform hover:scale-[1.02] ${
+                    selectedChat === chat.chatId 
+                      ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 shadow-lg' 
+                      : 'hover:bg-slate-700/30 border border-transparent'
                   }`}
                   onClick={() => handleChatSelect(chat.chatId)}
+                  style={{ animationDelay: `${index * 50}ms` }}
                 >
-                  <span className="text-sm text-white truncate flex-1">{chat.title}</span>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-8 w-8 p-0 hover:bg-[#4a4a4a] text-white"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <MoreVertical className="h-4 w-4" />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-40 bg-[#202c33] border-[#3c4043]">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="w-full justify-start text-red-400 hover:text-red-300 hover:bg-[#3c4043]"
-                        onClick={() => handleDeleteChat(chat.chatId)}
-                      >
-                        <Trash2 className="h-4 w-4 mr-2" />
-                        Delete
-                      </Button>
-                    </PopoverContent>
-                  </Popover>
+                  <div className="flex items-center space-x-3 flex-1 min-w-0">
+                    <MessageSquare className="h-4 w-4 text-blue-400 flex-shrink-0" />
+                    <span className="text-sm text-gray-200 truncate">{chat.title}</span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-red-500/20 text-gray-400 hover:text-red-400"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteChat(chat.chatId);
+                    }}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
                 </div>
               ))}
             </div>
           </ScrollArea>
         </div>
 
-        {/* Main Chat Area */}
-        <div className="flex-1 flex flex-col">
-          {/* Header */}
-          <div className="p-4 border-b border-[#3c4043] flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Button
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-                variant="ghost"
-                size="sm"
-                className="hover:bg-[#3c4043] text-white"
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-              <h2 className="text-lg font-medium text-white">
-                {selectedChat ? chats.find(c => c.chatId === selectedChat)?.title || 'Chat' : 'Select a chat'}
-              </h2>
+        {/* Main Chat Area with Enhanced Design */}
+        <div className="flex-1 flex flex-col bg-gradient-to-b from-slate-800/30 to-slate-900/30">
+          {/* Enhanced Header */}
+          <div className="p-6 border-b border-slate-700/50 bg-slate-800/20 backdrop-blur-sm">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <Button
+                  onClick={() => setSidebarOpen(!sidebarOpen)}
+                  variant="ghost"
+                  size="sm"
+                  className="hover:bg-slate-700/30 text-gray-300 hover:text-white transition-all duration-200 rounded-xl"
+                >
+                  <Menu className="h-5 w-5" />
+                </Button>
+                <div>
+                  <h2 className="text-xl font-semibold text-white">
+                    {selectedChat ? chats.find(c => c.chatId === selectedChat)?.title || 'Chat' : 'Select a conversation'}
+                  </h2>
+                  <p className="text-sm text-gray-400">
+                    {selectedChat ? 'Active conversation' : 'Choose a chat to start messaging'}
+                  </p>
+                </div>
+              </div>
+              {selectedChat && (
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <span className="text-sm text-gray-400">Online</span>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Messages */}
-          <ScrollArea className="flex-1 p-4">
-            <div className="space-y-4 max-w-4xl mx-auto">
+          {/* Messages Area */}
+          <ScrollArea className="flex-1 p-6">
+            <div className="space-y-6 max-w-4xl mx-auto">
+              {messages.length === 0 && !selectedChat && (
+                <div className="text-center py-20">
+                  <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <MessageSquare className="h-10 w-10 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-3">Welcome to Stratos</h3>
+                  <p className="text-gray-400 max-w-md mx-auto">
+                    Start a new conversation or select an existing chat to continue where you left off.
+                  </p>
+                </div>
+              )}
+              
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                  className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div
-                    className={`max-w-[70%] p-3 rounded-lg ${
+                    className={`max-w-[80%] lg:max-w-[70%] p-4 rounded-2xl transition-all duration-300 hover:shadow-xl ${
                       message.type === 'user'
-                        ? 'bg-[#005c4b] text-white'
-                        : 'bg-[#202c33] text-[#e9edef] border border-[#3c4043]'
+                        ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
+                        : 'bg-slate-700/40 text-gray-100 border border-slate-600/30 backdrop-blur-sm'
                     }`}
                   >
                     {message.type === 'user' ? (
-                      <p className="whitespace-pre-wrap">{message.content}</p>
+                      <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
                     ) : (
-                      renderMessage(message)
+                      <div className="prose prose-invert max-w-none">
+                        {renderMessage(message)}
+                      </div>
                     )}
                   </div>
                 </div>
@@ -603,36 +644,46 @@ const ChatInterface = () => {
             </div>
           </ScrollArea>
 
-          {/* Input Area */}
-          <div className="p-4 border-t border-[#3c4043]">
+          {/* Enhanced Input Area */}
+          <div className="p-6 border-t border-slate-700/50 bg-slate-800/20 backdrop-blur-sm">
             <div className="max-w-4xl mx-auto">
-              <div className="flex space-x-2">
-                <Input
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  placeholder="Type a message..."
-                  className="flex-1 bg-[#2a3942] border-[#3c4043] text-white placeholder-[#8696a0] focus:border-[#00a884]"
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSend();
-                    }
-                  }}
-                  disabled={isLoading}
-                />
+              <div className="flex space-x-4 items-end">
+                <div className="flex-1 relative">
+                  <Input
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    placeholder="Type your message..."
+                    className="w-full bg-slate-700/30 border-slate-600/30 text-white placeholder-gray-400 focus:border-blue-500/50 focus:ring-blue-500/20 rounded-2xl px-6 py-4 text-base transition-all duration-300 backdrop-blur-sm"
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSend();
+                      }
+                    }}
+                    disabled={isLoading}
+                  />
+                  {isLoading && (
+                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                      <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-500 border-t-transparent"></div>
+                    </div>
+                  )}
+                </div>
                 <Button
                   onClick={handleSend}
                   disabled={isLoading || !inputText.trim()}
-                  className="bg-[#00a884] hover:bg-[#00976c] text-white disabled:opacity-50"
+                  className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white disabled:opacity-50 disabled:cursor-not-allowed rounded-2xl px-6 py-4 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 >
-                  <SendIcon className="h-4 w-4" />
+                  <SendIcon className="h-5 w-5" />
                 </Button>
               </div>
+              <p className="text-xs text-gray-500 mt-3 text-center">
+                Press Enter to send • Shift+Enter for new line
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Dialogs */}
+        {/* Dialogs remain the same */}
         <ConfirmDialog
           isOpen={confirmDialog.isOpen}
           onClose={() => setConfirmDialog({ ...confirmDialog, isOpen: false })}
