@@ -25,33 +25,67 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
 
+    console.log("🔄 Login attempt started for user:", formData.username);
+
     try {
       const response = await apiPost('/auth/login', {
         username: formData.username,
         password: formData.password
       });
 
-      // Check if response exists (apiPost returns undefined on 401)
+      console.log("📡 Login response received:", {
+        status: response?.status,
+        ok: response?.ok,
+        responseExists: !!response
+      });
+
+      // Check if response exists (apiPost returns null on 401)
       if (!response) {
+        console.error("❌ Login failed: No response received (likely 401)");
         setError("Authentication failed. Please check your credentials.");
         return;
       }
 
       const data = await response.json();
+      console.log("📦 Login response data:", {
+        success: data.success,
+        hasUser: !!data.user,
+        hasToken: !!(data.user?.token),
+        username: data.user?.username
+      });
 
-      if (response.ok) {
-        // Store token in localStorage for now (you may want to use httpOnly cookies)
-        localStorage.setItem('auth-token', data.user.token);
-        // Login successful, redirect to chat
+      if (response.ok && data.success) {
+        console.log("✅ Login successful for user:", data.user.username);
+        
+        // Store token in localStorage
+        if (data.user?.token) {
+          localStorage.setItem('auth-token', data.user.token);
+          console.log("🔑 Auth token stored in localStorage");
+        } else {
+          console.warn("⚠️ No token received in login response");
+        }
+        
+        console.log("🚀 Redirecting to Stratos chat...");
+        // Redirect to chat page
         router.push("/chat");
+        
+        // Additional success feedback
+        console.log("🎉 Login process completed successfully!");
+        
       } else {
+        console.error("❌ Login failed with response:", data);
         setError(data.detail || data.error || "Login failed");
       }
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("🚨 Login error occurred:", {
+        message: error.message,
+        stack: error.stack,
+        error: error
+      });
       setError("Network error. Please try again.");
     } finally {
       setLoading(false);
+      console.log("🏁 Login attempt finished");
     }
   };
 

@@ -37,6 +37,7 @@ export default function SignupPage() {
     }
 
     setLoading(true);
+    console.log("🔄 Signup attempt started for user:", formData.username);
 
     try {
       const response = await apiPost('/auth/signup', {
@@ -45,27 +46,59 @@ export default function SignupPage() {
         email: formData.email || null
       });
 
-      // Check if response exists (apiPost returns undefined on 401)
+      console.log("📡 Signup response received:", {
+        status: response?.status,
+        ok: response?.ok,
+        responseExists: !!response
+      });
+
+      // Check if response exists (apiPost returns null on 401)
       if (!response) {
+        console.error("❌ Signup failed: No response received");
         setError("Signup failed. Please try again.");
         return;
       }
 
       const data = await response.json();
+      console.log("📦 Signup response data:", {
+        success: data.success,
+        hasUser: !!data.user,
+        hasToken: !!(data.user?.token),
+        username: data.user?.username
+      });
 
-      if (response.ok) {
-        // Store token in localStorage for now (you may want to use httpOnly cookies)
-        localStorage.setItem('auth-token', data.user.token);
-        // Signup successful, redirect to chat
+      if (response.ok && data.success) {
+        console.log("✅ Signup successful for user:", data.user.username);
+        
+        // Store token in localStorage
+        if (data.user?.token) {
+          localStorage.setItem('auth-token', data.user.token);
+          console.log("🔑 Auth token stored in localStorage");
+        } else {
+          console.warn("⚠️ No token received in signup response");
+        }
+        
+        console.log("🚀 Redirecting to Stratos chat...");
+        // Redirect to chat page
         router.push("/chat");
+        
+        // Additional success feedback
+        console.log("🎉 Signup and login process completed successfully!");
+        
       } else {
+        console.error("❌ Signup failed with response:", data);
         setError(data.detail || data.error || "Signup failed");
       }
     } catch (error) {
-      console.error("Signup error:", error);
+      console.error("🚨 Signup error occurred:", {
+        message: error.message,
+        stack: error.stack,
+        error: error
+      });
       setError("Network error. Please try again.");
     } finally {
       setLoading(false);
+      console.log("🏁 Signup attempt finished");
     }
   };
 
