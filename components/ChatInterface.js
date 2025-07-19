@@ -10,7 +10,7 @@ import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import { enhanceMarkdownFormatting, addBusinessResponseEnhancements } from '../lib/markdown-utils';
 import EnhancedLoadingMessage from './EnhancedLoadingMessage';
-import api, { apiPost,apiGet } from "@/lib/requests";
+import { apiPost, apiGet } from "@/lib/api-client";
 import { Menu, MoreVertical, Trash2, SendIcon, Plus, MessageSquare, Sparkles } from 'lucide-react';
 import { DEFAULT_SYSTEM_PROMPT } from "@/lib/constants";
 import { KeyboardAwareContainer } from './ui/keyboard-aware-container';
