@@ -25,8 +25,11 @@ app.add_middleware(
         "http://localhost:3000", 
         "http://localhost:3001",
         "https://chatbot-next-js-wheat.vercel.app",
+        "https://chatbot-next-js-wheat-baasils-projects.vercel.app",
+        "https://chatbot-next-js-git-main-baasils-projects.vercel.app",
         "https://consultant.axonbuild.com",
-        "https://*.vercel.app",  # Allow all Vercel preview deployments
+        # Add common Vercel deployment patterns
+        "https://*.vercel.app",
         "https://vercel.app"
     ],
     allow_credentials=True,

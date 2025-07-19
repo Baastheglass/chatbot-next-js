@@ -323,7 +323,33 @@ const ChatInterface = () => {
         
     } catch (error) {
         console.error('Error:', error);
-        await textStreamRoutine('Sorry, something went wrong. Please try again.');
+        
+        // Provide user-friendly error messages
+        let errorMessage = 'I apologize, but I encountered an issue. ';
+        
+        if (error.message.includes('NetworkError') || error.message.includes('Failed to fetch')) {
+            errorMessage += 'It seems there\'s a connection problem. Please check your internet connection and try again.';
+        } else if (error.message.includes('HTTP 400')) {
+            errorMessage += 'There was an issue with your request. Please try rephrasing your message.';
+        } else if (error.message.includes('HTTP 401')) {
+            errorMessage += 'Your session has expired. Please refresh the page and log in again.';
+        } else if (error.message.includes('HTTP 403')) {
+            errorMessage += 'You don\'t have permission to perform this action.';
+        } else if (error.message.includes('HTTP 404')) {
+            errorMessage += 'The service you\'re trying to reach is temporarily unavailable.';
+        } else if (error.message.includes('HTTP 429')) {
+            errorMessage += 'You\'re sending messages too quickly. Please wait a moment and try again.';
+        } else if (error.message.includes('HTTP 500')) {
+            errorMessage += 'Our servers are experiencing some difficulties. Please try again in a few moments.';
+        } else if (error.message.includes('CORS')) {
+            errorMessage += 'There\'s a temporary connection issue with our servers. Please try again.';
+        } else if (!openRouterSettings.apiKey) {
+            errorMessage += 'Please configure your OpenRouter API key in the sidebar settings to start chatting.';
+        } else {
+            errorMessage += 'Something unexpected happened. Please try again, and if the problem persists, please contact support.';
+        }
+        
+        await textStreamRoutine(errorMessage);
     } finally {
         setIsLoading(false);
     }
