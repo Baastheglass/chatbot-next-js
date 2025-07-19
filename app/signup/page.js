@@ -70,10 +70,15 @@ export default function SignupPage() {
       if (response.ok && data.success) {
         console.log("✅ Signup successful for user:", data.user.username);
         
-        // Store token in localStorage
+        // Store token in both localStorage and cookies
         if (data.user?.token) {
+          // Store in localStorage (for frontend use)
           localStorage.setItem('auth-token', data.user.token);
           console.log("🔑 Auth token stored in localStorage");
+          
+          // Also set as cookie (for middleware)
+          document.cookie = `auth-token=${data.user.token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax`;
+          console.log("🍪 Auth token set as cookie for middleware");
         } else {
           console.warn("⚠️ No token received in signup response");
         }
