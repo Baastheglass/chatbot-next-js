@@ -63,9 +63,11 @@ export default function LoginPage() {
           localStorage.setItem('auth-token', data.user.token);
           console.log("🔑 Auth token stored in localStorage");
           
-          // Also set as cookie (for middleware)
-          document.cookie = `auth-token=${data.user.token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax`;
-          console.log("🍪 Auth token set as cookie for middleware");
+          // Set cookie with proper attributes for middleware
+          const isSecure = window.location.protocol === 'https:';
+          const cookieString = `auth-token=${data.user.token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax${isSecure ? '; Secure' : ''}`;
+          document.cookie = cookieString;
+          console.log("🍪 Auth token set as cookie for middleware", { isSecure, cookieString: cookieString.substring(0, 50) + '...' });
         } else {
           console.warn("⚠️ No token received in login response");
         }
