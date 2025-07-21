@@ -1,9 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { apiPost } from '@/lib/api-client';
 import { Sparkles, User, Lock, Eye, EyeOff } from 'lucide-react';
+
+const { useState } = React;
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({

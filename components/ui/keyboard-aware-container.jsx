@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import React from "react";
 
+const { useState, useEffect } = React;
 
 const KeyboardAwareContainer = ({ children, scrollToBottom }) => {
   const [containerHeight, setContainerHeight] = useState('100vh');

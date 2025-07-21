@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { Button } from "@/components/ui/button";
 import { X, Save, RotateCcw, Type, FileText, Sparkles } from 'lucide-react';
 import { DEFAULT_SYSTEM_PROMPT } from "@/lib/constants";
 import { createPortal } from 'react-dom';
+
+const { useState, useEffect, useRef } = React;
 
 const PromptEditor = ({ 
   isOpen, 
