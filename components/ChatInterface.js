@@ -8,7 +8,6 @@ import ConfirmDialog from './ui/confirm-dialog';
 import InputDialog from './ui/input-dialog';
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
-import { enhanceMarkdownFormatting, addBusinessResponseEnhancements } from '../lib/markdown-utils';
 import EnhancedLoadingMessage from './EnhancedLoadingMessage';
 import { apiPost, apiGet } from "@/lib/api-client";
 import { Menu, MoreVertical, Trash2, SendIcon, Plus, MessageSquare, Sparkles } from 'lucide-react';
@@ -53,12 +52,21 @@ const ChatInterface = () => {
 
   // All useEffect hooks must come before any early returns
   useEffect(() => {
-    if (!user) return; // Don't fetch chats if no user
+    if (!user) {
+      // Clear stale data when user logs out
+      setChats([]);
+      setSelectedChat(null);
+      setMessages([]);
+      setSessionId(null);
+      return;
+    }
     
     const fetchChats = async () => {
       try {
+        console.log('Fetching chats for user:', user.username);
         const data = await apiGet("/chats");
         const chatList = data.chats || [];
+        console.log('Retrieved chats:', chatList);
         setChats(chatList);
         
         // If no chats exist, create a default one
@@ -77,6 +85,9 @@ const ChatInterface = () => {
         }
       } catch (error) {
         console.error('Error fetching chats:', error);
+        // Clear stale data on error
+        setChats([]);
+        setSelectedChat(null);
       }
     };
     fetchChats();
@@ -187,6 +198,7 @@ const ChatInterface = () => {
     }
   };
   const handleChatSelect = async (chatId) => {
+    console.log('Selecting chat:', chatId, 'User:', user?.username);
     setSelectedChat(chatId);
     setIsLoading(true);
     setMessages([{ type: 'assistant', content: 'Loading...' }]);
@@ -194,7 +206,7 @@ const ChatInterface = () => {
     try {
       await apiGet(`/chats/${chatId}/load_recent_context?sessionId=${sessionId}`);
       const data = await apiGet(`/chats/${chatId}/messages`);
-      console.log("data: ",data);
+      console.log("Chat messages data:", data);
       
       if (data.messages) {
         // Map messages for display
@@ -206,7 +218,7 @@ const ChatInterface = () => {
         setMessages([]);
       }
     } catch (error) {
-      console.error('Error fetching messages:', error);
+      console.error('Error fetching messages for chat:', chatId, error);
       setMessages([{ type: 'assistant', content: 'Failed to load messages.' }]);
     } finally {
       setIsLoading(false);
@@ -255,22 +267,37 @@ const ChatInterface = () => {
         let currentChatId = selectedChat;
         if (!currentChatId) {
             console.log('No chat selected, creating new chat...');
-            const chatData = await apiPost("/chats", {
-                title: inputText.slice(0, 50) + (inputText.length > 50 ? "..." : "")
-            });
-            currentChatId = chatData.chatId;
-            setSelectedChat(currentChatId);
-            
-            // Refresh chat list
-            const updatedChats = await apiGet("/chats");
-            setChats(updatedChats.chats || []);
+            try {
+                const chatData = await apiPost("/chats", {
+                    title: inputText.slice(0, 50) + (inputText.length > 50 ? "..." : "")
+                });
+                console.log('Chat created successfully:', chatData);
+                currentChatId = chatData.chatId;
+                setSelectedChat(currentChatId);
+                
+                // Refresh chat list
+                const updatedChats = await apiGet("/chats");
+                setChats(updatedChats.chats || []);
+            } catch (chatCreationError) {
+                console.error('Error creating chat:', chatCreationError);
+                throw new Error('Failed to create chat: ' + chatCreationError.message);
+            }
         }
 
         // Save user message to DB
-        await apiPost(`/chats/${currentChatId}/messages`, {
-            role: 'user',
-            content: inputText
-        });
+        try {
+            console.log('Saving user message to chat:', currentChatId, 'User:', user?.username);
+            await apiPost(`/chats/${currentChatId}/messages`, {
+                role: 'user',
+                content: inputText
+            });
+        } catch (messageError) {
+            console.error('Error saving message:', messageError);
+            console.error('Chat ID:', currentChatId);
+            console.error('User:', user?.username);
+            // If we can't save the user message, we should still continue
+            // The message is already added to the UI
+        }
 
         // Add user message immediately to UI
         setMessages(prev => [...prev, 
@@ -302,18 +329,26 @@ const ChatInterface = () => {
             switch (data.type) {
                 default:
                     // Save regular message to DB
-                    await apiPost(`/chats/${currentChatId}/messages`, {
-                        role: 'assistant',
-                        content: data.response
-                    });
+                    try {
+                        await apiPost(`/chats/${currentChatId}/messages`, {
+                            role: 'assistant',
+                            content: data.response
+                        });
+                    } catch (saveError) {
+                        console.error('Error saving assistant message:', saveError);
+                    }
                     await textStreamRoutine(data.response);
             }
         } else {
             // Handle regular text response
-            await apiPost(`/chats/${currentChatId}/messages`, {
-                role: 'assistant',
-                content: data.response
-            });
+            try {
+                await apiPost(`/chats/${currentChatId}/messages`, {
+                    role: 'assistant',
+                    content: data.response
+                });
+            } catch (saveError) {
+                console.error('Error saving assistant response:', saveError);
+            }
             await textStreamRoutine(data.response);
         }
 
@@ -347,7 +382,11 @@ const ChatInterface = () => {
             errorMessage += 'Something unexpected happened. Please try again, and if the problem persists, please contact support.';
         }
         
-        await textStreamRoutine(errorMessage);
+        // Remove the loading message and add error message directly
+        setMessages(prev => [
+            ...prev.slice(0, -1), // Remove loading message
+            { type: 'assistant', content: errorMessage }
+        ]);
     } finally {
         setIsLoading(false);
     }
@@ -502,7 +541,7 @@ const ChatInterface = () => {
           }}
       >
           {message.type === 'bot' 
-              ? addBusinessResponseEnhancements(enhanceMarkdownFormatting(message.content))
+              ? message.content
               : message.content
           }
       </ReactMarkdown>
