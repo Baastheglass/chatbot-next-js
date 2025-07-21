@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
+const { useState, useEffect, useRef } = React;
+
 import SignOutButton from './SignOutButton';
 import OpenRouterSettings from './OpenRouterSettings';
 import { Button } from "@/components/ui/button";
