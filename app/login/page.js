@@ -97,7 +97,19 @@ export default function LoginPage() {
         stack: error.stack,
         error: error
       });
-      setError("Network error. Please try again.");
+      
+      // Provide specific error messages based on error type
+      if (error.message.includes('401')) {
+        setError("Invalid username or password. Please try again.");
+      } else if (error.message.includes('404')) {
+        setError("User not found. Please check your username or sign up.");
+      } else if (error.message.includes('500')) {
+        setError("Server error. Please try again later.");
+      } else if (error.message.includes('Network error') || error.message.includes('fetch')) {
+        setError("Unable to connect to server. Please check your internet connection.");
+      } else {
+        setError("Login failed. Please try again.");
+      }
     } finally {
       setLoading(false);
       console.log("🏁 Login attempt finished");

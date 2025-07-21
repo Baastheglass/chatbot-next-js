@@ -110,7 +110,19 @@ export default function SignupPage() {
         stack: error.stack,
         error: error
       });
-      setError("Network error. Please try again.");
+      
+      // Provide specific error messages based on error type
+      if (error.message.includes('409')) {
+        setError("Username already exists. Please choose a different username.");
+      } else if (error.message.includes('400')) {
+        setError("Invalid signup data. Please check your input and try again.");
+      } else if (error.message.includes('500')) {
+        setError("Server error. Please try again later.");
+      } else if (error.message.includes('Network error') || error.message.includes('fetch')) {
+        setError("Unable to connect to server. Please check your internet connection.");
+      } else {
+        setError("Signup failed. Please try again.");
+      }
     } finally {
       setLoading(false);
       console.log("🏁 Signup attempt finished");
