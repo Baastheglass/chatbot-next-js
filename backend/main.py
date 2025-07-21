@@ -13,7 +13,32 @@ from user_manager import UserManager
 import jwt
 from datetime import datetime, timedelta
 
-# from auth_middleware import verify_token  # Authentication disabled for demo/development
+# Create JWT verification function
+async def verify_jwt_token(request: Request):
+    """Verify JWT token and extract user info"""
+    try:
+        auth_header = request.headers.get("Authorization")
+        if not auth_header or not auth_header.startswith("Bearer "):
+            raise HTTPException(status_code=401, detail="Authorization token is missing")
+        
+        token = auth_header.split(" ")[1]
+        jwt_secret = os.getenv("JWT_SECRET")
+        if not jwt_secret:
+            raise HTTPException(status_code=500, detail="JWT secret not configured")
+        
+        try:
+            payload = jwt.decode(token, jwt_secret, algorithms=["HS256"])
+            request.state.user_id = payload.get("userId")
+            request.state.username = payload.get("username")
+            return payload
+        except jwt.ExpiredSignatureError:
+            raise HTTPException(status_code=401, detail="Token has expired")
+        except jwt.InvalidTokenError:
+            raise HTTPException(status_code=401, detail="Invalid token")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=401, detail="Authentication failed")
 
 load_dotenv()
 
@@ -109,41 +134,47 @@ class AuthResponse(BaseModel):
     message: Optional[str] = None
 
 @app.post("/chats")
-async def create_chat_endpoint(req: CreateChatRequest, request: Request):
-    # Authentication disabled for demo/development
-    # user_email = getattr(request.state, 'user_email', None)
-    # if not user_email:
-    #     raise HTTPException(status_code=401, detail="User not authenticated")
-    
-    user_email = "demo@example.com"  # Use demo email for development
-    chat_title = req.title
-    chat_id = await chat_manager.create_chat(user_email, chat_title)
-    return {"chatId": chat_id}
+async def create_chat_endpoint(req: CreateChatRequest, request: Request, user_data: dict = Depends(verify_jwt_token)):
+    """Create a new chat for the authenticated user"""
+    try:
+        user_id = user_data.get("userId")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid user token")
+        
+        chat_title = req.title
+        chat_id = await chat_manager.create_chat(user_id, chat_title)
+        return {"chatId": chat_id}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 
 @app.post("/create_session")
-async def create_session(request: Request):
-    """Create a new chat session"""
+async def create_session(request: Request, user_data: dict = Depends(verify_jwt_token)):
+    """Create a new chat session for authenticated user"""
     try:
-        # Authentication disabled for demo/development
-        # user_email = getattr(request.state, 'user_email', None)
-        # if not user_email:
-        #     raise HTTPException(status_code=401, detail="User not authenticated")
+        user_id = user_data.get("userId")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid user token")
         
         session_id = chat_manager.create_session()
         return {"session_id": session_id}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/chat", response_model=ChatResponse)
-async def chat_endpoint(chat_message: ChatMessage, request: Request):
-    """Handle chat messages"""
+async def chat_endpoint(chat_message: ChatMessage, request: Request, user_data: dict = Depends(verify_jwt_token)):
+    """Handle chat messages for authenticated users"""
     try:
-        # Authentication disabled for demo/development
-        # user_email = getattr(request.state, 'user_email', None)
-        # if not user_email:
-        #     raise HTTPException(status_code=401, detail="User not authenticated")
+        user_id = user_data.get("userId")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid user token")
         
         # Get OpenRouter settings from request headers
         openrouter_api_key = request.headers.get("X-OpenRouter-API-Key")
@@ -310,70 +341,109 @@ async def video_endpoint(topic_request: TopicRequest, request: Request):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 @app.get("/chats")
-async def get_user_chats_endpoint(request: Request):
-    # Authentication disabled for demo/development
-    # user_email = getattr(request.state, 'user_email', None)
-    # if not user_email:
-    #     raise HTTPException(status_code=401, detail="User not authenticated")
-    
-    user_email = "demo@example.com"  # Use demo email for development
-    chats = await chat_manager.get_user_chats(user_email)
-    return {"chats": chats}
+async def get_user_chats_endpoint(request: Request, user_data: dict = Depends(verify_jwt_token)):
+    """Get all chats for the authenticated user"""
+    try:
+        user_id = user_data.get("userId")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid user token")
+        
+        chats = await chat_manager.get_user_chats(user_id)
+        return {"chats": chats}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/chats/{chatId}/messages")
-async def get_chat_messages_endpoint(chatId: str, request: Request):
-    # Authentication disabled for demo/development
-    # user_email = getattr(request.state, 'user_email', None)
-    # if not user_email:
-    #     raise HTTPException(status_code=401, detail="User not authenticated")
-    
-    messages = await chat_manager.get_chat_messages(chatId)
-    return {"messages": messages}
+async def get_chat_messages_endpoint(chatId: str, request: Request, user_data: dict = Depends(verify_jwt_token)):
+    """Get all messages for a specific chat (with user verification)"""
+    try:
+        user_id = user_data.get("userId")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid user token")
+        
+        # Verify that the chat belongs to the authenticated user
+        chat_details = await chat_manager.get_chat_details(chatId)
+        if not chat_details or chat_details.get("user_id") != user_id:
+            raise HTTPException(status_code=403, detail="Access denied: Chat does not belong to user")
+        
+        messages = await chat_manager.get_chat_messages(chatId)
+        return {"messages": messages}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/chats/{chatId}/messages")
-async def post_message_endpoint(chatId: str, req: NewMessageRequest, request: Request):
-    # Authentication disabled for demo/development
-    # user_email = getattr(request.state, 'user_email', None)
-    # if not user_email:
-    #     raise HTTPException(status_code=401, detail="User not authenticated")
-    
-    user_email = "demo@example.com"  # Use demo email for development
-    message = {
-        "role": req.role,
-        "content": req.content,
-        "attachmentType": req.attachmentType,
-        "attachmentData": req.attachmentData
-    }
-    await chat_manager.save_message(chatId, message, user_email)
-    return {"status": "ok"}
+async def post_message_endpoint(chatId: str, req: NewMessageRequest, request: Request, user_data: dict = Depends(verify_jwt_token)):
+    """Add a new message to a chat (with user verification)"""
+    try:
+        user_id = user_data.get("userId")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid user token")
+        
+        # Verify that the chat belongs to the authenticated user
+        chat_details = await chat_manager.get_chat_details(chatId)
+        if not chat_details or chat_details.get("user_id") != user_id:
+            raise HTTPException(status_code=403, detail="Access denied: Chat does not belong to user")
+        
+        message = {
+            "role": req.role,
+            "content": req.content,
+            "attachmentType": req.attachmentType,
+            "attachmentData": req.attachmentData
+        }
+        await chat_manager.save_message(chatId, message, user_id)
+        return {"status": "ok"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/chats/{chatId}/delete")
-async def delete_chat_endpoint(chatId: str, request: Request):
-    # Authentication disabled for demo/development
-    # user_email = getattr(request.state, 'user_email', None)
-    # if not user_email:
-    #     raise HTTPException(status_code=401, detail="User not authenticated")
-    
-    user_email = "demo@example.com"  # Use demo email for development
-    # Update the chat's isDeleted field to true
-    result = await chat_manager.soft_delete_chat(chatId, user_email)
-    if result:
-        return {"status": "ok"}
-    else:
-        raise HTTPException(status_code=404, detail="Chat not found or not authorized")
+async def delete_chat_endpoint(chatId: str, request: Request, user_data: dict = Depends(verify_jwt_token)):
+    """Delete a chat (with user verification)"""
+    try:
+        user_id = user_data.get("userId")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid user token")
+        
+        # Verify that the chat belongs to the authenticated user
+        chat_details = await chat_manager.get_chat_details(chatId)
+        if not chat_details or chat_details.get("user_id") != user_id:
+            raise HTTPException(status_code=403, detail="Access denied: Chat does not belong to user")
+        
+        # Update the chat's isDeleted field to true
+        result = await chat_manager.soft_delete_chat(chatId, user_id)
+        if result:
+            return {"status": "ok"}
+        else:
+            raise HTTPException(status_code=404, detail="Chat not found")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.get("/chats/{chatId}/load_recent_context")
-async def load_recent_context(chatId: str, sessionId: str, request: Request):
-    """
-    Whenever user switches to a new chat, load last 6 messages into self.chat_histories.
-    """
-    # Authentication disabled for demo/development
-    # user_email = getattr(request.state, 'user_email', None)
-    # if not user_email:
-    #     raise HTTPException(status_code=401, detail="User not authenticated")
-    
-    # Possibly verify user owns chatId if needed
-    await chat_manager.load_recent_context_for_chat(chatId, sessionId)
-    return {"status": "ok"}
+async def load_recent_context(chatId: str, sessionId: str, request: Request, user_data: dict = Depends(verify_jwt_token)):
+    """Load recent context for a chat (with user verification)"""
+    try:
+        user_id = user_data.get("userId")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid user token")
+        
+        # Verify that the chat belongs to the authenticated user
+        chat_details = await chat_manager.get_chat_details(chatId)
+        if not chat_details or chat_details.get("user_id") != user_id:
+            raise HTTPException(status_code=403, detail="Access denied: Chat does not belong to user")
+        
+        await chat_manager.load_recent_context_for_chat(chatId, sessionId)
+        return {"status": "ok"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/openrouter/models")
 async def get_openrouter_models(request: Request):

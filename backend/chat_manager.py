@@ -31,13 +31,13 @@ class ChatManager:
         self.DEFAULT_OPENROUTER_MODEL = "anthropic/claude-3-haiku"
         
     
-    async def create_chat(self, user_email: str,chat_title:str) -> str:
+    async def create_chat(self, user_id: str, chat_title: str) -> str:
         """Create a new chat for user"""
         chat_id = str(uuid.uuid4())
         
         await self.db.chats.insert_one({
             "chatId": chat_id,
-            "userId": user_email,
+            "userId": user_id,
             "title": chat_title,  
             "lastActive": datetime.utcnow(),
             "createdAt": datetime.utcnow(),
@@ -47,7 +47,7 @@ class ChatManager:
         
         return chat_id
 
-    async def save_message(self, chat_id: str, message: dict, user_email: str):
+    async def save_message(self, chat_id: str, message: dict, user_id: str):
         """Save message to MongoDB"""
         try:
             # If this is an MCQ answer update
@@ -76,7 +76,7 @@ class ChatManager:
             message_doc = {
                 "messageId": str(uuid.uuid4()),
                 "chatId": chat_id,
-                "userId": user_email,
+                "userId": user_id,
                 "type": message["role"],
                 "content": message["content"],
                 "timestamp": datetime.utcnow()
@@ -145,11 +145,11 @@ class ChatManager:
             
         return messages
 
-    async def get_user_chats(self, user_email: str) -> List[dict]:
+    async def get_user_chats(self, user_id: str) -> List[dict]:
         """Get all chats for a user"""
         chats = []
         async for chat in self.db.chats.find(
-            {"userId": user_email, "isDeleted": False}
+            {"userId": user_id, "isDeleted": False}
         ).sort("lastActive", -1):
             chats.append({
                 "chatId": chat["chatId"],
@@ -158,6 +158,14 @@ class ChatManager:
                 "currentTopic": chat["currentTopic"]
             })
         return chats
+
+    async def get_chat_details(self, chat_id: str) -> dict:
+        """Get chat details by chat_id"""
+        chat = await self.db.chats.find_one(
+            {"chatId": chat_id, "isDeleted": False}
+        )
+        return chat
+
     def _save_mcqs_to_disk(self):
         """Append the current in-memory MCQs to disk."""
         try:
@@ -995,10 +1003,10 @@ Provide me with 3 routes to market """
             log_error(f"Error in summarize_for_diagram: {e}")
             # If it fails, fallback to the original text or empty
             return text[:200]  # or just return text
-    async def soft_delete_chat(self, chat_id: str, user_email: str) -> bool:
+    async def soft_delete_chat(self, chat_id: str, user_id: str) -> bool:
         """Soft delete a chat by setting isDeleted to True"""
         result = await self.db.chats.update_one(
-            {"chatId": chat_id, "userId": user_email},
+            {"chatId": chat_id, "userId": user_id},
             {"$set": {"isDeleted": True}}
         )
         return result.modified_count > 0
