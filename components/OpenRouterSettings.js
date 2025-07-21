@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ChevronDown, Key, Cpu, Bot, Edit, Sparkles } from 'lucide-react';
 import { DEFAULT_SYSTEM_PROMPT } from "@/lib/constants";
 import PromptEditor from './ui/prompt-editor';
+
+const { useState, useEffect } = React;
 
 const OpenRouterSettings = ({ onSettingsChange }) => {
   const [apiKey, setApiKey] = useState('');
