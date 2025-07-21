@@ -93,17 +93,20 @@ const ChatInterface = () => {
     fetchChats();
   }, [user]);
 
-  useEffect(() => { // { changed code }
-    const createSession = async () => {
-      try{
-        const data = await apiPost("/create_session");
-        setSessionId(data.session_id);
-      } catch (error) {
-        console.error('Error creating session:', error);
-      }
-    };
-    createSession();
-  }, []);
+  useEffect(() => {
+    // Only create session if we don't have one and user is authenticated
+    if (!sessionId && user) {
+      const createSession = async () => {
+        try{
+          const data = await apiPost("/create_session");
+          setSessionId(data.session_id);
+        } catch (error) {
+          console.error('Error creating session:', error);
+        }
+      };
+      createSession();
+    }
+  }, [user, sessionId]); // Only run when user or sessionId changes
 
   useEffect(() => {
     scrollToBottom();
