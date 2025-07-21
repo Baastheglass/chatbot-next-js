@@ -95,7 +95,6 @@ const ChatInterface = () => {
         if (chatList.length === 0) {
           console.log('No chats found, creating default chat...');
           const newChatData = await apiPost("/chats", {
-            user_email: user.username, // Use username instead of email
             title: "New Conversation"
           });
           
@@ -126,7 +125,6 @@ const ChatInterface = () => {
   const confirmCreateChat = async (chatTitle) => {
     try {
       const data = await apiPost("/chats", {
-        user_email: user.username, // Use username instead of email
         title: chatTitle
       });
   
@@ -257,7 +255,6 @@ const ChatInterface = () => {
         if (!currentChatId) {
             console.log('No chat selected, creating new chat...');
             const chatData = await apiPost("/chats", {
-                user_email: user.username, // Use username instead of email
                 title: inputText.slice(0, 50) + (inputText.length > 50 ? "..." : "")
             });
             currentChatId = chatData.chatId;
