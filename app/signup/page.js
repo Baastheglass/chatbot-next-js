@@ -43,26 +43,25 @@ export default function SignupPage() {
     console.log("🔄 Signup attempt started for user:", formData.username);
 
     try {
-      const response = await apiPost('/auth/signup', {
+      const data = await apiPost('/auth/signup', {
         username: formData.username,
         password: formData.password,
         email: formData.email || null
       });
 
       console.log("📡 Signup response received:", {
-        status: response?.status,
-        ok: response?.ok,
-        responseExists: !!response
+        dataExists: !!data,
+        success: data?.success,
+        hasUser: !!data?.user
       });
 
       // Check if response exists (apiPost returns null on 401)
-      if (!response) {
+      if (!data) {
         console.error("❌ Signup failed: No response received");
         setError("Signup failed. Please try again.");
         return;
       }
 
-      const data = await response.json();
       console.log("📦 Signup response data:", {
         success: data.success,
         hasUser: !!data.user,
@@ -70,7 +69,7 @@ export default function SignupPage() {
         username: data.user?.username
       });
 
-      if (response.ok && data.success) {
+      if (data.success) {
         console.log("✅ Signup successful for user:", data.user.username);
         
         // Store token in both localStorage and cookies
