@@ -51,6 +51,53 @@ const ChatInterface = () => {
     systemPrompt: DEFAULT_SYSTEM_PROMPT
   });
 
+  // All useEffect hooks must come before any early returns
+  useEffect(() => {
+    if (!user) return; // Don't fetch chats if no user
+    
+    const fetchChats = async () => {
+      try {
+        const data = await apiGet("/chats");
+        const chatList = data.chats || [];
+        setChats(chatList);
+        
+        // If no chats exist, create a default one
+        if (chatList.length === 0) {
+          console.log('No chats found, creating default chat...');
+          const newChatData = await apiPost("/chats", {
+            title: "New Conversation"
+          });
+          
+          if (newChatData.chatId) {
+            setSelectedChat(newChatData.chatId);
+            // Refresh chat list
+            const updatedData = await apiGet("/chats");
+            setChats(updatedData.chats || []);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching chats:', error);
+      }
+    };
+    fetchChats();
+  }, [user]);
+
+  useEffect(() => { // { changed code }
+    const createSession = async () => {
+      try{
+        const data = await apiPost("/create_session");
+        setSessionId(data.session_id);
+      } catch (error) {
+        console.error('Error creating session:', error);
+      }
+    };
+    createSession();
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   // Show elegant loading screen while checking authentication
   if (authLoading) {
     return (
@@ -81,36 +128,6 @@ const ChatInterface = () => {
       </div>
     );
   }
-
-  useEffect(() => {
-    if (!user) return; // Don't fetch chats if no user
-    
-    const fetchChats = async () => {
-      try {
-        const data = await apiGet("/chats");
-        const chatList = data.chats || [];
-        setChats(chatList);
-        
-        // If no chats exist, create a default one
-        if (chatList.length === 0) {
-          console.log('No chats found, creating default chat...');
-          const newChatData = await apiPost("/chats", {
-            title: "New Conversation"
-          });
-          
-          if (newChatData.chatId) {
-            setSelectedChat(newChatData.chatId);
-            // Refresh chat list
-            const updatedData = await apiGet("/chats");
-            setChats(updatedData.chats || []);
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching chats:', error);
-      }
-    };
-    fetchChats();
-  }, [user]);
 
   const handleNewChat = async () => {
     // Show custom input dialog
@@ -200,22 +217,6 @@ const ChatInterface = () => {
       scrollDiv.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
   }
-
-  useEffect(() => { // { changed code }
-    const createSession = async () => {
-      try{
-        const data = await apiPost("/create_session");
-        setSessionId(data.session_id);
-      } catch (error) {
-        console.error('Error creating session:', error);
-      }
-    };
-    createSession();
-  }, []);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
 
   const textStreamRoutine = async (response) => {
     let loadingMsgRemoved = false;
