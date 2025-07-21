@@ -1,8 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { apiPost } from '@/lib/api-client';
+
+const { useState } = React;
 import { Sparkles, User, Lock, Mail, Eye, EyeOff } from 'lucide-react';
 
 export default function SignupPage() {

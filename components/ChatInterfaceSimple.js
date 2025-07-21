@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { apiPost, apiGet } from "@/lib/api-client";
 import { randomPick, sleep } from '@/lib/utils';
+
+const { useState, useEffect, useRef } = React;
 import { useAuth } from '@/lib/auth-context';
 
 const ChatInterfaceSimple = () => {
