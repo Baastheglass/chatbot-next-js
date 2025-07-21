@@ -23,7 +23,7 @@
 # misc
 .DS_Store
 *.pem
-
+LOGIN_FIX_SUMMARY.md
 # debug
 npm-debug.log*
 yarn-debug.log*

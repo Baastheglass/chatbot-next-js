@@ -30,25 +30,24 @@ export default function LoginPage() {
     console.log("🔄 Login attempt started for user:", formData.username);
 
     try {
-      const response = await apiPost('/auth/login', {
+      const data = await apiPost('/auth/login', {
         username: formData.username,
         password: formData.password
       });
 
       console.log("📡 Login response received:", {
-        status: response?.status,
-        ok: response?.ok,
-        responseExists: !!response
+        dataExists: !!data,
+        success: data?.success,
+        hasUser: !!data?.user
       });
 
       // Check if response exists (apiPost returns null on 401)
-      if (!response) {
+      if (!data) {
         console.error("❌ Login failed: No response received (likely 401)");
         setError("Authentication failed. Please check your credentials.");
         return;
       }
 
-      const data = await response.json();
       console.log("📦 Login response data:", {
         success: data.success,
         hasUser: !!data.user,
@@ -56,7 +55,7 @@ export default function LoginPage() {
         username: data.user?.username
       });
 
-      if (response.ok && data.success) {
+      if (data.success) {
         console.log("✅ Login successful for user:", data.user.username);
         
         // Store token in both localStorage and cookies
